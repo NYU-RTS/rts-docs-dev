@@ -30,43 +30,15 @@ class VASTClient(object):
     def get(self, url, params=None):
         return self._request('GET', url, params)
 
-def print_user_quota(id):
+def vast_user_quota(id):
     client = VASTClient()
     client_response = client.get("quotas/" + str(id))
-    print(client_response)
+    return client_response
 
-def print_quotas():
+def vast_user_quotas():
     client = VASTClient()
-    client.get("userquotas/")
+    client_response = client.get("userquotas/")
+    return client_response
 
-    tbq = None
-    su = None
-    suiq = None
-    iu = None
-    iup = None
-    sup = 0
-    for quota in client.get('userquotas')['results']:
-        if quota['soft_limit'] is not None:
-            for property in ['entity_identifier', 'state', 'soft_limit', 'hard_limit', 'soft_limit_inodes', 'hard_limit_inodes', 'grace_period', 'used_capacity', 'used_inodes', 'percent_inodes', 'percent_capacity']:
-                if quota[property] is not None:
-                    if property == 'soft_limit':
-                        tbq = int(quota[property] / 1000000000000)
-                    elif property == 'used_capacity':
-                        su = round(int(quota['used_capacity']) / 1000000000000, 2)
-                        #print(f'{su} TB')
-                    elif property == 'soft_limit_inodes':
-                        #print(quota[property])
-                        suiq = int(quota[property]) / 1000000
-                    elif property == 'used_inodes':
-                        iu = quota[property]
-                    elif property == 'percent_inodes':
-                        iup = quota[property]
-            if su is not None and tbq is not None:
-                sup = round(su / tbq, 2) * 100
-                #print(type(quota[property]))
-                #print(f'{property}={quota[property]} ', end='')
-            print(f'/vast        $VAST      NO/YES        {tbq}TB/{suiq}M           {su}TB({sup}%)/{iu}({iup}%)')
-            #print()
-
-# print_user_quota(460)
-# print_quotas()
+# print(vast_user_quota(460))
+# print(vast_user_quotas())
