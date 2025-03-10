@@ -1,0 +1,5 @@
+python_freeipa 
+srvlookup
+fastapi
+uvicorn
+urllib3

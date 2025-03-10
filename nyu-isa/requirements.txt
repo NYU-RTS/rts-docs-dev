@@ -1,0 +1,6 @@
+itsdangerous
+Authlib
+httpx
+Starlette
+fastapi
+uvicorn
