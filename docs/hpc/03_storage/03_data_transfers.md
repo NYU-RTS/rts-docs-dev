@@ -16,18 +16,30 @@ Note: while one can transfer data while on login nodes, it is  considered a bad 
 ## Data-Transfer nodes
 Attached to the NYU HPC cluster Greene, the Greene Data Transfer Node (gDTN) are  nodes optimized for transferring data between cluster file systems (e.g. scratch)  and other endpoints outside the NYU HPC clusters, including user laptops and desktops. The gDTNs have 100-Gb/s Ethernet connections to the High Speed Research Network (HSRN) and are connected to the HDR Infiniband fabric of the HPC clusters. 
 
+### Data Transfer Nodes Specs (gDTN)
+-   Node type: Lenovo SR630
+-   Number of nodes: 2
+-   CPU:  2x Intel Xeon Gold 6244 8C 150W 3.6GHz Processor
+-   Memory: 192GB   (total) - 12x 16GB DDR4, 2933MHz
+-   Local disk:  1x 1.92TB SSD
+-   Infiniband interconnect: 1x Mellanox ConnectX-6 HDR100 /100GbE VPI 1-Port x16 PCIe 3.0 HCA
+-   Ethernet connectivity to the NYU High-Speed Research Network ( HSRN ):  200Gbit  - 1x Mellanox ConnectX-5 EDR IB/100GbE VPI Dual-Port x16 PCIe 3.0 HCA
+
+### Data Transfer Node Access
 The HPC cluster filesystems include `/home`, `/scratch`, `/archive` and the [HPC Research Project Space](./05_research_project_space.md) are available on the gDTN.
 
-The Data-Transfer Node (DTN) can be access in a variety of ways
--   From NYU-net and the High Speed Research Network: use SSH to the DTN hostname gdtn.hpc.nyu.edu
--   From the Greene cluster (e.g., the login nodes): the hostname can be shortened to gdtn
--   For example, to log in to a DTN from the Greene cluster, to carry out some copy operation, and to log back out, you can use a command sequence like:
+The Data-Transfer Node (DTN) can be accessed in a variety of ways
+-   From NYU-net and the High Speed Research Network: use SSH to the DTN hostname `gdtn.hpc.nyu.edu`
+-   From the Greene cluster (e.g., the login nodes): the hostname can be shortened to `gdtn`
+:::tip
+For example, to log in to a DTN from the Greene cluster, to carry out some copy operation, and to log back out, you can use a command sequence like:
 ```sh
 ssh gdtn
 rsync ...
 logout
 ```
--   Via specific tools like Globus (see below)
+:::
+-   Via specific tools like [Globus](#globus)
 
 ## Linux & Mac Tools
 ### scp and rsync
@@ -56,7 +68,7 @@ Globus is the recommended tool to use for large-volume data transfers. It featur
 
 The Globus endpoint for Greene is available at `nyu#greene`. The endpoint `nyu#prince` has been retired.
 
-[Please see detailed instructions](./04_globus.md)
+Detailed instructions available at [Globus](./04_globus.md)
 
 ## rclone
 rclone - rsync for cloud storage, is a command line program to sync files and directories to and from cloud storage systems such as Google Drive, Amazon Drive, S3, B2 etc. rclone is available on DTNs.
