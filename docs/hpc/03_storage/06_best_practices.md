@@ -2,9 +2,11 @@
 ## User Quota Limits and the myquota command
 All users have quote limits set on HPC fie systems. There are several types of quota limits, such as limits on the amount of disk space (disk quota), number of files (inode quota) etc. The default user quota limits on HPC file systems are listed [on our Data Management page](./01_intro_and_data_management.mdx#hpc-storage-mounts-comparison-table).
 
-Running out of quota causes a variety of issues such as running user jobs being interrupted or users being unable to finish the installation of packages under their home directory.
+:::warning
+_One of the common issues users report is running out of inodes in their home directory._ This usually occurs during software installation, for example installing conda environment under their home directory.  Running out of quota causes a variety of issues such as running user jobs being interrupted or users being unable to finish the installation of packages under their home directory.
+:::
 
-_One of the common issues users report is running out of inodes in their home directory._ This usually occurs during software installation, for example installing conda environment under their home directory. Users can check their current utilization of quota using the myquota command. The myquota command provides a report of the current quota limits on mounted file systems, the user's  quota utilization, as well as the percentage of quota utilization. 
+Users can check their current utilization of quota using the myquota command. The myquota command provides a report of the current quota limits on mounted file systems, the user's quota utilization, as well as the percentage of quota utilization.
 
 In the following example the user who executes the `myquota` command is out of inodes in their home directory. The user inode quota
 
@@ -40,11 +42,13 @@ $ for d in $(find $(pwd) -maxdepth 1 -mindepth 1 -type d | sort -u); do n_files=
 ## Large number of small files
 In case your dataset or workflow requires to use large number of small files, this can create a bottleneck due to read/write rates. 
 
-Please refer to our page on working with a [large number of files](./07_large_number_of_small_files.md) to learn about some of the options we recommend to consider.
+Please refer to [our page on working with a large number of files](./07_large_number_of_small_files.md) to learn about some of the options we recommend to consider.
 
 ## Installing Python packages
-Your home directory has relatively small number of inodes.
-In case you would create conda or python environment in you home directory, this can eat up all the inodes. 
+:::warning
+Your home directory has a relatively small number of inodes.
+If you create a conda or python environment in you home directory, this can eat up all the inodes. 
+:::
 
-Please review best practices for managing packages under the Package Management section of the [Greene Software Page](../06_tools_and_software/05_software_on_greene.md).
+Please review the [Package Management section](../06_tools_and_software/05_software_on_greene.md#package-management-for-r-python--julia-and-conda-in-general) of the [Greene Software Page](../06_tools_and_software/05_software_on_greene.md).
 
