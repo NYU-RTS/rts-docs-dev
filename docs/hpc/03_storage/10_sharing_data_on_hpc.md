@@ -27,12 +27,15 @@ $ getfacl myfile.txt
 user::rw-
 group::---
 other::---
+```
 The example above illustrates that in most cases ACL looks just like the chmod-based permissions: owner of the file has read and write permission, members of the group and everyone else have no permissions at all.
 
-Setting ACL
+
+## Setting ACL
 Modify access permissions
 Use setfacl:
 
+```sh
 # general syntax:
 $ setfacl [option] [action/specification] file
 
@@ -63,8 +66,10 @@ $ setfacl -k <file/dir>
 $ setfacl -b <file/dir>
 ```
 
-### Important: Give Access to Parent Directories in the Path
+:::tip
+Give Access to Parent Directories in the Path
 When you would like to set ACL to say `/a/b/c/example.out`,  you also need to set appropriate ACLs to all the parent directories in the path. If you want to give read/write/execute permissions for the file `/a/b/c/example.out`, you would also need to give at least r-x permissions to the directories: `/a`,  `/a/b`, and `/a/b/c`.
+:::
 
 ### Remove All ACL Entries
 ```sh
@@ -93,7 +98,7 @@ drwxr-xr-x  1361 root  root      0 Apr  3 09:35 ..
 ```
 
 ### Flags
-Please read 'man setfacl' for possible flags. For example:
+Please read `man setfacl` for possible flags. For example:
 
 -   '-m' - modify
 -   '-x' - remove
