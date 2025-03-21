@@ -3,7 +3,7 @@
 ## Transferring files to and from Google Drive with RCLONE
 Having access to Google Drive from the HPC environment provides an option to archive data and even share data with collaborators who have no access to the NYU HPC environment. Other options to archiving data include the HPC Archive file system and using [Globus](./04_globus.md) to share data with collaborators.
 
-Access to Google Drive is provided by [rclone](https://rclone.org/drive/) - rsync for cloud storage - a command line program to sync files and directories to and from cloud storage systems such as Google Drive, Amazon Drive, S3, B2 etc. [rclone](https://rclone.org/drive/) is available on Greene cluster as a module, the module versions currently (March 2025) available are:
+Access to Google Drive is provided by [rclone](https://rclone.org/drive/) - rsync for cloud storage - a command line program to sync files and directories to and from cloud storage systems such as Google Drive, Amazon Drive, S3, B2 etc. [rclone](https://rclone.org/drive/) is available on Greene cluster as a module, the module versions currently available (March 2025) are:
 - **rclone/1.68.2**
 - **rclone/1.66.0**
 - **rclone/1.60.1**
@@ -47,7 +47,7 @@ This will try to open the config files and you will see the below content:
 
 You can select one of the options (here we show how to set up a new remote)
 ```sh
-2025/03/14 16:39:23 NOTICE: Config file "/Users/rjy1/.config/rclone/rclone.conf" not found - using defaults
+2025/03/14 16:39:23 NOTICE: Config file "/Users/user123/.config/rclone/rclone.conf" not found - using defaults
 No remotes found, make a new one?
 n) New remote
 s) Set configuration password
@@ -61,7 +61,7 @@ Please enter `n` to create a new remote
 Enter name for new remote.
 name> nyu_google_drive
 ```
-Please enter `nyu_oogle_drive` or something similar to name the new remote 
+Please enter `nyu_google_drive` or something similar to name the new remote 
 
 ```sh
 Option Storage.
@@ -188,7 +188,7 @@ Choose a number from below, or type in your own value.
 Storage> 19
 ```
 
-Enter `19` or if the above menu has changed whichever number corresponds to `Google Drive`
+Please enter the number that corresponds to `Google Drive`. In the example above it is `19`.
 
 ```sh
 Option client_id.
@@ -281,27 +281,25 @@ Enter a value.
 config_token> 
 ```
 
+As instructed, please copy the line in the output you get that is similar to:
+`rclone authorize "drive" "eyJzY29wZSI6ImRyaXZlIn0"`
+and paste that into a terminal on your local system and press enter/return.
+
+That should open a web browser that will have you select your NYU account and will verify that you would like to give rclone access to your Google Drive.  It will then provide you with a long code:
 
 ```sh
-Remote config
-Use auto config?
- * Say Y if not sure
- * Say N if you are working on a remote or headless machine
-y) Yes (default)
-n) No
-y/n> n
+user@ITS tmp % rclone authorize "drive" "eysi39xv82pmJzY29XZlIn0"
+2025/03/21 11:12:29 NOTICE: Make sure your Redirect URL is set to "http://127.0.0.1:53682/" in your custom config.
+2025/03/21 11:12:29 NOTICE: If your browser doesn't open automatically go to the following link: http://127.0.0.1:53682/auth?state=4c5yNwx6EsFWeise83svie
+2025/03/21 11:12:29 NOTICE: Log in and authorize rclone for access
+2025/03/21 11:12:29 NOTICE: Waiting for code...
+2025/03/21 11:12:39 NOTICE: Got code
+Paste the following into your remote machine --->
+code removed
+<---End paste
 ```
 
-Please enter 'n'.
-
-```sh
-Please go to the following link: https://accounts.google.com/o/oauth2/auth?access_type=offline&client_id=
- CUT AND PASTE The URL ABOVE INTO A BROWSER ON YOUR LAPTOP/DESKTOP 
-Log in and authorize rclone for access
-Enter verification code>
-```
-
-Please go to the link provided, log in and authorize rclone for access, as instructed, and then enter the verification code provided.
+Please copy this code and paste it in as a response to the `config_token>` prompt.
 
 ```sh
 Configure this as a team drive?
@@ -342,7 +340,7 @@ q) Quit config
 e/n/d/r/c/s/q> q
 ```
 
-Please enter 'q' and we're done.
+Please enter 'q' and we're done with configuration.
 
 ### Step 4: Transfer
 
@@ -353,7 +351,7 @@ $ rclone lsd nyu_google_drive:
 
 Transferring files to Google Drive, using the command below:
 ```sh
-$ rclone copy <source_folder> <remote_name>:<name_of_folder_on_gdrive>
+$ rclone copy <source_folder or file> <remote_name>:<name_of_folder_on_gdrive>
 ```
 
 It looks something like below:
