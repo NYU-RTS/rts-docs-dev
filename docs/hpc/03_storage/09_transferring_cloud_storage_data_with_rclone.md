@@ -343,13 +343,16 @@ e/n/d/r/c/s/q> q
 Please enter 'q' and we're done with configuration.
 
 ### Step 4: Transfer
+:::warning
+Please be sure to perform data transters on a data transfer node (DTN).  It can degrade performace for other users to perform transfers on other types of nodes.  For more information please see [Data Transfers](./03_data_transfers.md)
+:::
 
 Sample commands:
 ```sh
 $ rclone lsd nyu_google_drive:
 ```
 
-Transferring files to Google Drive, using the command below:
+Transfer files to Google Drive, using the command below:
 ```sh
 $ rclone copy <source_folder or file> <remote_name>:<name_of_folder_on_gdrive>
 ```
