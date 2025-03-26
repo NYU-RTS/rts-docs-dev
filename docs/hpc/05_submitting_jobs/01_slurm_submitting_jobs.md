@@ -4,7 +4,7 @@
 ## Batch vs Interactive Jobs
 
 -   HPC workloads are usually better suited to *batch processing* than *interactive* working.
--   A batch job is sent to the system when submitted with an ~sbatch~ command. 
+-   A batch job is sent to the system when submitted with an **sbatch** command. 
 -   The working pattern we are all familiar with is *interactive* - where we type ( or click ) something interactively, and the computer performs the associated action. Then we type ( or click ) the next thing.
 -   Comments at the start of the script, which match a special pattern ( #SBATCH ) are read as Slurm options.
 
@@ -12,13 +12,15 @@
 
 There is a reason why GUIs are less common in HPC environments: **point-and-click** is **necessarily interactive**. In HPC environments (*as we'll see in session 3*) work is scheduled in order to allow exclusive use of the shared resources. On a busy system there may be several hours wait between when you submit a job and when the resources become available, so a reliance on user interaction is not viable. In Unix, commands need not be run interactively at the prompt, you can write a sequence of commands into a file to be run as a script, either manually (for sequences you find yourself repeating frequently) or by another program such as the batch system.
 
+:::tip
 The job might not start immediately, and might take hours or days, so we prefer a *batch* approach:
 
 -   Plan the sequence of commands which will perform the actions we need
     -   Write them into a script.
 
-I can now run the script interactively, which is a great way to save effort if i frequently use the same workflow, or ...
+You can now run the script interactively, which is a great way to save effort if i frequently use the same workflow, or ...
 -   Submit the script to a batch system, to run on dedicated resources when they become available.
+:::
 
 ### Where does the output go ?
 
@@ -35,9 +37,9 @@ There are two aspects to a batch job script:
 
 ### A simple example
 
-A typical batch script on an NYU HPC cluster looks something like these:
+A typical batch script on an NYU HPC cluster looks something like these two examples:
 
-```sh
+```bash
 #!/bin/bash
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
@@ -59,7 +61,9 @@ mkdir -p $RUNDIR
 DATADIR=$SCRATCH/my_project/data
 cd $RUNDIR
 stata -b do $DATADIR/data_0706.do
+```
 
+```bash
 #!/bin/bash
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
@@ -200,7 +204,11 @@ Jobs are submitted with the sbatch command:
 sbatch options job-script
 ```
 
-The options tell SLURM information about the job, such as what resources will be needed. **These can be specified in the job-script as SBATCH directives, or on the command line as options, or both** ( in which case the command line options take precedence should the two contradict each other ). For each option there is a corresponding SBATCH directive with the syntax: 
+The options tell SLURM information about the job, such as what resources will be needed. **These can be specified in the job-script as SBATCH directives, or on the command line as options, or both**
+:::note
+ When SBATCH options are provided in both the script and the command line, the command line options take precedence should the two contradict each other.
+ :::
+ For each option there is a corresponding SBATCH directive with the syntax: 
 
 ```sh
 #SBATCH option 
@@ -395,8 +403,7 @@ cd /scratch/$USER/myjarraytest
 python wordcount.py sample-$SLURM_ARRAY_TASK_ID.txt
 ```
 
-Job array submission introduces an environment variable.
-`SLURM_ARRAY_TASK_ID`, which is unique for each job array job. It is usually embedded somewhere so that at a job running time it's unique value is incorporated into producing a proper file name. 
+Job array submission introduces an environment variable, `SLURM_ARRAY_TASK_ID`, which is unique for each job array job. It is usually embedded somewhere so that when a job runs, its unique value is incorporated into producing a proper file name.
 
 Also as shown above: two additional options `%A` and `%a`, denoting the job ID and the task ID ( i.e. job array index ) respectively, are available for specifying a job's stdout, and stderr file names.
 
@@ -427,7 +434,9 @@ sbatch run-amber.s
 
 There are three NVIDIA GPU types and one AMD GPU type that can be used.
 
-> **_CAUTION:_** AMD GPUs require code to be compatible with ROCM drivers, not CUDA
+:::warning
+AMD GPUs require code to be compatible with ROCM drivers, not CUDA
+:::
 
 **To request NVIDIA GPUs**
 
@@ -499,7 +508,9 @@ The demo Amber job should take ~2 minutes to finish once it starts runnning. Whe
 
 The majority of the jobs on the NYU HPC cluster are submitted with the sbatch command, and executed in the background. These jobs' steps and workflows are predefined by users, and their executions are driven by the scheduler system.
 
-There are cases when users need to run applications interactively ( interactive jobs ). Interactive jobs allow the users to enter commands and data on the command line (or in a graphical interface ), providing an experience similar to working on a desktop or laptop. Examples of common interactive tasks are:
+There are cases when users need to run applications interactively ( *interactive jobs* ). Interactive jobs allow the users to enter commands and data on the command line (or in a graphical interface ), providing an experience similar to working on a desktop or laptop.
+
+Examples of common interactive tasks are:
 
 -   Editing files
 
@@ -513,27 +524,32 @@ There are cases when users need to run applications interactively ( interactive 
 
 To support interactive use in a batch environment, Slurm allows for interactive batch jobs.
 
-### Can you run interactive jobs on the HPC Login nodes?
-
-Since the login nodes of the HPC cluster are shared between many users, running interactive jobs that require significant computing and IO resources on the login nodes will impact many users.
-
-Thus running compute and IO intensive interactive jobs on the HPC login nodes is not allowed. 
+:::warning
+Please do not run interactive jobs on the HPC Login nodes.  Login nodes of the HPC cluster are shared between many users so running interactive jobs that require significant computing and IO resources on the login nodes will impact many users.  For this reason running compute and IO intensive interactive jobs on the HPC login nodes is not allowed.
 
 > **_Such jobs may be removed without notice!_**
+:::
 
-Instead of running interactive jobs on Login nodes, users can run interactive jobs on the HPC Compute nodes using SLURM's `srun` utility. Running interactive jobs on compute nodes does not impact many users and in addition provides access to resources that are not available on the login nodes, such as interactive access to GPUs, high memory, exclusive access to all the resources of a compute node, etc.  Note: There is no partition on the HPC cluster that has been reserved for Interactive jobs.
+::::tip
+Instead of running interactive jobs on Login nodes, users can run interactive jobs on the HPC Compute nodes using SLURM's `srun` utility. Running interactive jobs on compute nodes does not impact many users and in addition provides access to resources that are not available on the login nodes, such as interactive access to GPUs, high memory, exclusive access to all the resources of a compute node, etc.
+:::note
+There is no partition on the HPC cluster that has been reserved for Interactive jobs.
+:::
+::::
 
 ### Start an Interactive Job
 
 When you start an interactive batch job the command prompt is not immediately returned. Instead, you wait until the resource is available when the prompt is returned and you are on a compute node and in a batch job - much like the process of logging in to a host with ssh. **To end the session, type 'exit'**, again just like the process of logging in and out with ssh.
 
-```console
+```
 [wd35@log-0 ~]$ srun --pty /bin/bash
+srun: job 58699789 queued and waiting for resources
+srun: job 58699789 has been allocated resources
 [wd35@c17-01 ~]$ hostname
 c17-01
 ```
 
-To use any GUI-based program within the interactive batch session you will need to extend X forwarding with the --x11 option. This of course still relies on you having X forwarding at your login session - try running 'xterm' before starting the interactive to verify that this is working correctly.
+To use any GUI-based program within the interactive batch session you will need to extend X forwarding with the --x11 option. This of course still relies on you having X forwarding at your login session - try running 'xterm' before starting the interactive to verify that this is working correctly.  Please see [SSH Tunneling and X11 Forwarding](../02_connecting_to_hpc/02_ssh_tunneling_and_x11_forwarding.md) for details.
 
 ### Request Resources
 
@@ -614,28 +630,26 @@ srun --x11 -t1:30:00 --mem=3000 --gres=gpu:1 --pty /bin/bash
 
 The following example shows how to work with Interactive R session on a compute node:
 
-```console
+```sh
 [NetID@log-1 ~]$ srun -c 1 --pty /bin/bash
 [NetID@c17-01 ~]$ module purge
 [NetID@c17-01 ~]$ module list
 
 No modules loaded
-[NetID@c17-01 ~]$ module load r/intel/4.0.4
+[NetID@c17-01 ~]$ module load r/gcc/4.4.0
 [NetID@c17-01 ~]$ module list
 
 Currently Loaded Modules:
-  1) intel/19.1.2   2) r/intel/4.0.4
+  1) r/intel/4.4.0
 
 [NetID@c17-01 ~]$ R
-R version 4.0.4 (2021-02-15) -- "Lost Library Book"
-Copyright (C) 2021 The R Foundation for Statistical Computing
-Platform: x86_64-centos-linux-gnu (64-bit)
+R version 4.4.0 (2024-04-24) -- "Puppy Cup"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
