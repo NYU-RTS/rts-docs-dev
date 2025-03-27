@@ -4,9 +4,9 @@
 Having access to Google Drive from the HPC environment provides an option to archive data and even share data with collaborators who have no access to the NYU HPC environment. Other options to archiving data include the HPC Archive file system and using [Globus](./04_globus.md) to share data with collaborators.
 
 Access to Google Drive is provided by [rclone](https://rclone.org/drive/) - rsync for cloud storage - a command line program to sync files and directories to and from cloud storage systems such as Google Drive, Amazon Drive, S3, B2 etc. [rclone](https://rclone.org/drive/) is available on Greene cluster as a module, the module versions currently available (March 2025) are:
-- **rclone/1.68.2**
-- **rclone/1.66.0**
-- **rclone/1.60.1**
+-   **rclone/1.68.2**
+-   **rclone/1.66.0**
+-   **rclone/1.60.1**
 
 For more details on how to use rclone to sync files to Google Drive, please see: [RClone documentation for Google Drive](https://rclone.org/drive/)
 
