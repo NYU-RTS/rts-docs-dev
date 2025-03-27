@@ -73,12 +73,12 @@ When you would like to set ACL to say `/a/b/c/example.out`,  you also need to se
 
 ### Remove All ACL Entries
 ```sh
-# setfacl -b abc
+$ setfacl -b abc
 ```
 
 ### Check ACLs
 ```sh
-# getfacl abc
+$ getfacl abc
 # file: abc
 # owner: someone
 # group: someone
@@ -109,7 +109,7 @@ Please read `man setfacl` for possible flags. For example:
 ### File ACL Example
 Set read, write, and execute (rwX) permissions for user johnny to file named abc:
 ```sh
-# setfacl -m "u:johnny:rwX" abc
+$ setfacl -m "u:johnny:rwX" abc
 ```
 
 :::note
@@ -117,7 +117,7 @@ We recommend for the permissions using a capital 'X' as using a lowercase 'x' wi
 
 Check permissions:
 ```sh
-# getfacl abc
+$ getfacl abc
 # file: abc
 # owner: someone
 # group: someone
@@ -130,12 +130,12 @@ other::r--
 
 Change permissions for user johnny:
 ```sh
-# setfacl -m "u:johnny:r-X" abc
+$ setfacl -m "u:johnny:r-X" abc
 ```
 
 Check permissions:
 ```sh
-# getfacl abc
+$ getfacl abc
 # file: abc
 # owner: someone
 # group: someone

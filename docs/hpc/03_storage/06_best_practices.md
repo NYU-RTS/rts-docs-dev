@@ -8,9 +8,7 @@ _One of the common issues users report is running out of inodes in their home di
 
 Users can check their current utilization of quota using the myquota command. The myquota command provides a report of the current quota limits on mounted file systems, the user's quota utilization, as well as the percentage of quota utilization.
 
-In the following example the user who executes the `myquota` command is out of inodes in their home directory. The user inode quota
-
-limit on the `/home` file system **30.0K inodes** and the user has **33000 inodes**, thus **110%** of the inode quota limit.
+In the following example the user who executes the `myquota` command is out of inodes in their home directory. The user inode quota limit on the `/home` file system **30.0K inodes** and the user has **33000 inodes**, thus **110%** of the inode quota limit.
 ```sh
 $ myquota
 Hostname: log-1 at Sun Mar 21 21:59:08 EDT 2021
