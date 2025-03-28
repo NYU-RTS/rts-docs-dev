@@ -47,7 +47,7 @@ This will try to open the config files and you will see the below content:
 
 You can select one of the options (here we show how to set up a new remote)
 ```sh
-2025/03/14 16:39:23 NOTICE: Config file "/Users/user123/.config/rclone/rclone.conf" not found - using defaults
+2025/03/14 16:39:23 NOTICE: Config file "/Users/$USER/.config/rclone/rclone.conf" not found - using defaults
 No remotes found, make a new one?
 n) New remote
 s) Set configuration password
