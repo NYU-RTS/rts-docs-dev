@@ -14,13 +14,13 @@ The Slurm software system is a resource manager and a job scheduler, which is de
 
 -   This tutorial assumes you have a NYU HPC account. If not, you may find the steps to apply for an account on the [Getting and renewing an account page](../01_getting_started/02_getting_and_renewing_an_account.md).
 
--   It also assumes you are comfortable with Linux command-line environment. To learn about linux please read \[Linux Tutorial](../10_tutorials/01_linux_tutorial.mdx).
+-   It also assumes you are comfortable with Linux command-line environment. To learn about linux please read our [Linux Tutorial](../10_tutorials/01_linux_tutorial.mdx).
 
 -   Please review the [Hardware Specs page](../12_spec_sheet.mdx) for more information on Greene's hardware specifications.
 
 ## Slurm Commands
 
-For an overview of useful Slurm commands, please read (Slurm Main Commands) page before continuing the tutorial.
+For an overview of useful Slurm commands, please read [Slurm Main Commands](./03_slurm_main_commands.md) page before continuing the tutorial.
 
 ## Software and Environment Modules
 
