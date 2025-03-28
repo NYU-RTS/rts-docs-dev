@@ -411,7 +411,7 @@ Also as shown above: two additional options `%A` and `%a`, denoting the job ID a
 
 You can find more examples here:
 
-```
+```sh
 /scratch/work/public/examples/slurm/jobarry/
 ```
 
@@ -481,7 +481,7 @@ pmemd.cuda -O
 
 The demo Amber job should take ~2 minutes to finish once it starts runnning. When the job is done, several output files are generated. Check the one named "mdout", which has a section most relevant here:
 
-```
+```sh
 |--------------------- INFORMATION ---------------------- 
 | GPU (CUDA) Version of PMEMD in use: NVIDIA GPU IN USE. 
 |                    Version 16.0.0 
@@ -541,7 +541,7 @@ There is no partition on the HPC cluster that has been reserved for Interactive 
 
 When you start an interactive batch job the command prompt is not immediately returned. Instead, you wait until the resource is available when the prompt is returned and you are on a compute node and in a batch job - much like the process of logging in to a host with ssh. **To end the session, type 'exit'**, again just like the process of logging in and out with ssh.
 
-```
+```sh
 [wd35@log-0 ~]$ srun --pty /bin/bash
 srun: job 58699789 queued and waiting for resources
 srun: job 58699789 has been allocated resources
