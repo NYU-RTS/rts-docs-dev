@@ -527,7 +527,7 @@ To support interactive use in a batch environment, Slurm allows for interactive 
 :::warning
 Please do not run interactive jobs on the HPC Login nodes.  Login nodes of the HPC cluster are shared between many users so running interactive jobs that require significant computing and IO resources on the login nodes will impact many users.  For this reason running compute and IO intensive interactive jobs on the HPC login nodes is not allowed.
 
-> **_Such jobs may be removed without notice!_**
+**_Such jobs may be removed without notice!_**
 :::
 
 ::::tip
