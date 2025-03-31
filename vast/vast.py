@@ -30,15 +30,9 @@ class VASTClient(object):
     def get(self, url, params=None):
         return self._request('GET', url, params)
 
-def vast_user_quota(id):
-    client = VASTClient()
-    client_response = client.get("quotas/" + str(id))
-    return client_response
-
 def vast_user_quotas():
     client = VASTClient()
     client_response = client.get("userquotas/")
     return client_response
 
-# print(vast_user_quota(460))
-# print(vast_user_quotas())
+print(vast_user_quotas())
