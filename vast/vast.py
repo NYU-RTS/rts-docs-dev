@@ -36,8 +36,9 @@ def vast_user_quota(id, url):
         for quota in client_response['results']:
             if quota['entity']['name'] == id:
                 return quota
-        client_response = client.get(client_response['next'])
-        if not client_response['next']:
+        if client_response['next']:
+            client_response = client.get(client_response['next'])
+        else:
             return "{'error':'username not found'}"
 
 def vast_user_quotas(url):
