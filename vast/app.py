@@ -38,16 +38,18 @@ def index():
 
 @app.get('/vast_user_quota/{user_id}')
 def vast_get_user_quota(user_id):
+    userquota_url = 'https://vast.hpc.nyu.edu/api/userquotas/'
     try:
-        quota = vast.get_user_quota(user_id)
+        quota = vast.get_user_quota(user_id, userquota_url)
     except Exception as err:
         logging.error(f'Error reading user quota {user_id}: {err}')
     return {'data': quota }
 
 @app.get('/vast_user_quotas')
 def vast_get_all_user_quotas():
+    userquota_url = 'https://vast.hpc.nyu.edu/api/userquotas/'
     try:
-        quotas = vast.get_user_quotas()
+        quotas = vast.get_user_quotas(userquota_url)
     except Exception as err:
        logging.error(f'Error reading all vast user quotas: {err}')
     return {'data': quotas }

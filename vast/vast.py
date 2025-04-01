@@ -53,4 +53,4 @@ def vast_user_quotas(url):
 
 userquota_url = 'https://vast.hpc.nyu.edu/api/userquotas/'
 # print(vast_user_quotas(userquota_url))
-# print(vast_user_quota('rjy1', userquota_url))
+print(vast_user_quota('rjy1', userquota_url))
