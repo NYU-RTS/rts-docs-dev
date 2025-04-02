@@ -94,13 +94,13 @@ We'll work through them more closely in a moment.
 You submit the job with *sbatch*:
 
 ```sh
-sbatch myscript.sh
+[NetID@log-1 ~]$ sbatch myscript.sh
 ```
 
 And monitor it's progress with:
 
 ```sh
-squeue -u $USER
+[NetID@log-1 ~]$ squeue -u $USER
 ```
 
 **What just happened ?** Here's an annotated version of the first script:
@@ -210,13 +210,13 @@ The options tell SLURM information about the job, such as what resources will be
  :::
  For each option there is a corresponding SBATCH directive with the syntax: 
 
-```sh
+```bash
 #SBATCH option 
 ```
 
 For example, you can specify that a job needs 2 nodes and 4 cores on each node ( by default one CPU core per task ) on each node by adding to the script the directive:
 
-```sh
+```bash
 #!/bin/bash
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=4
@@ -225,7 +225,7 @@ For example, you can specify that a job needs 2 nodes and 4 cores on each node (
 or as a command-line option to sbatch when you submit the job:
 
 ```sh
-sbatch --nodes=2 --ntasks-per-node=4 my_script.sh
+[NetID@log-1 ~]$ sbatch --nodes=2 --ntasks-per-node=4 my_script.sh
 ```
 
 ### Options to manage job output
@@ -322,9 +322,9 @@ sbatch --nodes=2 --ntasks-per-node=4 my_script.sh
 
 Create a directory and an example R script
 
-```sh
-mkdir /scratch/$USER/examples
-cd /scratch/$USER/examples
+```bash
+[NetID@log-1 ~]$ mkdir /scratch/$USER/examples
+[NetID@log-1 ~]$ cd /scratch/$USER/examples
 ```
 
 Create `example.R` inside the examples directory:
@@ -340,7 +340,7 @@ df[rev(order(df$y)),]
 
 Create the following SBATCH script named `run-R.sbatch` :
 
-```sh
+```bash
 #!/bin/bash
 #
 #SBATCH --job-name=RTest
@@ -359,7 +359,7 @@ R --no-save -q -f example.R > example.out 2>&1
 Run the job using `sbatch`.
 
 ```sh
-sbatch run-R.sbatch
+[NetID@log-1 ~]$ sbatch run-R.sbatch
 ```
 
 ## Array Jobs
@@ -371,21 +371,21 @@ Please follow the recipe below to try the example. There are 5 input files named
 Prepare the data before submitting an array job:
 
 ```sh
-mkdir -p /scratch/$USER/myjarraytest
-cd /scratch/$USER/myjarraytest
-cp /share/apps/Tutorials/slurm/example/jobarray/* .
-ls
+[NetID@log-1 ~]$ mkdir -p /scratch/$USER/myjarraytest
+[NetID@log-1 ~]$ cd /scratch/$USER/myjarraytest
+[NetID@log-1 ~]$ cp /share/apps/Tutorials/slurm/example/jobarray/* .
+[NetID@log-1 ~]$ ls
 ```
 
 Submit the array job:
 
 ```sh
-sbatch --array=1-5 run-jobarray.s
+[NetID@log-1 ~]$ sbatch --array=1-5 run-jobarray.s
 ```
 
 The content of the job script `run-jobarray.s` is copied below:
 
-```sh
+```bash
 #!/bin/bash
 
 #SBATCH --job-name=myJobarrayTest
@@ -409,7 +409,7 @@ Also as shown above: two additional options `%A` and `%a`, denoting the job ID a
 
 ## More examples
 
-You can find more examples here:
+You can find more examples in the slurm jobarray examples directory:
 
 ```sh
 /scratch/work/public/examples/slurm/jobarry/
@@ -419,17 +419,17 @@ You can find more examples here:
 
 To request one GPU card, use SBATCH directive in job script:
 
-```sh
+```bash
 #SBATCH --gres=gpu:1
 ```
 
 To request a specific card type, use eg. `--gres=gpu:v100:1`. As an example, let's submit an Amber job. Amber is a molecular dynamics software package. The recipe is:
 
 ```sh
-mkdir -p /scratch/$USER/myambertest
-cd /scratch/$USER/myambertest
-cp /share/apps/Tutorials/slurm/example/amberGPU/* .
-sbatch run-amber.s
+[NetID@log-1 ~]$ mkdir -p /scratch/$USER/myambertest
+[NetID@log-1 ~]$ cd /scratch/$USER/myambertest
+[NetID@log-1 ~]$ cp /share/apps/Tutorials/slurm/example/amberGPU/* .
+[NetID@log-1 ~]$ sbatch run-amber.s
 ```
 
 There are three NVIDIA GPU types and one AMD GPU type that can be used.
@@ -441,30 +441,40 @@ AMD GPUs require code to be compatible with ROCM drivers, not CUDA
 **To request NVIDIA GPUs**
 
 -   RTX8000
-```sh
+```bash
 #SBATCH --gres=gpu:rtx8000:1
 ```
 
 -   V100 
-```sh
+```bash
 #SBATCH --gres=gpu:v100:1
 ```
 
 -   A100
-```sh
+```bash
 #SBATCH --gres=gpu:a100:1
+```
+
+-   H100
+```bash
+#SBATCH --gres=gpu:h100:1
 ```
 
 **To request AMD GPUs**
 
--   MI50
-```sh
-#SBATCH --gres=gpu:mi50:1
+-   MI100
+```bash
+#SBATCH --gres=gpu:mi100:1
+```
+
+-   MI250
+```bash
+#SBATCH --gres=gpu:mi250:1
 ```
 
 From the tutorial example directory we copy over Amber input data files "inpcrd", "prmtop" and "mdin", and the job script file "run-amber.s". The content of the job script "run-amber.s" is:
 
-```sh
+```bash
 #!/bin/bash
 #
 #SBATCH --job-name=myAmberJobGPU
@@ -542,14 +552,20 @@ There is no partition on the HPC cluster that has been reserved for Interactive 
 When you start an interactive batch job the command prompt is not immediately returned. Instead, you wait until the resource is available when the prompt is returned and you are on a compute node and in a batch job - much like the process of logging in to a host with ssh. **To end the session, type 'exit'**, again just like the process of logging in and out with ssh.
 
 ```sh
-[wd35@log-0 ~]$ srun --pty /bin/bash
+[NetID@log-1 ~]$ srun --pty /bin/bash
 srun: job 58699789 queued and waiting for resources
 srun: job 58699789 has been allocated resources
-[wd35@c17-01 ~]$ hostname
-c17-01
+[NetID@cm034 ~]$ hostname
+cm034.hpc.nyu.edu
 ```
 
-To use any GUI-based program within the interactive batch session you will need to extend X forwarding with the --x11 option. This of course still relies on you having X forwarding at your login session - try running 'xterm' before starting the interactive to verify that this is working correctly.  Please see [SSH Tunneling and X11 Forwarding](../02_connecting_to_hpc/02_ssh_tunneling_and_x11_forwarding.md) for details.
+To use any GUI-based program within the interactive batch session you will need to extend X forwarding with the --x11 option. This of course still relies on you having X forwarding at your login session.  To test if you have X forwarding running, you can try running the gnuplot test as shown:
+```sh
+[NetID@log-1 ~]$ module load gnuplot/gcc/5.4.1
+[NetID@log-1 ~]$ gnuplot
+gnuplot> test
+```
+If a window opens on your display with a gnuplot test window, you know that Xforwarding is working.  Please see [SSH Tunneling and X11 Forwarding](../02_connecting_to_hpc/02_ssh_tunneling_and_x11_forwarding.md) for details.
 
 ### Request Resources
 
@@ -558,7 +574,7 @@ You can request resources for an interactive batch session just as you would for
 If you do not request resources you will get the default settings. If after some directory navigation in your interactive session, you can jump back to the directory you submitted from with:
 
 ```sh
-cd $SLURM_SUBMIT_DIR
+[NetID@cm034 ~]$ cd $SLURM_SUBMIT_DIR
 ```
 
 ### Interactive Job Options
@@ -594,19 +610,19 @@ Through `srun` SLURM provides rich command line options for users to request res
 In the srun examples below, through `--pty /bin/bash` we request to start bash command shell session in pseudo terminal by default the resource allocated is single CPU core and 2GB memory for 1 hour: 
 
 ```sh
-srun --pty /bin/bash
+[NetID@log-1 ~]$ srun --pty /bin/bash
 ```
 
 To request 4 CPU cores, 4 GB memory, and 2 hour running duration:
 
 ```sh
-srun -c4 -t2:00:00 --mem=4000 --pty /bin/bash
+[NetID@log-1 ~]$ srun -c4 -t2:00:00 --mem=4000 --pty /bin/bash
 ```
 
 To request one GPU card, 3 GB memory, and 1.5 hour running duration:
 
 ```sh
-srun -t1:30:00 --mem=3000 --gres=gpu:1 --pty /bin/bash
+[NetID@log-1 ~]$ srun -t1:30:00 --mem=3000 --gres=gpu:1 --pty /bin/bash
 ```
 
 **Example (x11 forwarding)**
@@ -616,14 +632,16 @@ In srun there is an option "–x11", which enables X forwarding, so programs usi
 To request computing resources, and export x11 display on allocated node(s)
 
 ```sh
-srun --x11 -c4 -t2:00:00 --mem=4000 --pty /bin/bash
-xterm  # check if xterm popping up okay
+[NetID@log-1 ~]$ srun --x11 -c4 -t2:00:00 --mem=4000 --pty /bin/bash
+[NetID@cm034 ~]$ module load gnuplot/gcc/5.4.1
+[NetID@cm034 ~]$ gnuplot
+gnuplot> test
 ```
 
 To request GPU card etc, and export x11 display:
 
 ```sh
-srun --x11 -t1:30:00 --mem=3000 --gres=gpu:1 --pty /bin/bash
+[NetID@log-1 ~]$ srun --x11 -t1:30:00 --mem=3000 --gres=gpu:1 --pty /bin/bash
 ```
 
 ### R interactive job
@@ -632,17 +650,17 @@ The following example shows how to work with Interactive R session on a compute 
 
 ```sh
 [NetID@log-1 ~]$ srun -c 1 --pty /bin/bash
-[NetID@c17-01 ~]$ module purge
-[NetID@c17-01 ~]$ module list
+[NetID@cm034 ~]$ module purge
+[NetID@cm034 ~]$ module list
 
 No modules loaded
-[NetID@c17-01 ~]$ module load r/gcc/4.4.0
-[NetID@c17-01 ~]$ module list
+[NetID@cm034 ~]$ module load r/gcc/4.4.0
+[NetID@cm034 ~]$ module list
 
 Currently Loaded Modules:
   1) r/intel/4.4.0
 
-[NetID@c17-01 ~]$ R
+[NetID@cm034 ~]$ R
 R version 4.4.0 (2024-04-24) -- "Puppy Cup"
 Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
@@ -667,7 +685,7 @@ Type 'q()' to quit R.
 >
 > q()
 Save workspace image? [y/n/c]: n
-[NetID@c17-01 ~]$ exit
+[NetID@cm034 ~]$ exit
 exit
 [NetID@log-1 ~]$
 ```
