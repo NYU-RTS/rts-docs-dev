@@ -3,12 +3,12 @@
 ## What is Conda?
 Package, dependency and environment management for any language—Python, R, Ruby, Lua, Scala, Java, JavaScript, C/ C++, FORTRAN, and more.
 
-Please find more information at this link: [https://docs.conda.io/en/latest/](https://docs.conda.io/en/latest/)
+Please find more information at [the official documentation page](https://docs.conda.io/en/latest/)
 
 Conda provides a great way to install packages that are already compiled, so you don't need to go over the long compilation process. If a package you need is not available, you can install it (and compile it when needed) using pip (Python) or install.packages (R).
 
-:::note
-Reproducibility:
+:::tip
+**Reproducibility**:
 One of the ways to ensure the reproducibility of your results is to have an independent conda environment in the directory of each project (one of the options shown below). This will also keep conda environment files away from your /home/$USER directory.
 :::
 
@@ -16,7 +16,10 @@ One of the ways to ensure the reproducibility of your results is to have an inde
 ### Advantages
 
 -   A lot of pre-compiled packages (fast and easy to install)
--   Note for Python: pip also offers pre-compiled packages (wheels). List can be found here https://pythonwheels.com. However, Conda has a significantly larger number of pre-compiled packages.
+:::note
+**For Python:** pip also offers pre-compiled packages (wheels). List can be found on [Python Wheels](https://pythonwheels.com). 
+However, Conda has a significantly larger number of pre-compiled packages.
+:::
 -   Compiled packages use highly efficient Intel Math Kernel Library (MKL) library
 
 ### Disadvantages
@@ -28,27 +31,27 @@ One of the ways to ensure the reproducibility of your results is to have an inde
 Load anaconda module
 ```sh
 module purge
-module load anaconda3/2020.07
+module load anaconda3/2024.02
 ```
 
 Conda init can create problems with package installation, so we suggest using `source activate` instead of `conda activate`, even though conda activate is considered a best practice by the Anaconda developers.
 
 ### Automatic deletion of your files
-This page describes the installation of packages on /scratch. One has to remember, though, that files stored in the HPC scratch file system are subject to the HPC Scratch old file purging policy: Files on the /scratch file system that have not been accessed for 60 or more days will be purged (read more about [Data Management](../03_storage/01_intro_and_data_management.mdx).
+This page describes the installation of packages on `/scratch`. One has to remember, though, that files stored in the HPC scratch file system are subject to the HPC Scratch old file purging policy: Files on the `/scratch` file system that have not been accessed for 60 or more days will be purged (read more this in [Data Management](../03_storage/01_intro_and_data_management.mdx)).
 
 Thus you can consider the following options
 
 -   Reinstall your packages if some of the files get deleted
     -   You can do this manually 
     -   You can do this automatically. For example, within a workflow of a pipeline software like [Nextflow](https://www.nextflow.io/)
--   Pay for "Research Project Space" - read more [here](../03_storage/05_research_project_space.md)
--   Use Singularity and install packages within a corresponding overlay file - read more [here](../07_containers/03_singularity_with_conda.md)  
+-   Pay for "Research Project Space" - for details see [Research Project Space](../03_storage/05_research_project_space.md)
+-   Use Singularity and install packages within a corresponding overlay file - for details see [Singularity with Conda](../07_containers/03_singularity_with_conda.md)  
 
 ## Python
 Load anaconda module
 ```sh
 module purge
-module load anaconda3/2020.07
+module load anaconda3/2024.02
 ```
 :::tip
 Keep your program/project in `/scratch` and create conda environment using '-p' parameter. This will keep all the files inside the project's directory, instead of putting in in your `/home/$USER`
