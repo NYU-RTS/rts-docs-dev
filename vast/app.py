@@ -6,7 +6,7 @@ from typing import (
     List, Optional
 )
 import urllib3
-import gpfs as gpfs
+import vast as vast
 import os
 
 class Group(BaseModel):
@@ -18,7 +18,7 @@ class GroupMembers(BaseModel):
     users: Optional[list] = None
 
 app = FastAPI()
-gpfs = gpfs.GPFS()
+vast = vast.GPFS()
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
