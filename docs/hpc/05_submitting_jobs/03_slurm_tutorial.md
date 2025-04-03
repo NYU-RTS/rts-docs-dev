@@ -232,15 +232,7 @@ exit
 
 MPI stands for "Message Passing Interface" and is managed by a program, such as OpenMPI, to coordinate code and resources across the HPC cluster for your job to run workloads in parallel. You may have heard of HPC sometimes referred to as "parallel computing" because the ability to run many processes simultaneously - aka in parallel - is how the best efficiencies can be realized on the cluster. Users interested in MPI generally must compile the program they want to run using an MPI compiler. 
 
-Greene supports two common OpenMPI versions, Intel and GCC. These can be loaded as modules:
-
-### Intel's OpenMPI
-
-```sh
-module load openmpi/intel/4.1.1
-```
-
-### GCC's OpenMPI
+Greene supports many MPI compilers. We'll be using the OpenMPI GCC compiler in this tutorial.  It can be loaded as a module:
 
 ```sh
 module load openmpi/gcc/4.1.6
@@ -271,7 +263,7 @@ int main(int argc, char *argv[], char *envp[]) {
 Once copied into your directory, load OpenMPI and compile it with the following:
 
 ```sh
-module load openmpi/intel/4.1.1
+module load openmpi/gcc/4.1.6
 mpicc hellompi.c -o hellompi
 ```
 
