@@ -2,7 +2,8 @@
   display: flex;
   align-items: center;
   width: 100%;
-  padding: calc(var(--ifm-spacing-vertical) * 2) 0;
+  padding: calc(var(--ifm-spacing-vertical) * 2)
+    calc(var(--ifm-spacing-horizontal) * 2);
 }
 
 .featureSvg {
