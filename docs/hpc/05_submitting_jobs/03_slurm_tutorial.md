@@ -20,7 +20,7 @@ The Slurm software system is a resource manager and a job scheduler, which is de
 
 ## Slurm Commands
 
-For an overview of useful Slurm commands, please read [Slurm Main Commands](./03_slurm_main_commands.md) page before continuing the tutorial.
+For an overview of useful Slurm commands, please read [Slurm Main Commands](./02_slurm_main_commands.md) page before continuing the tutorial.
 
 ## Software and Environment Modules
 
