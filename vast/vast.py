@@ -7,7 +7,7 @@ urllib3.disable_warnings()
 
 class RESTFailure(Exception): pass
 
-class VastClient(object):
+class VASTClient(object):
     def __init__(self, user = os.environ['VASTUSER'], password = os.environ['VASTPASS'], cert_file=None, cert_server_name=None):
         self._user = user
         self._password = password
