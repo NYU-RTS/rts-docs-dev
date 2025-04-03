@@ -6,7 +6,7 @@
  * @see https://stylelint.io/user-guide/configure
  */
 const stylelintConfig = {
-  extends: ["stylelint-config-standard"],
+  extends: ["stylelint-config-standard", "stylelint-config-rational-order"],
   overrides: [
     {
       files: ["**/*.module.css"],

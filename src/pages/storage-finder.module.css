@@ -1,0 +1,480 @@
+/** @author Ka Pui (August) Cheung */
+
+/* Hide scroll indicators by default (only show on mobile) */
+.scrollIndicator {
+  display: none;
+}
+
+.mainContent {
+  display: flex;
+  flex-direction: row;
+  gap: calc(var(--ifm-spacing-vertical) * 2);
+  margin-bottom: calc(var(--ifm-spacing-vertical) * 2);
+}
+
+/* Sticky Info Bar */
+.infoBar {
+  position: sticky;
+  top: var(--ifm-navbar-height);
+  z-index: var(--ifm-z-index-fixed);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: var(--ifm-navbar-height);
+  margin-bottom: calc(var(--ifm-spacing-vertical) * 2);
+  padding: var(--ifm-navbar-padding-vertical)
+    var(--ifm-navbar-padding-horizontal);
+  background-color: var(--ifm-color-emphasis-200);
+  border-radius: var(--ifm-global-radius);
+  transition:
+    background-color var(--ifm-transition-fast)
+      var(--ifm-transition-timing-default),
+    border-radius var(--ifm-transition-fast)
+      var(--ifm-transition-timing-default),
+    margin var(--ifm-transition-fast) var(--ifm-transition-timing-default),
+    width var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+}
+
+/* Sticky state styling - will be applied via JS */
+.infoBar.sticky {
+  position: sticky;
+  left: 0;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  background-color: var(--ifm-navbar-background-color);
+  border-bottom: var(--ifm-global-border-width) solid
+    var(--ifm-color-emphasis-300);
+  border-radius: 0;
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+/* Animated title styling */
+.stickyTitle {
+  position: absolute;
+  color: var(--ifm-color-primary);
+  font-weight: var(--ifm-font-weight-bold);
+  font-size: var(--ifm-h3-font-size);
+  transform: translateX(-20px);
+  opacity: 0;
+  transition:
+    opacity var(--ifm-transition-fast) var(--ifm-transition-timing-default),
+    transform var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+  pointer-events: none;
+}
+
+.stickyTitle.visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.serviceStats {
+  display: flex;
+  flex-wrap: nowrap; /* Prevent wrapping */
+  gap: calc(var(--ifm-spacing-horizontal) * 0.75);
+  align-items: center;
+  color: var(--ifm-color-emphasis-700);
+  font-size: calc(var(--ifm-font-size-base) * 0.9);
+  white-space: nowrap; /* Prevent text wrapping */
+  transition: transform var(--ifm-transition-fast)
+    var(--ifm-transition-timing-default);
+}
+
+/* Adjust service stats position when title is visible */
+.infoBar.sticky .serviceStats {
+  transform: translateX(160px); /* Make room for the title */
+}
+
+/* Panel Styles with Fixed Headers */
+.questionPanel,
+.servicesPanel {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  height: 600px; /* Fixed height for both panels */
+}
+
+.questionPanel {
+  flex: 1;
+}
+
+.servicesPanel {
+  flex: 2;
+}
+
+.panelHeader {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ifm-card-vertical-spacing);
+  padding: var(--ifm-card-horizontal-spacing) var(--ifm-card-horizontal-spacing)
+    var(--ifm-card-vertical-spacing) !important;
+  background-color: var(--ifm-card-background-color);
+  border-bottom: var(--ifm-global-border-width) solid
+    var(--ifm-color-emphasis-200);
+}
+
+.panelTitle {
+  margin: 0;
+  font-weight: var(--ifm-font-weight-semibold);
+  line-height: var(--ifm-heading-line-height);
+}
+
+.buttonRow {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+/* Reset scroll properties to defaults for desktop */
+.panelScrollContent {
+  flex: 1;
+  padding-top: calc(var(--ifm-spacing-vertical) * 0.5);
+  overflow-y: auto;
+
+  /* Add scrollbar styling for webkit browsers */
+  &::-webkit-scrollbar {
+    width: var(--ifm-scrollbar-size);
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--ifm-scrollbar-track-background-color);
+    border-radius: var(--ifm-global-radius); /* or 10px */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--ifm-scrollbar-thumb-background-color);
+    border-radius: var(--ifm-global-radius); /* or 10px */
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--ifm-scrollbar-thumb-hover-background-color);
+  }
+}
+
+.facet {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: calc(var(--ifm-spacing-vertical) * 1.5);
+}
+
+.facet:last-child {
+  margin-bottom: 0;
+}
+
+.facetTitle {
+  margin-bottom: calc(var(--ifm-spacing-vertical) * 0.5);
+  font-weight: var(--ifm-font-weight-semibold);
+  line-height: var(--ifm-heading-line-height);
+}
+
+.facetNumber {
+  display: inline;
+  margin-right: calc(var(--ifm-spacing-horizontal) * 0.5);
+  color: var(--ifm-color-primary);
+  font-weight: var(--ifm-font-weight-bold);
+}
+
+.choicesList {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--ifm-spacing-vertical) * 0.5);
+  padding-left: var(--ifm-spacing-horizontal);
+}
+
+/* Filter options for non-matching services */
+.filterOptions {
+  display: flex;
+  flex-direction: row;
+  gap: var(--ifm-spacing-horizontal);
+  align-items: center;
+}
+
+.filterSelect {
+  width: 200px;
+  padding: calc(var(--ifm-spacing-vertical) * 0.5)
+    calc(var(--ifm-spacing-horizontal) * 0.5);
+  font-size: calc(var(--ifm-font-size-base) * 0.9);
+  background-color: var(--ifm-background-color);
+  border: var(--ifm-global-border-width) solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-global-radius);
+}
+
+/* Service Panel Header */
+.servicesPanelHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ifm-spacing-vertical);
+  width: 100%;
+}
+
+.serviceActionButtons {
+  display: flex;
+  gap: var(--ifm-spacing-horizontal);
+}
+
+/* Service Grid */
+.serviceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--ifm-global-spacing);
+}
+
+.serviceButton {
+  position: relative;
+  display: flex;
+  padding: var(--ifm-global-spacing);
+  color: var(--ifm-color-primary-dark);
+  font-weight: var(--ifm-font-weight-semibold);
+  font-size: var(--ifm-font-size-base);
+  text-align: left;
+  background-color: color-mix(
+    in srgb,
+    var(--ifm-color-primary) 5%,
+    transparent
+  );
+  border: var(--ifm-global-border-width) solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-global-radius);
+  cursor: pointer;
+  transition: all var(--ifm-transition-fast)
+    var(--ifm-transition-timing-default);
+}
+
+.serviceButton:hover:not(.disabled) {
+  border-color: var(--ifm-color-primary);
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+.serviceButton.selected {
+  color: var(--ifm-color-white);
+  background-color: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary-dark);
+}
+
+.serviceButton.disabled {
+  color: var(--ifm-color-emphasis-600);
+  background-color: var(--ifm-color-emphasis-200);
+  border-color: var(--ifm-color-emphasis-300);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.serviceButton.nonMatching {
+  color: var(--ifm-color-danger);
+  background-color: color-mix(
+    in srgb,
+    var(--ifm-color-danger) 10%,
+    transparent
+  );
+  border-color: var(--ifm-color-emphasis-300);
+}
+
+.serviceButton.nonMatching:hover {
+  background-color: color-mix(
+    in srgb,
+    var(--ifm-color-danger) 15%,
+    transparent
+  );
+  border-color: var(--ifm-color-danger);
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+.serviceButton.nonMatching.selected {
+  color: var(--ifm-color-white);
+  background-color: var(--ifm-color-danger);
+  border-color: var(--ifm-color-danger-dark);
+}
+
+/* Dark mode styling for non-matching service buttons */
+html[data-theme="dark"] .serviceButton.nonMatching {
+  color: var(--ifm-color-danger-lighter);
+}
+
+html[data-theme="dark"] .serviceButton.nonMatching:hover {
+  border-color: var(--ifm-color-danger-lighter);
+}
+
+html[data-theme="dark"] .serviceButton.nonMatching.selected {
+  color: var(--ifm-color-white);
+  border-color: var(--ifm-color-danger);
+}
+
+/* Checkmark and other indicators */
+.serviceButton .checkmark {
+  position: absolute;
+  top: 50%;
+  right: var(--ifm-spacing-horizontal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: var(--ifm-color-primary);
+  font-weight: var(--ifm-font-weight-bold);
+  background-color: var(--ifm-color-white);
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+
+.serviceButton.nonMatching.selected .checkmark {
+  color: var(--ifm-color-danger);
+}
+
+.noServicesSelected {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--ifm-spacing-vertical) * 3) var(--ifm-spacing-horizontal);
+  color: var(--ifm-color-emphasis-600);
+}
+
+.comparisonTableWrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.comparisonTable {
+  width: 100%;
+  table-layout: fixed;
+}
+
+/* Remove bottom margin from paragraphs in storage finder */
+/* stylelint-disable-next-line selector-pseudo-class-no-unknown, selector-class-pattern */
+:global(.remove-p-margin-bottom) p {
+  margin-bottom: 0;
+}
+
+.attributeColumn {
+  width: 180px;
+  min-width: 180px; /* Ensure minimum width */
+}
+
+.attributeName {
+  font-weight: var(--ifm-font-weight-semibold);
+}
+
+/* Service column sizing logic */
+.serviceColumn {
+  width: auto; /* Let the browser distribute width for multiple columns */
+  min-width: 250px; /* Minimum width for multiple service columns */
+}
+
+/* Special case for a single service column */
+.singleServiceColumn {
+  width: 100%; /* When there's only one service column, let it expand */
+}
+
+/* Responsive adjustments */
+@media (width > 768px) {
+  .panelScrollContent {
+    padding-bottom: var(--ifm-card-vertical-spacing) !important;
+  }
+}
+
+@media (width <= 768px) {
+  /* Hide info bar on mobile */
+  .infoBar {
+    display: none;
+  }
+
+  /* Change main content layout */
+  .mainContent {
+    flex-direction: column;
+    gap: calc(var(--ifm-spacing-vertical) * 1.5);
+  }
+
+  /* Adjust panel heights for mobile */
+  .questionPanel,
+  .servicesPanel {
+    height: auto; /* Auto height instead of fixed */
+    min-height: 300px; /* Minimum height on mobile */
+  }
+
+  /* Panel content horizontal scrolling with snap */
+  .panelScrollContent {
+    padding: var(--ifm-spacing-vertical)
+      calc(var(--ifm-spacing-horizontal) * 0.5);
+    padding-bottom: calc(var(--ifm-spacing-vertical) * 1.5);
+    overflow: auto hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scroll-snap-type: x proximity; /* Changed from mandatory to proximity */
+  }
+
+  /* Questions horizontal layout */
+  .questionPanel .panelScrollContent {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: var(--ifm-spacing-vertical);
+  }
+
+  /* Only apply scroll snap to middle elements, not first or last */
+  .panelScrollContent .facet {
+    min-width: 280px;
+    margin-right: calc(var(--ifm-spacing-horizontal) * 1.5);
+    margin-bottom: 0;
+  }
+
+  .panelScrollContent .facet:not(:first-child, :last-child) {
+    scroll-snap-align: center;
+  }
+
+  /* Mobile service grid - 5 services per column with horizontal scrolling */
+  .serviceGrid {
+    display: flex;
+    flex-flow: column wrap;
+    gap: calc(var(--ifm-global-spacing) * 0.75);
+    width: max-content;
+    max-height: 450px; /* Adjusted to fit exactly 5 items */
+  }
+
+  /* Service buttons for mobile */
+  .serviceButton {
+    flex: 0 0 auto;
+    width: 200px;
+    min-width: 200px;
+    height: 70px; /* Adjusted height for 5 items */
+    margin-bottom: 0;
+  }
+
+  /* Mobile scroll indicators */
+  .scrollIndicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: calc(var(--ifm-spacing-vertical) * 0.5);
+    padding: calc(var(--ifm-spacing-vertical) * 0.5)
+      calc(var(--ifm-spacing-horizontal) * 0.5);
+    color: var(--ifm-color-emphasis-600);
+    font-size: calc(var(--ifm-font-size-base) * 0.8);
+    text-align: center;
+  }
+}
+
+/* Common styles for scroll indicator SVGs */
+.scrollIndicator svg,
+.tableScrollIndicator svg {
+  width: 16px;
+  height: 16px;
+  margin: 0 calc(var(--ifm-spacing-horizontal) * 0.25);
+}
+
+/* Comparison Table Section */
+.comparisonTableSection {
+  scroll-margin-top: calc(
+    var(--ifm-navbar-height) + var(--ifm-spacing-vertical)
+  );
+}
+
+/* Table scroll indicator - always visible */
+.tableScrollIndicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--ifm-spacing-vertical) * 0.5) 0;
+  color: var(--ifm-color-emphasis-600);
+  font-size: calc(var(--ifm-font-size-base) * 0.85);
+  text-align: center;
+}

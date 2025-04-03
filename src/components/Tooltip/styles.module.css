@@ -1,0 +1,69 @@
+/** @author Ka Pui (August) Cheung */
+
+.tooltipContent {
+  z-index: var(--ifm-z-index-overlay);
+  max-width: 350px;
+  padding: calc(var(--ifm-spacing-vertical) * 0.5)
+    calc(var(--ifm-spacing-horizontal) * 0.75);
+  color: var(--ifm-color-white);
+  font-size: var(--ifm-font-size-base);
+  line-height: calc(var(--ifm-line-height-base) * 0.9);
+  background-color: var(--ifm-color-emphasis-900);
+  border-radius: var(--ifm-global-radius);
+  box-shadow: var(--ifm-global-shadow-md);
+  animation-duration: var(--ifm-transition-fast);
+  animation-timing-function: var(--ifm-transition-timing-default);
+  animation-fill-mode: forwards;
+  user-select: none;
+}
+
+.tooltipContent[data-state="delayed-open"] {
+  animation-name: fade-in;
+}
+
+.tooltipContent[data-side="top"] {
+  transform-origin: bottom;
+}
+
+.tooltipContent[data-side="bottom"] {
+  transform-origin: top;
+}
+
+.tooltipContent[data-side="left"] {
+  transform-origin: right;
+}
+
+.tooltipContent[data-side="right"] {
+  transform-origin: left;
+}
+
+.tooltipArrow {
+  fill: var(--ifm-color-emphasis-900);
+}
+
+/* Dark mode */
+html[data-theme="dark"] .tooltipContent {
+  color: var(--ifm-color-black);
+  background-color: var(--ifm-color-white);
+}
+
+html[data-theme="dark"] .tooltipArrow {
+  fill: var(--ifm-color-white);
+}
+
+@keyframes fade-in {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.tooltipDisabledTarget > * {
+  width: 100%;
+  height: 100%;
+}

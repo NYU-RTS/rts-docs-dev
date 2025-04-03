@@ -1,0 +1,120 @@
+/** @author Ka Pui (August) Cheung */
+
+.selectableButtonLabel {
+  position: relative;
+  display: flex;
+  gap: calc(var(--ifm-spacing-horizontal) * 0.5);
+  align-items: center;
+  cursor: pointer;
+}
+
+/* Hide the actual input */
+.selectableButtonInput {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+}
+
+/* Custom control container (both checkbox and radio) */
+.customControl {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background-color: var(--ifm-background-surface-color);
+  border: calc(var(--ifm-global-border-width) * 1.5) solid
+    var(--ifm-color-emphasis-500);
+  border-radius: var(--ifm-global-radius);
+  transition: all var(--ifm-transition-fast)
+    var(--ifm-transition-timing-default);
+}
+
+/* Radio variant */
+.radio {
+  border-radius: 50%;
+}
+
+/* Checked state styling for both */
+.selectableButtonInput:checked ~ .customControl {
+  background-color: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary);
+}
+
+/* Checkmark icon */
+.checkbox::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: 9px;
+  height: 5px;
+  border: solid var(--ifm-color-white);
+  border-width: 0 0 2px 2px;
+  transform: translate(-50%, -70%) rotate(-45deg);
+  opacity: 0;
+  content: "";
+}
+
+/* Radio dot */
+.radio::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background-color: var(--ifm-color-white);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition: all var(--ifm-transition-fast)
+    var(--ifm-transition-timing-default);
+  content: "";
+}
+
+/* Show indicators when checked */
+.selectableButtonInput:checked ~ .checkbox::after,
+.selectableButtonInput:checked ~ .radio::after {
+  opacity: 1;
+}
+
+/* Special animation for radio button */
+.selectableButtonInput:checked ~ .radio::after {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Dark mode specific styles */
+html[data-theme="dark"] .selectableButtonInput:checked ~ .checkbox::after {
+  border-color: var(--ifm-color-black);
+}
+
+html[data-theme="dark"] .selectableButtonInput:checked ~ .radio::after {
+  background-color: var(--ifm-color-black);
+}
+
+/* Hover and focus styles */
+.selectableButtonInput:hover ~ .customControl,
+.selectableButtonInput:focus ~ .customControl {
+  border-color: var(--ifm-color-primary);
+}
+
+/* Disabled state */
+.selectableButtonLabel.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.selectableButtonInput:disabled ~ .customControl {
+  background-color: var(--ifm-color-emphasis-200);
+  border-color: var(--ifm-color-emphasis-300);
+}
+
+/* Text styling */
+.selectableButtonText {
+  font-size: var(--ifm-font-size-base);
+  line-height: calc(var(--ifm-line-height-base) * 0.8);
+}
