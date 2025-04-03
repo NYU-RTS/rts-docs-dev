@@ -5,14 +5,15 @@
 
 .heroBanner {
   position: relative;
-  padding: 4rem 0;
+  padding: calc(var(--ifm-spacing-vertical) * 4) 0;
   overflow: hidden;
   text-align: center;
 }
 
 @media screen and (width <= 996px) {
   .heroBanner {
-    padding: 2rem;
+    padding: calc(var(--ifm-spacing-vertical) * 2)
+      calc(var(--ifm-spacing-horizontal) * 2);
   }
 }
 
