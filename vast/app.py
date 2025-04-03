@@ -40,7 +40,7 @@ def index():
 @app.get('/vast_user_quota/{user_id}')
 def vast_get_user_quota(user_id):
     try:
-        quota = vast.get_user_quota(user_id, os.environ('BASE_URL')+'userquotas/')
+        quota = vast.get_user_quota(user_id, os.environ('VASTSERVER')+'/api/userquotas/')
     except Exception as err:
         logging.error(f'Error reading user quota {user_id}: {err}')
     return {'data': quota }
@@ -48,7 +48,7 @@ def vast_get_user_quota(user_id):
 @app.get('/vast_user_quotas')
 def vast_get_all_user_quotas():
     try:
-        quotas = vast.get_user_quotas(os.environ('BASE_URL')+'userquotas/')
+        quotas = vast.get_user_quotas(os.environ('VASTSERVER')+'/api/userquotas/')
     except Exception as err:
        logging.error(f'Error reading all vast user quotas: {err}')
     return {'data': quotas }
