@@ -18,7 +18,7 @@ class GroupMembers(BaseModel):
     users: Optional[list] = None
 
 app = FastAPI()
-vast = vast.GPFS()
+vast = vast.vast()
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
