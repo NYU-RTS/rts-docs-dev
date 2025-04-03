@@ -37,12 +37,12 @@ def index():
 def index():
     return {'data': 'FastAPI is easy!'}
 
-@app.get('/vast_user_quota/{user_id}')
-def vast_get_user_quota(user_id):
+@app.get('/vast_user_quota/{username}')
+def vast_get_user_quota(username):
     try:
-        quota = vast.get_user_quota(user_id, os.environ('VASTSERVER')+'/api/userquotas/')
+        quota = vast.get_user_quota(username, os.environ('VASTSERVER')+'/api/userquotas/')
     except Exception as err:
-        logging.error(f'Error reading user quota {user_id}: {err}')
+        logging.error(f'Error reading user quota {username}: {err}')
     return {'data': quota }
 
 @app.get('/vast_user_quotas')
