@@ -29,29 +29,23 @@ class VASTClient(object):
     def get(self, url, params=None):
         return self._request('GET', url, params)
 
-def vast_user_quota(id, url):
-    client = VASTClient()
-    client_response = client.get(url)
-    while True:
-        for quota in client_response['results']:
-            if quota['entity']['name'] == id:
-                return quota
-        if client_response['next']:
-            client_response = client.get(client_response['next'])
-        else:
-            return "{'error':'username not found'}"
+    def vast_user_quota(self, id, url):
+        client_response = self.get(url)
+        while True:
+            for quota in client_response['results']:
+                if quota['entity']['name'] == id:
+                    return quota
+            if client_response['next']:
+                client_response = self.get(client_response['next'])
+            else:
+                return "{'error':'username not found'}"
 
-def vast_user_quotas(url):
-    output_list = []
-    client = VASTClient()
-    client_response = client.get(url)
-    output_list.append(client_response['results'])
-    while True:
-        if not client_response['next']:
-            return output_list
-        client_response = client.get(client_response['next'])
-        output_list.append(client_response)
-
-# userquota_url = 'https://vast.hpc.nyu.edu/api/userquotas/'
-# print(vast_user_quotas(userquota_url))
-# print(vast_user_quota('rjy1', userquota_url))
+    def vast_user_quotas(self, url):
+        output_list = []
+        client_response = self.get(url)
+        output_list.append(client_response['results'])
+        while True:
+            if not client_response['next']:
+                return output_list
+            client_response = self.get(client_response['next'])
+            output_list.append(client_response)
