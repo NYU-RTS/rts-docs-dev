@@ -1,4 +1,4 @@
-# Slurm - Submitting Jobs
+# Slurm: Submitting Jobs
 
 
 ## Batch vs Interactive Jobs

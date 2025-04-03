@@ -1,4 +1,4 @@
-# Slurm Tutorial
+# Slurm: Tutorial
 
 ## Introduction to High Performance Computing Clusters
 
