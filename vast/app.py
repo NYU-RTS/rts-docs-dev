@@ -41,17 +41,17 @@ def index():
 def vast_get_user_quota(username):
     try:
         quota = vast.get_user_quota(username, os.environ('VASTSERVER')+'/api/userquotas/')
+        return {'data': quota }
     except Exception as err:
         logging.error(f'Error reading user quota {username}: {err}')
-    return {'data': quota }
 
 @app.get('/vast_user_quotas')
 def vast_get_all_user_quotas():
     try:
         quotas = vast.get_user_quotas(os.environ('VASTSERVER')+'/api/userquotas/')
+        return {'data': quotas }
     except Exception as err:
        logging.error(f'Error reading all vast user quotas: {err}')
-    return {'data': quotas }
 
 if __name__ == "__main__":
     uvicorn.run(app, host='0.0.0.0', port=8080)

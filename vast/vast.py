@@ -29,7 +29,7 @@ class VASTClient(object):
     def get(self, url, params=None):
         return self._request('GET', url, params)
 
-    def vast_user_quota(self, id, url):
+    def get_user_quota(self, id, url):
         client_response = self.get(url)
         while True:
             for quota in client_response['results']:
@@ -40,7 +40,7 @@ class VASTClient(object):
             else:
                 return "{'error':'username not found'}"
 
-    def vast_user_quotas(self, url):
+    def get_user_quotas(self, url):
         output_list = []
         client_response = self.get(url)
         output_list.append(client_response['results'])
