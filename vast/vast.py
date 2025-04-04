@@ -74,7 +74,7 @@ class VASTClient(object):
             client_response = self.get(client_response['next'])
             output_list.append(client_response)
 
-userquota_url = 'https://vast.hpc.nyu.edu/api/userquotas/'
-vast = VASTClient()
-print(vast.get_user_quota('rjy1', userquota_url))
+# userquota_url = 'https://vast.hpc.nyu.edu/api/userquotas/'
+# vast = VASTClient()
+# print(vast.get_user_quota('rjy1', userquota_url))
 # print(vast.get_user_quotas(userquota_url))
