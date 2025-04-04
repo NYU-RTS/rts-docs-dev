@@ -40,7 +40,7 @@ class VASTClient(object):
         }
         # print(f"auth_data: {auth_data}")
         encoded_auth_data = json.dumps(auth_data).encode('utf-8')
-        token_url = f'{os.environ["VASTSERVER"]}api/token/'
+        token_url = f'{os.environ["VASTSERVER"]}/api/token/'
         # print(f'token_url: {token_url}')
         pm = urllib3.PoolManager(cert_reqs='CERT_NONE')
         r = pm.request('POST', token_url, headers=headers, body=encoded_auth_data, fields=None)
