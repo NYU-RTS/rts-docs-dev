@@ -40,7 +40,7 @@ class VASTClient(object):
         }
         # print(f"auth_data: {auth_data}")
         encoded_auth_data = json.dumps(auth_data).encode('utf-8')
-        token_url = f'{os.environ["VASTSERVER"]}api/token/'
+        token_url = f'{os.environ["VASTSERVER"]}/api/token/'
         # print(f'token_url: {token_url}')
         pm = urllib3.PoolManager(cert_reqs='CERT_NONE')
         r = pm.request('POST', token_url, headers=headers, body=encoded_auth_data, fields=None)
@@ -74,7 +74,7 @@ class VASTClient(object):
             client_response = self.get(client_response['next'])
             output_list.append(client_response)
 
-# userquota_url = 'https://vast.hpc.nyu.edu/api/userquotas/'
-# vast = VASTClient()
-# print(vast.get_user_quota('rjy1', userquota_url))
+userquota_url = 'https://vast.hpc.nyu.edu/api/userquotas/'
+vast = VASTClient()
+print(vast.get_user_quota('rjy1', userquota_url))
 # print(vast.get_user_quotas(userquota_url))
