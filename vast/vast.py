@@ -19,12 +19,36 @@ class VASTClient(object):
             pm = urllib3.PoolManager(ca_certs=self._cert_file, server_hostname=self._cert_server_name)
         else:
             pm = urllib3.PoolManager(cert_reqs='CERT_NONE')
-        headers = urllib3.make_headers(basic_auth=self._user + ':' + self._password)
+        # headers = urllib3.make_headers(basic_auth=f'{self._user}:{self._password}')
+        token = self.get_cert()
+        # print(f'token: {token}')
+        # headers = {'Authorization': f"Bearer {os.environ['VASTTOKEN']}"}
+        headers = {'Authorization': f"Bearer {token}"}
         r = pm.request(method, url, headers=headers, fields=params)
         if r.status != http.HTTPStatus.OK:
             raise RESTFailure(f'Response for request {url} with {params} failed with error {r.status} and message {r.data}')
 
         return json.loads(r.data.decode('utf-8'))
+
+    def get_cert(self):
+        auth_data = {
+            'username': os.environ['VASTUSER'],
+            'password': os.environ['VASTPASS']
+        }
+        headers = {
+            'content-type': 'application/json'
+        }
+        # print(f"auth_data: {auth_data}")
+        encoded_auth_data = json.dumps(auth_data).encode('utf-8')
+        token_url = f'{os.environ["VASTSERVER"]}api/token/'
+        # print(f'token_url: {token_url}')
+        pm = urllib3.PoolManager(cert_reqs='CERT_NONE')
+        r = pm.request('POST', token_url, headers=headers, body=encoded_auth_data, fields=None)
+        if r.status != http.HTTPStatus.OK:
+            raise RESTFailure(f'Response for request {token_url} failed with error {r.status} and message {r.data}')
+        token = json.loads(r.data.decode('utf-8'))['access']
+        # print('get_cert: {token}')
+        return token
 
     def get(self, url, params=None):
         return self._request('GET', url, params)
@@ -49,3 +73,8 @@ class VASTClient(object):
                 return output_list
             client_response = self.get(client_response['next'])
             output_list.append(client_response)
+
+# userquota_url = 'https://vast.hpc.nyu.edu/api/userquotas/'
+# vast = VASTClient()
+# print(vast.get_user_quota('rjy1', userquota_url))
+# print(vast.get_user_quotas(userquota_url))
