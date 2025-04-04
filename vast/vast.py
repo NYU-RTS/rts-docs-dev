@@ -19,7 +19,7 @@ class VASTClient(object):
             pm = urllib3.PoolManager(ca_certs=self._cert_file, server_hostname=self._cert_server_name)
         else:
             pm = urllib3.PoolManager(cert_reqs='CERT_NONE')
-        headers = urllib3.make_headers(basic_auth=self._user + ':' + self._password)
+        headers = urllib3.make_headers(basic_auth=f'{self._user}:{self._password}')
         r = pm.request(method, url, headers=headers, fields=params)
         if r.status != http.HTTPStatus.OK:
             raise RESTFailure(f'Response for request {url} with {params} failed with error {r.status} and message {r.data}')
@@ -49,3 +49,7 @@ class VASTClient(object):
                 return output_list
             client_response = self.get(client_response['next'])
             output_list.append(client_response)
+
+# userquota_url = 'https://vast.hpc.nyu.edu/api/userquotas/'
+# vast = VASTClient()
+# print(vast.get_user_quota('rjy1', userquota_url))
