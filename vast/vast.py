@@ -2,6 +2,7 @@ import urllib3
 import http
 import json
 import os
+import redis
 
 urllib3.disable_warnings()
 
@@ -53,7 +54,7 @@ class VASTClient(object):
     def get(self, url, params=None):
         return self._request('GET', url, params)
 
-    def get_user_quota(self, id, url):
+    def get_user_quota_old(self, id, url):
         client_response = self.get(url)
         while True:
             for quota in client_response['results']:
@@ -64,7 +65,15 @@ class VASTClient(object):
             else:
                 return "{'error':'username not found'}"
 
-    def get_user_quotas(self, url):
+    def get_user_quota(self, username):
+        r = redis.Redis(host=os.environ['REDISSERVER'], port=6379, db=0)
+        quota_data = r.get(username)
+        if quota_data:
+            return json.loads(quota_data)
+        else:
+            return "{'error':'username not found'}"
+
+    def get_user_quotas_old(self, url):
         output_list = []
         client_response = self.get(url)
         output_list.append(client_response['results'])
@@ -74,7 +83,35 @@ class VASTClient(object):
             client_response = self.get(client_response['next'])
             output_list.append(client_response)
 
-# userquota_url = 'https://vast.hpc.nyu.edu/api/userquotas/'
-# vast = VASTClient()
-# print(vast.get_user_quota('rjy1', userquota_url))
-# print(vast.get_user_quotas(userquota_url))
+    def get_user_quotas(self):
+        quota_list = []
+        r = redis.Redis(host=os.environ['REDISSERVER'], port=6379, db=0)
+        for key in r.scan_iter():
+            quota_list.append(r.get(key.decode('utf-8')))
+        return quota_list
+
+    def parse_load_block(self, json_block):
+        r = redis.Redis(host=os.environ['REDISSERVER'], port=6379, db=0)
+        for entry in json_block:
+            redis_key = entry['entity']['name']
+            if redis_key:
+                redis_data = json.dumps(entry)
+                r.set(redis_key, redis_data)
+
+    def load_user_quotas_redis(self, url):
+        client_response = self.get(url)
+        self.parse_load_block(client_response['results'])
+        while True:
+            if not client_response['next']:
+                return
+            client_response = self.get(client_response['next'])
+            self.parse_load_block(client_response['results'])
+
+
+
+userquota_url = 'https://vast.hpc.nyu.edu/api/userquotas/'
+vast = VASTClient()
+
+# vast.load_user_quotas_redis(userquota_url)
+# print(vast.get_user_quota('rjy1'))
+print(vast.get_user_quotas())
