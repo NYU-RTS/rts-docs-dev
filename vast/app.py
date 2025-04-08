@@ -41,7 +41,7 @@ def index():
 def vast_get_user_quota(username, background_tasks: BackgroundTasks):
     try:
         quota = vast.get_user_quota(username)
-        background_tasks.add_task(vast.load_user_quotas_redis(os.environ['VASTSERVER']+'/api/userquotas/'))
+        background_tasks.add_task(vast.load_user_quotas_redis, os.environ['VASTSERVER']+'/api/userquotas/')
         return {'data': quota }
     except Exception as err:
         logging.error(f'Error reading user quota {username}: {err}')
