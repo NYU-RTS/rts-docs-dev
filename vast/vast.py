@@ -3,6 +3,7 @@ import http
 import json
 import os
 import redis
+import datetime
 
 urllib3.disable_warnings()
 
@@ -88,30 +89,40 @@ class VASTClient(object):
         r = redis.Redis(host=os.environ['REDISSERVER'], port=6379, db=0)
         for key in r.scan_iter():
             quota_list.append(r.get(key.decode('utf-8')))
+
         return quota_list
 
-    def parse_load_block(self, json_block):
-        r = redis.Redis(host=os.environ['REDISSERVER'], port=6379, db=0)
+    def parse_load_block(self, r, json_block):
         for entry in json_block:
             redis_key = entry['entity']['name']
             if redis_key:
                 redis_data = json.dumps(entry)
                 r.set(redis_key, redis_data)
-
+        
     def load_user_quotas_redis(self, url):
+        r = redis.Redis(host=os.environ['REDISSERVER'], port=6379, db=0)
+        current_timestamp = datetime.datetime.now().timestamp()
+        last_update_timestamp = float(r.get('last_update').decode('utf-8'))
+        if (current_timestamp - last_update_timestamp) < (86400 * 14):  # 2 weeks
+            return
+
         client_response = self.get(url)
-        self.parse_load_block(client_response['results'])
+        self.parse_load_block(r, client_response['results'])
         while True:
             if not client_response['next']:
-                return
+                break
             client_response = self.get(client_response['next'])
-            self.parse_load_block(client_response['results'])
-
+            self.parse_load_block(r, client_response['results'])
+         
+        timestamp = datetime.datetime.now().timestamp()
+        r.set('last_update', timestamp)
 
 
 userquota_url = 'https://vast.hpc.nyu.edu/api/userquotas/'
 vast = VASTClient()
 
-# vast.load_user_quotas_redis(userquota_url)
+vast.load_user_quotas_redis(userquota_url)
 # print(vast.get_user_quota('rjy1'))
-print(vast.get_user_quotas())
+# print(vast.get_user_quotas())
+# token = vast.get_cert()
+# print(token)
