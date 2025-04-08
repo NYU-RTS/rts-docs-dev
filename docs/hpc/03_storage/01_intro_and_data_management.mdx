@@ -44,7 +44,7 @@ The User home directories are available on all HPC clusters (Greene) and on ever
 :::warning
 Avoid changing file and directory permissions in your home directory to allow other users to access files.
 :::
-User Home Directories are not ideal for sharing files and folders with other users. HPC Scratch of Research Project Space (RPS) are better file systems for sharing data.
+User Home Directories are not ideal for sharing files and folders with other users. HPC Scratch or [Research Project Space (RPS)](./05_research_project_space.md) are better file systems for sharing data.
 
 :::warning
 **One of the common issues that users report regarding their home directories is running out of inodes,** i.e. the number of files  stored under their home exceeds the inode limit, which by default is set to 30,000 files. This typically occurs when users install software under their home directories, for example, when working with Conda and Julia environments, that involve many small files.
@@ -101,7 +101,7 @@ The HPC Research Project Space (RPS) provides data storage space for research pr
 -   For detailed information about RPS see: [HPC Research Project Space](./05_research_project_space.md)
 
 #### HPC Work
-The HPC team makes available a number of public sets that are commonly used in analysis jobs. The data sets are available Read-Only under **`/scratch/work/public`**. 
+The HPC team makes available a number of public datasets that are commonly used in analysis jobs. The data sets are available Read-Only under **`/scratch/work/public`**. 
 
 For some of the datasets users must provide a signed usage agreement before accessing.
 
@@ -123,7 +123,7 @@ Currently (March 2021) there is no limit on the amount of data a user can store 
 
 However, there are limits to the data transfer rate in moving to/from Google Drive. Thus, moving many small files to Google Drive is not going to be efficient. 
 
-Please read the [Instructions on how to use cloud storage within the NYU HPC Environment](./09_transferring_cloud_storage_data_with_rclone.md). 
+Please read the [Instructions on how to use cloud storage within the NYU HPC Environment](./08_transferring_cloud_storage_data_with_rclone.md). 
 
 #### HPC Storage Mounts Comparison Table
 <iframe width="100%" height="300em" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT-q0rRueYg1Be_gcWSghB-GGFDonP8DaXNnm8Qi036w-Vi_l7CCOav4IPxi1yZy8TSnTRFy7S5dNTJ/pubhtml?widget=true&amp;headers=false"></iframe>
