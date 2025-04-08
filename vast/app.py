@@ -30,7 +30,8 @@ def index():
     return {'data': 'Go away please'}
 
 @app.get('/healthz')
-def index():
+def healthz(background_tasks: BackgroundTasks):
+    background_tasks.add_task(vast.load_user_quotas_redis, os.environ['VASTSERVER']+'/api/userquotas/')
     return {'status': 'ok'}
 
 @app.get('/message')
@@ -46,11 +47,11 @@ def vast_get_user_quota(username, background_tasks: BackgroundTasks):
     except Exception as err:
         logging.error(f'Error reading user quota {username}: {err}')
 
-
 @app.get('/vast_user_quotas')
-def vast_get_all_user_quotas():
+def vast_get_all_user_quotas(background_tasks: BackgroundTasks):
     try:
         quotas = vast.get_user_quotas()
+        background_tasks.add_task(vast.load_user_quotas_redis, os.environ['VASTSERVER']+'/api/userquotas/')
         return {'data': quotas }
     except Exception as err:
        logging.error(f'Error reading all vast user quotas: {err}')
