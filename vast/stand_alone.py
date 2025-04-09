@@ -7,7 +7,6 @@ if len(sys.argv) < 2:
     print(f"usage: {sys.argv[0]} <username>")
 
 username = sys.argv[1]
-# url = os.environ['VASTSERVER'] + '/vast_user_quota'
 url = 'https://vast-quota-test-rtc-api-services.apps.cloud.rt.nyu.edu/vast_user_quota/'
 print(f'username: {username}')
 
