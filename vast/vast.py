@@ -128,7 +128,7 @@ class VASTClient(object):
         r = redis.Redis(host=os.environ['REDISSERVER'], port=6379, db=0)
         current_timestamp = datetime.datetime.now().timestamp()
         last_update_timestamp = float(r.get('last_update').decode('utf-8'))
-        if (current_timestamp - last_update_timestamp) < (86400 * 14):  # 2 weeks
+        if (current_timestamp - last_update_timestamp) < (60 * 20):  # 20 minutes
             return
 
         client_response = self.get(url)
