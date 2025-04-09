@@ -24,6 +24,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logging = logging.getLogger("uvicorn")
+vast.load_user_quotas_redis(os.environ['VASTSERVER']+'/api/userquotas')
 
 @app.get('/')
 def index():
@@ -31,7 +32,7 @@ def index():
 
 @app.get('/healthz')
 def healthz(background_tasks: BackgroundTasks):
-    background_tasks.add_task(vast.load_user_quotas_redis, os.environ['VASTSERVER']+'/api/userquotas/')
+    background_tasks.add_task(vast.load_user_quotas_redis, os.environ['VASTSERVER']+'/api/userquotas')
     return {'status': 'ok'}
 
 @app.get('/message')
@@ -42,7 +43,7 @@ def index():
 def vast_get_user_quota(username, background_tasks: BackgroundTasks):
     try:
         quota = vast.get_user_quota(username)
-        background_tasks.add_task(vast.load_user_quotas_redis, os.environ['VASTSERVER']+'/api/userquotas/')
+        background_tasks.add_task(vast.load_user_quotas_redis, os.environ['VASTSERVER']+'/api/userquotas')
         return {'data': quota }
     except Exception as err:
         logging.error(f'Error reading user quota {username}: {err}')
@@ -51,7 +52,7 @@ def vast_get_user_quota(username, background_tasks: BackgroundTasks):
 def vast_get_all_user_quotas(background_tasks: BackgroundTasks):
     try:
         quotas = vast.get_user_quotas()
-        background_tasks.add_task(vast.load_user_quotas_redis, os.environ['VASTSERVER']+'/api/userquotas/')
+        background_tasks.add_task(vast.load_user_quotas_redis, os.environ['VASTSERVER']+'/api/userquotas')
         return {'data': quotas }
     except Exception as err:
        logging.error(f'Error reading all vast user quotas: {err}')
