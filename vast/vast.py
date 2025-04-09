@@ -89,7 +89,7 @@ class VASTClient(object):
             if client_response['next']:
                 client_response = self.get(client_response['next'])
             else:
-                return '{"error":"username not found"}'
+                return json.dumps({'error':'username not found'})
 
     def get_user_quota(self, username):
         r = redis.Redis(host=os.environ['REDISSERVER'], port=6379, db=0)
@@ -97,7 +97,7 @@ class VASTClient(object):
         if quota_data:
             return json.loads(quota_data)
         else:
-            return '{"error:":"username not found"}'
+            return json.dumps({'error':'username not found'})
 
     def get_user_quotas_old(self, url):
         output_list = []
