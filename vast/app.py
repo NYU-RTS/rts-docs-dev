@@ -8,6 +8,7 @@ from typing import (
 import urllib3
 import vast as vast
 import os
+from prometheus_fastapi_instrumentator import Instrumentator
 
 class Group(BaseModel):
     name: str
@@ -18,6 +19,7 @@ class GroupMembers(BaseModel):
     users: Optional[list] = None
 
 app = FastAPI()
+Instrumentator().instrument(app).expose(app)
 vast = vast.VASTClient()
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
