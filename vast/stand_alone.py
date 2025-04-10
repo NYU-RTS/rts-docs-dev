@@ -1,24 +1,16 @@
-import pycurl
-from io import BytesIO
 import json
 import sys
+import requests
 
 if len(sys.argv) < 2:
     print(f"usage: {sys.argv[0]} <username>")
 
 username = sys.argv[1]
 url = 'https://vast-quota-test-rtc-api-services.apps.cloud.rt.nyu.edu/vast_user_quota/'
-print(f'username: {username}')
 
 def get_user_quota(url, username):
-    buffer = BytesIO()
-    c = pycurl.Curl()
-    c.setopt(c.URL, url + username)
-    c.setopt(c.WRITEDATA, buffer)
-    c.perform()
-    c.close()
-
-    quota = json.loads(buffer.getvalue().decode('utf-8'))
+    response = requests.get(url + username)
+    quota = json.loads(response.text)
     quota_data = quota['data']
     if isinstance(quota_data, str) and json.loads(quota_data)['error'] == 'username not found':
         print(f'Error: username {username} not found!')
