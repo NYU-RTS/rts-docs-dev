@@ -80,17 +80,6 @@ class VASTClient(object):
     def get(self, url, params=None):
         return self._request('GET', url, params)
 
-    def get_user_quota_old(self, id, url):
-        client_response = self.get(url)
-        while True:
-            for quota in client_response['results']:
-                if quota['entity']['name'] == id:
-                    return quota
-            if client_response['next']:
-                client_response = self.get(client_response['next'])
-            else:
-                return json.dumps({'error':'username not found'})
-
     def get_user_quota(self, username):
         r = redis.Redis(host=os.environ['REDISSERVER'], port=6379, db=0)
         quota_data = r.get(username)
@@ -98,16 +87,6 @@ class VASTClient(object):
             return json.loads(quota_data)
         else:
             return json.dumps({'error':'username not found'})
-
-    def get_user_quotas_old(self, url):
-        output_list = []
-        client_response = self.get(url)
-        output_list.append(client_response['results'])
-        while True:
-            if not client_response['next']:
-                return output_list
-            client_response = self.get(client_response['next'])
-            output_list.append(client_response)
 
     def get_user_quotas(self):
         quota_list = []
