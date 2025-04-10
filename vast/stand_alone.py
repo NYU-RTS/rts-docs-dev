@@ -5,16 +5,18 @@ import requests
 if len(sys.argv) < 2:
     print(f"usage: {sys.argv[0]} <username>")
 
-username = sys.argv[1]
-url = 'https://vast-quota-test-rtc-api-services.apps.cloud.rt.nyu.edu/vast_user_quota/'
-
-def get_user_quota(url, username):
+def get_user_quota(username):
+    url = 'https://vast-quota-test-rtc-api-services.apps.cloud.rt.nyu.edu/vast_user_quota/'
     response = requests.get(url + username)
+    if response.status_code != 200:
+        print(f'Error: request failed with status code {response.status_code}')
+        sys.exit(1)
+
     quota = json.loads(response.text)
     quota_data = quota['data']
     if isinstance(quota_data, str) and json.loads(quota_data)['error'] == 'username not found':
         print(f'Error: username {username} not found!')
-        sys.exit(1)
+        sys.exit(2)
 
     tbq  = None if quota_data['soft_limit'] == None else int(quota_data['soft_limit']/ 1000000000000)
     su   = None if quota_data['used_capacity'] == None else round(int(quota_data['used_capacity']) / 1000000000000, 2)
@@ -25,4 +27,5 @@ def get_user_quota(url, username):
 
     print(f'/vast        $VAST      NO/YES        {tbq}TB/{suiq}M           {su}TB({sup}%)/{iu}({iup}%)')
 
-get_user_quota(url, username)
+username = sys.argv[1]
+get_user_quota(username)
