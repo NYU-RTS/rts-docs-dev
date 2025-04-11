@@ -1,0 +1,18 @@
+/** Do not replace hardcoded values with CSS variables in this file, as these values are copied from Docusaurus. */
+
+.iconEdit {
+  margin-right: 0.3em;
+  vertical-align: sub;
+}
+
+.lastUpdated {
+  margin-top: 0.2rem;
+  font-size: smaller;
+  font-style: italic;
+}
+
+@media (width >= 997px) {
+  .lastUpdated {
+    text-align: right;
+  }
+}
