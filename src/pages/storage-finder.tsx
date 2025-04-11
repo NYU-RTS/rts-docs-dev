@@ -680,12 +680,12 @@ export default function StorageFinderPage() {
                         <tr key={field.key}>
                           <td className={styles.attributeName}>
                             {field.label}
-                            <Tooltip keepOpenOnActivate content="Learn more">
+                            {/* <Tooltip keepOpenOnActivate content="Learn more">
                               <InfoButton
                                 content={`Information about ${field.label.toLowerCase()}`}
                                 title={field.label}
                               />
-                            </Tooltip>
+                            </Tooltip> */}
                           </td>
                           {selectedServices.map((serviceId) => {
                             const service = serviceList.find(
