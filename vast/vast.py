@@ -99,7 +99,8 @@ class VASTClient(object):
     def parse_load_block(self, r, json_block):
         for entry in json_block:
             redis_key = entry['entity']['name']
-            if redis_key:
+            entity_type = entry['entity']['identifier_type']
+            if redis_key and entity_type == 'username':
                 redis_data = json.dumps(entry)
                 r.set(redis_key, redis_data)
         
