@@ -51,9 +51,9 @@ class VASTClient(object):
                         if http_err.response.status_code == 401:
                             return self.make_token()
                         else:
-                            return {'error': http_err.response.status_code}
+                            return json.dumps({'error': http_err.response.status_code})
                 else:
-                    return {'error': http_err.response.status_code}
+                    return json.dumps({'error': http_err.response.status_code})
         else:
             return self.make_token()
                     
