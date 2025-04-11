@@ -277,7 +277,7 @@ export default function StorageFinderPage() {
         title="Research Data Storage Finder"
       >
         {/* Main content container */}
-        <main className="container padding--lg remove-p-margin-bottom">
+        <main className="padding--lg remove-p-margin-bottom">
           {/* Title - Always above the info bar */}
           <Heading as="h1" className="text--center">
             Research Data Storage Finder
