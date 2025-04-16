@@ -25,7 +25,7 @@ def get_user_quota(username):
     iup  = quota_data['percent_inodes']
     sup  = (round(su / tbq, 2) * 100) if not su == None and not tbq == None else None
 
-    print(f'/vast        $VAST      NO/YES        {tbq}TB/{suiq}M           {su}TB({sup}%)/{iu}({iup}%)')
+    print(f'/vast        $VAST         NO/YES        {tbq}TB/{suiq}M           {su}TB({sup:.1f}%)/{iu}({iup}%)')
 
 username = sys.argv[1]
 get_user_quota(username)
