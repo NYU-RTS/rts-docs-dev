@@ -48,12 +48,12 @@ class VASTClient(object):
                         os.environ['REFRESHTOKEN'] = json.loads(r.data.decode('utf-8'))['refresh']
                         return os.environ['ACCESSTOKEN']
                     except HTTPError as http_err:
-                        if http_err.response.status_code == 401:
-                            return self.make_token()
-                        else:
-                            return json.dumps({'error': http_err.response.status_code})
+                        print(json.dumps({'error': http_err.response.status_code}))
+                        return self.make_token()
                 else:
-                    return json.dumps({'error': http_err.response.status_code})
+                    print(json.dumps({'error': http_err.response.status_code}))
+                    return self.make_token()
+
         else:
             return self.make_token()
                     
