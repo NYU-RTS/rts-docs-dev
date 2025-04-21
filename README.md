@@ -26,3 +26,9 @@ Applications are installed and managed via ArgoCD (```nyu-rts/rts-argocd```)
 1. ```nyu-rts/rts-fastapi-apps``` - application source code
 1. ```nyu-rts/rts-fastapi-k8s``` - application deployment resources
 1. ```nyu-rts/rts-argocd``` - deployment CI/CD
+
+## Redis
+quotas are cached in a Redis store.<br>
+Cache IDs:
+0. Vast
+1. gpfs/home
