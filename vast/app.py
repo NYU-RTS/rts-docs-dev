@@ -41,6 +41,12 @@ def healthz(background_tasks: BackgroundTasks):
 def index():
     return {'data': 'FastAPI is easy!'}
 
+@app.get('/reload_cache')
+def make_token():
+    vast.make_token()
+    vast.load_user_quotas_redis(os.environ['VASTSERVER']+'/api/userquotas', force = True)
+    return {'status': 'ok'}
+
 @app.get('/vast_user_quota/{username}')
 def vast_get_user_quota(username, background_tasks: BackgroundTasks):
     try:
