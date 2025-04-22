@@ -66,7 +66,14 @@ class GPFS():
         timestamp = datetime.datetime.now().timestamp()
         redisClient.set('last_update', timestamp)
 
+    def getQuotas(self, filesystem, fileset):
+        redisClient = redis.Redis(host=os.environ['REDISSERVER'], port=6379, 
+                                  db=self.filesystemset2db(filesystem, fileset))
+        quota_list = []
+        for key in redisClient.scan_iter():
+            quota_list.append(redisClient.get(key.decode('utf-8')).decode('utf-8'))
 
+        return quota_list
 
 test = GPFS()
-test.loadQuotas('dss_scratch', 'cgsb')
+print(test.getQuotas('dss_scratch', 'cgsb'))
