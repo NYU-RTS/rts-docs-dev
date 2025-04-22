@@ -29,6 +29,10 @@ Applications are installed and managed via ArgoCD (```nyu-rts/rts-argocd```)
 
 ## Redis
 quotas are cached in a Redis store.<br>
-Cache IDs:
-0. Vast
-1. gpfs/home
+| filesystem    | Redis DB ID |
+|   :---        |     :---:   |
+| /vast         | 0           |
+| /gpfs/home    | 1           |
+| /gpfs/scratch | 2           |
+| /gpfs/archive | 3           |
+| /gpfs/cgsb    | 4           |

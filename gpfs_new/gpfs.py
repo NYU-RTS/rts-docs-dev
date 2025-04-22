@@ -23,6 +23,12 @@ class GPFS():
         '''return redis db ID based on input filesystem & fileset strings'''
         if filesystem == 'dss_home' and fileset == 'root':
             db = 1
+        elif filesystem == 'dss_scratch' and fileset == 'root':
+            db = 2
+        elif filesystem == 'dss_archive' and fileset == 'root':
+            db = 3
+        elif filesystem == 'dss_scratch' and fileset == 'cgsb':
+            db = 4
         else:
             raise ValueError("Invalid filesystem string provided in filesystem2db")
         
@@ -62,8 +68,5 @@ class GPFS():
 
 
 
- 
-
-
 test = GPFS()
-test.loadQuotas('dss_home', 'root')
+test.loadQuotas('dss_scratch', 'cgsb')
