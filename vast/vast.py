@@ -25,13 +25,20 @@ class VASTClient(object):
         token = self.get_cert()
         headers = {'Authorization': f"Bearer {token}"}
         r = pm.request(method, url, headers=headers, fields=params)
-        if r.status != http.HTTPStatus.OK:
-            raise RESTFailure(f'Response for request {url} with {params} failed with error {r.status} and message {r.data}')
+        err_ctr = 0
+        while r.status != http.HTTPStatus.OK:
+            print(f'WARN: Response for request {url} with {params} failed with error {r.status} and message {r.data}')
+            token = self.get_cert(force=True)
+            headers = {'Authorization': f"Bearer {token}"}
+            r = pm.request(method, url, headers=headers, fields=params)
+            err_ctr += 1
+            if err_ctr > 100:
+                raise RESTFailure(f'_request:Response for request {token_url} failed with error {r.status} and message {r.data}')
 
         return json.loads(r.data.decode('utf-8'))
 
-    def get_cert(self):
-        if 'ACCESSTOKEN' in os.environ:
+    def get_cert(self, force=False):
+        if 'ACCESSTOKEN' in os.environ and not force:
             url_test = os.environ['VASTSERVER'] + '/healthz'
             headers = {'Authorization': f"Bearer {os.environ['ACCESSTOKEN']}"}
             pm = urllib3.PoolManager(cert_reqs='CERT_NONE')
@@ -71,7 +78,7 @@ class VASTClient(object):
         pm = urllib3.PoolManager(cert_reqs='CERT_NONE')
         r = pm.request('POST', token_url, headers=headers, body=encoded_auth_data, fields=None)
         if r.status != http.HTTPStatus.OK:
-            raise RESTFailure(f'Response for request {token_url} failed with error {r.status} and message {r.data}')
+            raise RESTFailure(f'make_token:Response for request {token_url} failed with error {r.status} and message {r.data}')
         os.environ['ACCESSTOKEN'] = json.loads(r.data.decode('utf-8'))['access']
         os.environ['REFRESHTOKEN'] = json.loads(r.data.decode('utf-8'))['refresh']
 
@@ -104,11 +111,11 @@ class VASTClient(object):
                 redis_data = json.dumps(entry)
                 r.set(redis_key, redis_data)
         
-    def load_user_quotas_redis(self, url):
+    def load_user_quotas_redis(self, url, force = False):
         r = redis.Redis(host=os.environ['REDISSERVER'], port=6379, db=0)
         current_timestamp = datetime.datetime.now().timestamp()
         last_update_timestamp = float(r.get('last_update').decode('utf-8'))
-        if (current_timestamp - last_update_timestamp) < (60 * 20):  # 20 minutes
+        if not force and ((current_timestamp - last_update_timestamp) < (60 * 20)):  # 20 minutes
             return
 
         client_response = self.get(url)
