@@ -18,6 +18,7 @@ class GPFS():
         self.user = user
         self.password = password
         self.server = server
+        self.server_redis = os.environ['REDISSERVER']
 
     def filesystemset2db(self, filesystem, fileset):
         '''return redis db ID based on input filesystem & fileset strings'''
@@ -36,11 +37,12 @@ class GPFS():
     
     def loadPage(self, redis_client, quotas):
         for q in quotas:
-            redis_key = q['objectName']
-            redis_client.set(redis_key, json.dumps(q))
+            if q['quotaType'] == 'USR':
+                redis_key = q['objectName']
+                redis_client.set(redis_key, json.dumps(q))
 
     def loadQuotas(self, filesystem, fileset):
-        redisClient = redis.Redis(host=os.environ['REDISSERVER'], port=6379, 
+        redisClient = redis.Redis(host=self.server_redis, port=6379, 
                                   db=self.filesystemset2db(filesystem, fileset))
         try:
             response = requests.get(f'https://{self.server}:443/scalemgmt/v2/filesystems/{filesystem}/filesets/{fileset}/quotas', 
@@ -67,13 +69,22 @@ class GPFS():
         redisClient.set('last_update', timestamp)
 
     def getQuotas(self, filesystem, fileset):
-        redisClient = redis.Redis(host=os.environ['REDISSERVER'], port=6379, 
+        redisClient = redis.Redis(host=self.server_redis, port=6379, 
                                   db=self.filesystemset2db(filesystem, fileset))
         quota_list = []
         for key in redisClient.scan_iter():
             quota_list.append(redisClient.get(key.decode('utf-8')).decode('utf-8'))
 
         return quota_list
+    
+    def loadFilesystems(self):
+        response = requests.get(f'https://{self.server}:443/scalemgmt/v2/filesystems', 
+                                auth=(self.user, self.password), verify=False)
+        for fs in response.json()['filesystems']:
+            print(fs['name'])
+
 
 test = GPFS()
-print(test.getQuotas('dss_scratch', 'cgsb'))
+test.loadQuotas('dss_scratch', 'cgsb')
+# print(test.getQuotas('dss_scratch', 'cgsb'))
+# test.loadFilesystems()
