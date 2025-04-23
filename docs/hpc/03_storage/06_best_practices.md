@@ -46,5 +46,5 @@ Please refer to our page on working with a [large number of files](./07_large_nu
 Your home directory has relatively small number of inodes.
 In case you would create conda or python environment in you home directory, this can eat up all the inodes. 
 
-Please review best practices for managing packages under the Package Management section of the [Greene Software Page](../06_tools_and_software/05_software_on_greene.md).
+Please review best practices for managing packages under the Package Management section of the [Greene Software Page](../06_tools_and_software/01_software_on_greene.md).
 
