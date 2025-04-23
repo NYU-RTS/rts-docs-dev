@@ -76,7 +76,12 @@ class GPFS():
             quota_list.append(redisClient.get(key.decode('utf-8')).decode('utf-8'))
 
         return quota_list
-    
+
+    def getQuota(self, filesystem, fileset, username):
+        redisClient = redis.Redis(host=self.server_redis, port=6379, 
+                                  db=self.filesystemset2db(filesystem, fileset))
+        return redisClient.get(username).decode('utf-8')
+
     def loadFilesystems(self):
         response = requests.get(f'https://{self.server}:443/scalemgmt/v2/filesystems', 
                                 auth=(self.user, self.password), verify=False)
@@ -85,6 +90,7 @@ class GPFS():
 
 
 test = GPFS()
-test.loadQuotas('dss_scratch', 'cgsb')
+# test.loadQuotas('dss_scratch', 'cgsb')
 # print(test.getQuotas('dss_scratch', 'cgsb'))
 # test.loadFilesystems()
+# print(test.getQuota('dss_home', 'root', 'rjy1'))
