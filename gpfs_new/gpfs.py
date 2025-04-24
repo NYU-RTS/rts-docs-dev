@@ -79,7 +79,11 @@ class GPFS():
     def getQuota(self, filesystem, fileset, username):
         redisClient = redis.Redis(host=self.server_redis, port=6379,
                                   db=self.filesystemset2db(filesystem, fileset))
-        return json.loads(redisClient.get(username))
+        quota_data = redisClient.get(username)
+        if quota_data:
+            return json.loads(quota_data)
+        else:
+            return f'Error: username {username} not found'
 
     def loadFilesystems(self):
         response = requests.get(f'https://{self.server}:443/scalemgmt/v2/filesystems', 
