@@ -53,36 +53,12 @@ def get_quotas_gpfs_endpoint(endpoint):
        logging.error(f'Error reading {endpoint} quotas: {err}')
     return {'data': quotas }
 
-@app.get('/quota/gpfs/home/{username}')
-def get_quota_gpfs_home(username):
+@app.get('/quota/gpfs/{endpoint}/{username}')
+def get_quota_gpfs_endpoint_username(endpoint, username):
     try:
-        quota = gpfs.getQuota('dss_home', 'root', username)
+        quota = gpfs.getQuota(endpoint, username)
     except Exception as err:
-       logging.error(f'Error reading home quota for {username}: {err}')
-    return {'data': quota }
-
-@app.get('/quota/gpfs/scratch/{username}')
-def get_quota_gpfs_scratch(username):
-    try:
-        quota = gpfs.getQuota('dss_scratch', 'root', username)
-    except Exception as err:
-       logging.error(f'Error reading scratch quota for {username} : {err}')
-    return {'data': quota }
-
-@app.get('/quota/gpfs/archive/{username}')
-def get_quota_gpfs_archive(username):
-    try:
-        quota = gpfs.getQuota('dss_archive', 'root', username)
-    except Exception as err:
-       logging.error(f'Error reading archive quotas for {username}: {err}')
-    return {'data': quota }
-
-@app.get('/quota/gpfs/cgsb/{username}')
-def get_quota_gpfs_cgsb(username):
-    try:
-        quota = gpfs.getQuota('dss_scratch', 'cgsb', username)
-    except Exception as err:
-       logging.error(f'Error reading cgsb quota for {username}: {err}')
+       logging.error(f'Error reading {endpoint} quota for {username}: {err}')
     return {'data': quota }
 
 if __name__ == "__main__":
