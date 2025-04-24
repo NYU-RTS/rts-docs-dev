@@ -20,28 +20,40 @@ class GPFS():
         self.server = server
         self.server_redis = os.environ['REDISSERVER']
 
-    def filesystemset2db(self, filesystem, fileset):
-        '''return redis db ID based on input filesystem & fileset strings'''
-        if filesystem == 'dss_home' and fileset == 'root':
-            db = 1
-        elif filesystem == 'dss_scratch' and fileset == 'root':
-            db = 2
-        elif filesystem == 'dss_archive' and fileset == 'root':
-            db = 3
-        elif filesystem == 'dss_scratch' and fileset == 'cgsb':
-            db = 4
+    def endpoint2filesystemset(self, endpoint):
+        '''returns filesystem & fileset based on endpoint'''
+        if endpoint == 'home':
+            return ('dss_home', 'root')
+        elif endpoint == 'scratch':
+            return ('dss_scratch', 'root')
+        elif endpoint == 'archive':
+            return ('dss_archive', 'root')
+        elif endpoint == 'cgsb':
+            return ('dss_scratch', 'cgsb')
         else:
-            raise ValueError("Invalid filesystem string provided in filesystem2db")
+            raise ValueError(f"Invalid input parameter {endpoint} for endpoint2filesystemset")
+
+    def filesystemset2db(self, filesystem, fileset):
+        '''returns redis db ID based on input filesystem & fileset strings'''
+        if filesystem == 'dss_home' and fileset == 'root':
+            return 1
+        elif filesystem == 'dss_scratch' and fileset == 'root':
+            return 2
+        elif filesystem == 'dss_archive' and fileset == 'root':
+            return 3
+        elif filesystem == 'dss_scratch' and fileset == 'cgsb':
+            return 4
+        else:
+            raise ValueError(f"Invalid input paramters {filesystem} {fileset} to filesystem2db")
         
-        return db
-    
     def loadPage(self, redis_client, quotas):
         for q in quotas:
             if q['quotaType'] == 'USR' and not q['objectName'].isnumeric():
                 redis_client.set(q['objectName'], json.dumps(q))
 
-    def loadQuotas(self, filesystem, fileset, force = False):        
+    def loadQuotas(self, endpoint, force=False):        
 
+        filesystem, fileset = self.endpoint2filesystemset(endpoint)
         redisClient = redis.Redis(host=self.server_redis, port=6379, 
                                   db=self.filesystemset2db(filesystem, fileset))
         
@@ -74,7 +86,8 @@ class GPFS():
         timestamp = datetime.datetime.now().timestamp()
         redisClient.set('last_update', timestamp)
 
-    def getQuotas(self, filesystem, fileset):
+    def getQuotas(self, endpoint):
+        filesystem, fileset = self.endpoint2filesystemset(endpoint)
         redisClient = redis.Redis(host=self.server_redis, port=6379, 
                                   db=self.filesystemset2db(filesystem, fileset))
         quota_list = []
@@ -82,6 +95,15 @@ class GPFS():
             quota_list.append(json.loads(redisClient.get(key.decode('utf-8'))))
 
         return quota_list
+
+    # def getQuotas(self, filesystem, fileset):
+    #     redisClient = redis.Redis(host=self.server_redis, port=6379, 
+    #                               db=self.filesystemset2db(filesystem, fileset))
+    #     quota_list = []
+    #     for key in redisClient.scan_iter():
+    #         quota_list.append(json.loads(redisClient.get(key.decode('utf-8'))))
+    # 
+    #     return quota_list
 
     def getQuota(self, filesystem, fileset, username):
         redisClient = redis.Redis(host=self.server_redis, port=6379,

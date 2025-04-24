@@ -37,20 +37,20 @@ def index():
 def index():
     return {'data': 'FastAPI is easy!'}
 
-@app.get('/update_cache/{filesystem}/{fileset}')
-def update_cache_gpfs_home(filesystem, fileset):
+@app.get('/update_cache/{endpoint}')
+def update_cache_gpfs_home(endpoint):
     try:
-        gpfs.loadQuotas(filesystem, fileset, force=True)
+        gpfs.loadQuotas(endpoint, force=True)
     except Exception as err:
         logging.error(f'Error updating home cache: {err}')
     return {'status': 'ok'}
 
-@app.get('/quotas/gpfs/home')
-def get_quotas_gpfs_home():
+@app.get('/quotas/gpfs/{endpoint}')
+def get_quotas_gpfs_endpoint(endpoint):
     try:
-        quotas = gpfs.getQuotas('dss_home', 'root')
+        quotas = gpfs.getQuotasEndpoint(endpoint)
     except Exception as err:
-       logging.error(f'Error reading home quotas: {err}')
+       logging.error(f'Error reading {endpoint} quotas: {err}')
     return {'data': quotas }
 
 @app.get('/quota/gpfs/home/{username}')
@@ -61,14 +61,6 @@ def get_quota_gpfs_home(username):
        logging.error(f'Error reading home quota for {username}: {err}')
     return {'data': quota }
 
-@app.get('/quotas/gpfs/scratch')
-def get_quotas_gpfs_scratch():
-    try:
-        quotas = gpfs.getQuotas('dss_scratch', 'root')
-    except Exception as err:
-       logging.error(f'Error reading scratch quotas: {err}')
-    return {'data': quotas }
-
 @app.get('/quota/gpfs/scratch/{username}')
 def get_quota_gpfs_scratch(username):
     try:
@@ -77,14 +69,6 @@ def get_quota_gpfs_scratch(username):
        logging.error(f'Error reading scratch quota for {username} : {err}')
     return {'data': quota }
 
-@app.get('/quotas/gpfs/archive')
-def get_quotas_gpfs_archive():
-    try:
-        quotas = gpfs.getQuotas('dss_archive', 'root')
-    except Exception as err:
-       logging.error(f'Error reading archive quotas: {err}')
-    return {'data': quotas }
-
 @app.get('/quota/gpfs/archive/{username}')
 def get_quota_gpfs_archive(username):
     try:
@@ -92,14 +76,6 @@ def get_quota_gpfs_archive(username):
     except Exception as err:
        logging.error(f'Error reading archive quotas for {username}: {err}')
     return {'data': quota }
-
-@app.get('/quotas/gpfs/cgsb')
-def get_quotas_gpfs_cgsb():
-    try:
-        quotas = gpfs.getQuotas('dss_scratch', 'cgsb')
-    except Exception as err:
-       logging.error(f'Error reading cgsb quotas: {err}')
-    return {'data': quotas }
 
 @app.get('/quota/gpfs/cgsb/{username}')
 def get_quota_gpfs_cgsb(username):
