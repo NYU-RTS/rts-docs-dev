@@ -37,9 +37,8 @@ class GPFS():
     
     def loadPage(self, redis_client, quotas):
         for q in quotas:
-            if q['quotaType'] == 'USR':
-                redis_key = q['objectName']
-                redis_client.set(redis_key, json.dumps(q))
+            if q['quotaType'] == 'USR' and not q['objectName'].isnumeric():
+                redis_client.set(q['objectName'], json.dumps(q))
 
     def loadQuotas(self, filesystem, fileset):
         redisClient = redis.Redis(host=self.server_redis, port=6379, 
@@ -73,14 +72,14 @@ class GPFS():
                                   db=self.filesystemset2db(filesystem, fileset))
         quota_list = []
         for key in redisClient.scan_iter():
-            quota_list.append(redisClient.get(key.decode('utf-8')).decode('utf-8'))
+            quota_list.append(json.loads(redisClient.get(key.decode('utf-8'))))
 
         return quota_list
 
     def getQuota(self, filesystem, fileset, username):
-        redisClient = redis.Redis(host=self.server_redis, port=6379, 
+        redisClient = redis.Redis(host=self.server_redis, port=6379,
                                   db=self.filesystemset2db(filesystem, fileset))
-        return redisClient.get(username).decode('utf-8')
+        return json.loads(redisClient.get(username))
 
     def loadFilesystems(self):
         response = requests.get(f'https://{self.server}:443/scalemgmt/v2/filesystems', 
@@ -89,8 +88,10 @@ class GPFS():
             print(fs['name'])
 
 
-test = GPFS()
+# test = GPFS()
 # test.loadQuotas('dss_scratch', 'cgsb')
 # print(test.getQuotas('dss_scratch', 'cgsb'))
+# print(test.getQuota('dss_scratch', 'cgsb', 'ag8612'))
 # test.loadFilesystems()
-# print(test.getQuota('dss_home', 'root', 'rjy1'))
+# foo = json.loads(test.getQuota('dss_home', 'root', 'rjy1'))
+# print(type(foo))
