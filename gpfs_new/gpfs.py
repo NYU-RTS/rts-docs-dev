@@ -40,9 +40,16 @@ class GPFS():
             if q['quotaType'] == 'USR' and not q['objectName'].isnumeric():
                 redis_client.set(q['objectName'], json.dumps(q))
 
-    def loadQuotas(self, filesystem, fileset):
+    def loadQuotas(self, filesystem, fileset, force = False):        
+
         redisClient = redis.Redis(host=self.server_redis, port=6379, 
                                   db=self.filesystemset2db(filesystem, fileset))
+        
+        current_timestamp = datetime.datetime.now().timestamp()
+        last_update_timestamp = float(redisClient.get('last_update').decode('utf-8'))
+        if (current_timestamp - last_update_timestamp) < (60 * 20) and not force:   # 20 minutes 
+            return
+
         try:
             response = requests.get(f'https://{self.server}:443/scalemgmt/v2/filesystems/{filesystem}/filesets/{fileset}/quotas', 
                              auth=(self.user, self.password), verify=False)            

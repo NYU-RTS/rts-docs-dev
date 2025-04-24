@@ -37,6 +37,14 @@ def index():
 def index():
     return {'data': 'FastAPI is easy!'}
 
+@app.get('/update_cache/{filesystem}/{fileset}')
+def update_cache_gpfs_home(filesystem, fileset):
+    try:
+        gpfs.loadQuotas(filesystem, fileset, force=True)
+    except Exception as err:
+        logging.error(f'Error updating home cache: {err}')
+    return {'status': 'ok'}
+
 @app.get('/quotas/gpfs/home')
 def get_quotas_gpfs_home():
     try:
