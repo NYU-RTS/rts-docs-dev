@@ -10,7 +10,7 @@ if (process.env.PREVIEW_PATH) {
 }
 
 const config: Config = {
-  title: "Research Technology Servcies",
+  title: "Research Technology Services",
   tagline: "NYU",
   favicon: "img/NYU.ico",
 
