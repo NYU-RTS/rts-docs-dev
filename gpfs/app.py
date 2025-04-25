@@ -1,5 +1,5 @@
 import logging
-from fastapi import FastAPI
+from fastapi import FastAPI, BackgroundTasks
 import uvicorn
 from pydantic import BaseModel
 from typing import (
@@ -29,44 +29,35 @@ def index():
     return {'data': 'Go away please'}
 
 @app.get('/healthz')
-def index():
+def healthz(background_tasks: BackgroundTasks):
+    background_tasks.add_task(gpfs.loadAllQuotas)
     return {'status': 'ok'}
 
-@app.get('/message')
-def index():
-    return {'data': 'FastAPI is easy!'}
-
-@app.get('/quotas/gpfs/home')
-def index():
+@app.get('/update_cache/{endpoint}')
+def update_cache_gpfs_home(endpoint):
     try:
-        quotas = gpfs.getQuotas('dss_home', 'root')
+        gpfs.loadQuotas(endpoint, force=True)
     except Exception as err:
-       logging.error(f'Error reading home quotas: {err}')
+        logging.error(f'Error updating home cache: {err}')
+    return {'status': 'ok'}
+
+@app.get('/quotas/gpfs/{endpoint}')
+def get_quotas_gpfs_endpoint(endpoint, background_tasks: BackgroundTasks):
+    try:
+        quotas = gpfs.getQuotas(endpoint)
+        background_tasks.add_task(gpfs.loadAllQuotas)
+    except Exception as err:
+       logging.error(f'Error reading {endpoint} quotas: {err}')
     return {'data': quotas }
 
-@app.get('/quotas/gpfs/scratch')
-def index():
+@app.get('/quota/gpfs/{endpoint}/{username}')
+def get_quota_gpfs_endpoint_username(endpoint, username, background_tasks: BackgroundTasks):
     try:
-        quotas = gpfs.getQuotas('dss_scratch', 'root')
+        quota = gpfs.getQuota(endpoint, username)
+        background_tasks.add_task(gpfs.loadAllQuotas)
     except Exception as err:
-       logging.error(f'Error reading scratch quotas: {err}')
-    return {'data': quotas }
-
-@app.get('/quotas/gpfs/archive')
-def index():
-    try:
-        quotas = gpfs.getQuotas('dss_archive', 'root')
-    except Exception as err:
-       logging.error(f'Error reading archive quotas: {err}')
-    return {'data': quotas }
-
-@app.get('/quotas/gpfs/cgsb')
-def index():
-    try:
-        quotas = gpfs.getQuotas('dss_scratch', 'cgsb')
-    except Exception as err:
-       logging.error(f'Error reading cgsb quotas: {err}')
-    return {'data': quotas }
+       logging.error(f'Error reading {endpoint} quota for {username}: {err}')
+    return {'data': quota }
 
 if __name__ == "__main__":
     uvicorn.run(app, host='0.0.0.0', port=8080)

@@ -2,3 +2,5 @@ fastapi
 uvicorn
 urllib3
 requests
+redis
+prometheus-fastapi-instrumentator
