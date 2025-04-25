@@ -73,6 +73,7 @@ class GPFS():
     def loadAllQuotas(self):
         for endpoint in self.endpoints2filesystemset.keys():
             self.loadQuotas(endpoint)
+        self.loadFilesystems()
 
     def getQuotas(self, endpoint):
         filesystem, fileset = self.endpoints2filesystemset[endpoint]
@@ -97,5 +98,23 @@ class GPFS():
     def loadFilesystems(self):
         response = requests.get(f'https://{self.server}:443/scalemgmt/v2/filesystems', 
                                 auth=(self.user, self.password), verify=False)
-        for fs in response.json()['filesystems']:
-            print(fs['name'])
+        redisClient = redis.Redis(host=self.server_redis, port=6379, db=5)
+
+        last_update = redisClient.get('last_update')
+        if last_update:
+            current_timestamp = datetime.datetime.now().timestamp()
+            last_update_timestamp = float(last_update.decode('utf-8'))
+            if (current_timestamp - last_update_timestamp) < (60 * 20):   # 20 minutes 
+                return
+
+        redisClient.set('filesystems', json.dumps(response.json()))
+        timestamp = datetime.datetime.now().timestamp()
+        redisClient.set('last_update', timestamp)
+
+    def getFilesystems(self):
+        redisClient = redis.Redis(host=self.server_redis, port=6379, db=5)
+        filesystems = redisClient.get('filesystems')
+        if filesystems:
+            return json.loads(filesystems)
+        else:
+            return f'Error: filesystems not found'

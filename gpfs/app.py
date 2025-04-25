@@ -59,5 +59,15 @@ def get_quota_gpfs_endpoint_username(endpoint, username, background_tasks: Backg
        logging.error(f'Error reading {endpoint} quota for {username}: {err}')
     return {'data': quota }
 
+@app.get('/filesystems')
+def get_filesystems(background_tasks: BackgroundTasks):
+    try:
+        filesystems = gpfs.getFilesystems()
+        background_tasks.add_task(gpfs.loadAllQuotas)
+    except Exception as err:
+       logging.error(f'Error reading filesystems: {err}')
+    return {'data': filesystems }
+
+
 if __name__ == "__main__":
     uvicorn.run(app, host='0.0.0.0', port=8080)

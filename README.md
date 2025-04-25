@@ -29,13 +29,14 @@ Applications are installed and managed via ArgoCD (```nyu-rts/rts-argocd```)
 
 ## Redis
 quotas are cached in a Redis store.<br>
-| filesystem    | Redis DB ID |
-|   :---        |     :---:   |
-| /vast         | 0           |
-| /gpfs/home    | 1           |
-| /gpfs/scratch | 2           |
-| /gpfs/archive | 3           |
-| /gpfs/cgsb    | 4           |
+| filesystem              | Redis DB ID |
+|   :---                  |     :---:   |
+| /vast                   | 0           |
+| /gpfs/home              | 1           |
+| /gpfs/scratch           | 2           |
+| /gpfs/archive           | 3           |
+| /gpfs/cgsb              | 4           |
+| utils (not an endpoint) | 5           |
 
 ## Adding/Modifying GPFS Endpoints
 When adding or modifying GPFS endpoints, you'll need to update the following dictionaries in `gpfs/gpfs.py` in `__init__`:
