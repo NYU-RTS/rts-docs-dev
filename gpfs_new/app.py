@@ -7,7 +7,6 @@ from typing import (
 )
 import urllib3
 import gpfs as gpfs
-import json
 
 class Group(BaseModel):
     name: str
@@ -30,12 +29,9 @@ def index():
     return {'data': 'Go away please'}
 
 @app.get('/healthz')
-def index():
+def healthz(background_tasks: BackgroundTasks):
+    background_tasks.add_task(gpfs.loadAllQuotas)
     return {'status': 'ok'}
-
-@app.get('/message')
-def index():
-    return {'data': 'FastAPI is easy!'}
 
 @app.get('/update_cache/{endpoint}')
 def update_cache_gpfs_home(endpoint):
@@ -46,17 +42,19 @@ def update_cache_gpfs_home(endpoint):
     return {'status': 'ok'}
 
 @app.get('/quotas/gpfs/{endpoint}')
-def get_quotas_gpfs_endpoint(endpoint):
+def get_quotas_gpfs_endpoint(endpoint, background_tasks: BackgroundTasks):
     try:
-        quotas = gpfs.getQuotasEndpoint(endpoint)
+        quotas = gpfs.getQuotas(endpoint)
+        background_tasks.add_task(gpfs.loadAllQuotas)
     except Exception as err:
        logging.error(f'Error reading {endpoint} quotas: {err}')
     return {'data': quotas }
 
 @app.get('/quota/gpfs/{endpoint}/{username}')
-def get_quota_gpfs_endpoint_username(endpoint, username):
+def get_quota_gpfs_endpoint_username(endpoint, username, background_tasks: BackgroundTasks):
     try:
         quota = gpfs.getQuota(endpoint, username)
+        background_tasks.add_task(gpfs.loadAllQuotas)
     except Exception as err:
        logging.error(f'Error reading {endpoint} quota for {username}: {err}')
     return {'data': quota }

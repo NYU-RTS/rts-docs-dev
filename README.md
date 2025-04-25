@@ -36,3 +36,10 @@ quotas are cached in a Redis store.<br>
 | /gpfs/scratch | 2           |
 | /gpfs/archive | 3           |
 | /gpfs/cgsb    | 4           |
+
+## Adding/Modifying GPFS Endpoints
+When adding or modifying GPFS endpoints, you'll need to update the following dictionaries in `gpfs/gpfs.py` in `__init__`:
+- endpoints2filesystemset
+   - a mapping from endpoint to filesystem and fileset
+- filesystemset2db
+   - a mapping from filesystem and fileset to Redis database number

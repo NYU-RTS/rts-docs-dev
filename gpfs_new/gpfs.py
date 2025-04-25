@@ -1,5 +1,4 @@
 import urllib3
-import http
 import json
 import os
 import redis
@@ -19,43 +18,28 @@ class GPFS():
         self.password = password
         self.server = server
         self.server_redis = os.environ['REDISSERVER']
+        self.endpoints2filesystemset = { 
+            'home': ('dss_home', 'root'),
+            'scratch': ('dss_scratch', 'root'),
+            'archive': ('dss_archive', 'root'),
+            'cgsb': ('dss_scratch', 'cgsb')
+        }
+        self.filesystemset2db = {
+            ('dss_home', 'root'): 1,
+            ('dss_scratch', 'root'): 2,
+            ('dss_archive', 'root'): 3,
+            ('dss_scratch', 'cgsb'): 4
+        }
 
-    def endpoint2filesystemset(self, endpoint):
-        '''returns filesystem & fileset based on endpoint'''
-        if endpoint == 'home':
-            return ('dss_home', 'root')
-        elif endpoint == 'scratch':
-            return ('dss_scratch', 'root')
-        elif endpoint == 'archive':
-            return ('dss_archive', 'root')
-        elif endpoint == 'cgsb':
-            return ('dss_scratch', 'cgsb')
-        else:
-            raise ValueError(f"Invalid input parameter {endpoint} for endpoint2filesystemset")
-
-    def filesystemset2db(self, filesystem, fileset):
-        '''returns redis db ID based on input filesystem & fileset strings'''
-        if filesystem == 'dss_home' and fileset == 'root':
-            return 1
-        elif filesystem == 'dss_scratch' and fileset == 'root':
-            return 2
-        elif filesystem == 'dss_archive' and fileset == 'root':
-            return 3
-        elif filesystem == 'dss_scratch' and fileset == 'cgsb':
-            return 4
-        else:
-            raise ValueError(f"Invalid input paramters {filesystem} {fileset} to filesystem2db")
-        
     def loadPage(self, redis_client, quotas):
         for q in quotas:
             if q['quotaType'] == 'USR' and not q['objectName'].isnumeric():
                 redis_client.set(q['objectName'], json.dumps(q))
 
     def loadQuotas(self, endpoint, force=False):        
-
-        filesystem, fileset = self.endpoint2filesystemset(endpoint)
+        filesystem, fileset = self.endpoints2filesystemset[endpoint]
         redisClient = redis.Redis(host=self.server_redis, port=6379, 
-                                  db=self.filesystemset2db(filesystem, fileset))
+                                  db=self.filesystemset2db[(filesystem, fileset)])
         
         current_timestamp = datetime.datetime.now().timestamp()
         last_update_timestamp = float(redisClient.get('last_update').decode('utf-8'))
@@ -86,10 +70,14 @@ class GPFS():
         timestamp = datetime.datetime.now().timestamp()
         redisClient.set('last_update', timestamp)
 
+    def loadAllQuotas(self):
+        for endpoint in self.endpoints2filesystemset.keys():
+            self.loadQuotas(endpoint)
+
     def getQuotas(self, endpoint):
-        filesystem, fileset = self.endpoint2filesystemset(endpoint)
+        filesystem, fileset = self.endpoints2filesystemset[endpoint]
         redisClient = redis.Redis(host=self.server_redis, port=6379, 
-                                  db=self.filesystemset2db(filesystem, fileset))
+                                  db=self.filesystemset2db[(filesystem, fileset)])
         quota_list = []
         for key in redisClient.scan_iter():
             quota_list.append(json.loads(redisClient.get(key.decode('utf-8'))))
@@ -97,9 +85,9 @@ class GPFS():
         return quota_list
 
     def getQuota(self, endpoint, username):
-        filesystem, fileset = self.endpoint2filesystemset(endpoint)
+        filesystem, fileset = self.endpoints2filesystemset[endpoint]
         redisClient = redis.Redis(host=self.server_redis, port=6379,
-                                  db=self.filesystemset2db(filesystem, fileset))
+                                  db=self.filesystemset2db[(filesystem, fileset)])
         quota_data = redisClient.get(username)
         if quota_data:
             return json.loads(quota_data)
@@ -111,12 +99,3 @@ class GPFS():
                                 auth=(self.user, self.password), verify=False)
         for fs in response.json()['filesystems']:
             print(fs['name'])
-
-
-# test = GPFS()
-# test.loadQuotas('dss_scratch', 'cgsb')
-# print(test.getQuotas('dss_scratch', 'cgsb'))
-# print(test.getQuota('dss_scratch', 'cgsb', 'ag8612'))
-# test.loadFilesystems()
-# foo = json.loads(test.getQuota('dss_home', 'root', 'rjy1'))
-# print(type(foo))
