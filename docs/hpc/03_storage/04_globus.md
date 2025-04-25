@@ -5,7 +5,7 @@ The Globus project aims at providing powerful tools for scientific data manageme
 ## Transferring data between endpoints
 ### Endpoint
 
-A globus **Endpoint** is a data transfer location, a location where data can be moved to or from using Globus transfer, sync and sharing service. An endpoint can either be a ***personal endpoint*** (on a user’s personal computer) or a ***server endpoint*** (located on a server, for use by multiple users). [Please read for details.](https://www.globus.org/data-transfer)
+A globus **Endpoint** is a data transfer location, a location where data can be moved to or from using Globus transfer, sync and sharing service. An endpoint can either be a ***personal endpoint*** (on a user’s personal computer) or a ***server endpoint*** (located on a server, for use by multiple users). Please see [Data Transfer With Globus](https://www.globus.org/data-transfer) for details.
 
 ### Collection
 
@@ -13,7 +13,9 @@ A collection is a named set of files (or blobs), hierarchically organized in fol
 
 ### Data Sharing
 
-How to share data using Globus is described: [https://docs.globus.org/how-to/share-files/](https://docs.globus.org/how-to/share-files/)
+Please see [How to Share Data Using Globus](https://docs.globus.org/how-to/share-files/) for details from Globus.
+
+#### Instructions for NYU
 
 The first step in transferring data is to get a Globus account at [https://www.globus.org/](https://www.globus.org/). Click on "Log in" at upper right corner. Select "New York University" from the pull-down menu and click on "Continue".
 
@@ -36,7 +38,7 @@ The "File Manager" panel should come up as the following image. In order to be a
 The NYU HPC Server Endpoint: nyu#greene
 :::
 
-**Globus Connect Server** is already installed on the NYU HPC cluster creating a ***Server Endpoint*** named **nyu#greene**, that is available to authorized users (users with a valid HPC account) using Globus. If you want to move data to or from your computer and the NYU HPC cluster, you need to install **Globus Connect Personal** on your computer, thus creating a ***Personal Endpoint*** on your computer.
+**Globus Connect Server** is already installed on the NYU HPC cluster creating a ***Server Endpoint*** named **nyu#greene**, that is available to authorized users (users with a valid HPC account) using Globus. If you want to move data to or from your computer and the NYU HPC cluster, you need to install **[Globus Connect Personal](https://www.globus.org/globus-connect-personal)** on your computer, thus creating a ***Personal Endpoint*** on your computer.
 
 ### Moving data between Server Endpoints
 
@@ -71,4 +73,6 @@ Globus support HTTPS access to data. To download a small file from your web brow
 
 ![Globus Download](./static/globus_download.png)
 
-Additional info can be found at this page [https://docs.globus.org/how-to/get-started/](https://docs.globus.org/how-to/get-started/). Feel free to send any question. Good luck!
+Additional info can be found at [File Management How-Tos](https://docs.globus.org/guides/tutorials/manage-files/). 
+
+Please contact [hpc@nyu.edu](mailto:hpc@nyu.edu) if you have any questions.  Good luck!

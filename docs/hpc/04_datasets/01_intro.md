@@ -161,5 +161,8 @@ The Pile is a 825 GiB diverse, open source language modeling data set that consi
 The field of machine learning is changing rapidly. Waymo is in a unique position to contribute to the research community with 	some of the largest and most diverse autonomous driving datasets ever released.
 
 *Dataset is available under*
+-   `/vast/work/public/ml-datasets/waymo_open_dataset_scene_flow`
 -   `/vast/work/public/ml-datasets/waymo_open_dataset_v_1_2_0_individual_files`
+-   `/vast/work/public/ml-datasets/waymo_open_dataset_v_1_3_2_individual_files`
+-   `/vast/work/public/ml-datasets/waymo_open_dataset_v_1_4_1_individual_files`
 
