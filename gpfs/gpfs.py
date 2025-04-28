@@ -74,6 +74,9 @@ class GPFS():
         for endpoint in self.endpoints2filesystemset.keys():
             self.loadQuotas(endpoint)
         self.loadFilesystems()
+        self.loadFilesets('dss_home')
+        self.loadFilesets('dss_scratch')
+        self.loadFilesets('dss_archive')
 
     def getQuotas(self, endpoint):
         filesystem, fileset = self.endpoints2filesystemset[endpoint]
@@ -100,7 +103,7 @@ class GPFS():
                                 auth=(self.user, self.password), verify=False)
         redisClient = redis.Redis(host=self.server_redis, port=6379, db=5)
 
-        last_update = redisClient.get('last_update')
+        last_update = redisClient.get('last_update_filesystems')
         if last_update:
             current_timestamp = datetime.datetime.now().timestamp()
             last_update_timestamp = float(last_update.decode('utf-8'))
@@ -109,7 +112,7 @@ class GPFS():
 
         redisClient.set('filesystems', json.dumps(response.json()))
         timestamp = datetime.datetime.now().timestamp()
-        redisClient.set('last_update', timestamp)
+        redisClient.set('last_update_filesystems', timestamp)
 
     def getFilesystems(self):
         redisClient = redis.Redis(host=self.server_redis, port=6379, db=5)
@@ -118,3 +121,27 @@ class GPFS():
             return json.loads(filesystems)
         else:
             return f'Error: filesystems not found'
+
+    def loadFilesets(self, filesystem):
+        response = requests.get(f'https://{self.server}:443/scalemgmt/v2/filesystems/{filesystem}/filesets', 
+                                auth=(self.user, self.password), verify=False)
+        redisClient = redis.Redis(host=self.server_redis, port=6379, db=5)
+
+        last_update = redisClient.get('last_update_filesets')
+        if last_update:
+            current_timestamp = datetime.datetime.now().timestamp()
+            last_update_timestamp = float(last_update.decode('utf-8'))
+            if (current_timestamp - last_update_timestamp) < (60 * 20):   # 20 minutes 
+                return
+
+        redisClient.set(f'filesets_{filesystem}', json.dumps(response.json()))
+        timestamp = datetime.datetime.now().timestamp()
+        redisClient.set('last_update_filesets', timestamp)
+
+    def getFilesets(self, filesystem):
+        redisClient = redis.Redis(host=self.server_redis, port=6379, db=5)
+        filesets = redisClient.get(f'filesets_{filesystem}')
+        if filesets:
+            return json.loads(filesets)
+        else:
+            return f'Error: filesets for {filesystem} not found'

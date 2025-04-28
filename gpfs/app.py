@@ -68,6 +68,14 @@ def get_filesystems(background_tasks: BackgroundTasks):
        logging.error(f'Error reading filesystems: {err}')
     return {'data': filesystems }
 
+@app.get('/filesets/{filesystem}')
+def get_filesets(filesystem, background_tasks: BackgroundTasks):
+    try:
+        filesets = gpfs.getFilesets(filesystem)
+        background_tasks.add_task(gpfs.loadAllQuotas)
+    except Exception as err:
+       logging.error(f'Error reading filesystems: {err}')
+    return {'data': filesets }
 
 if __name__ == "__main__":
     uvicorn.run(app, host='0.0.0.0', port=8080)
