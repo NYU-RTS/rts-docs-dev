@@ -44,3 +44,6 @@ When adding or modifying GPFS endpoints, you'll need to update the following dic
    - a mapping from endpoint to filesystem and fileset
 - filesystemset2db
    - a mapping from filesystem and fileset to Redis database number
+
+## Dynamic /gpfs/scratch endpoints
+The code stores 'dynamic' versions of the dictionaries endopints2filesystemset and filesystemset2db in the Redis utils cached (db=5).  These contain similar mappings, but for the /gpfs/scratch endpoints.
