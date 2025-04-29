@@ -30,15 +30,15 @@ def index():
 
 @app.get('/healthz')
 def healthz(background_tasks: BackgroundTasks):
-    background_tasks.add_task(gpfs.loadAllQuotas)
-    background_tasks.add_task(gpfs.loadFilesystems)
-    background_tasks.add_task(gpfs.loadAllFilesets)
+    background_tasks.add_task(gpfs.load_all_quotas)
+    background_tasks.add_task(gpfs.load_filesystems)
+    background_tasks.add_task(gpfs.load_all_filesets)
     return {'status': 'ok'}
 
 @app.get('/update_cache/{endpoint}')
 def update_cache_gpfs_home(endpoint):
     try:
-        gpfs.loadQuotas(endpoint, force=True)
+        gpfs.load_quotas(endpoint, force=True)
     except Exception as err:
         logging.error(f'Error updating home cache: {err}')
     return {'status': 'ok'}
@@ -46,10 +46,10 @@ def update_cache_gpfs_home(endpoint):
 @app.get('/quotas/gpfs/{endpoint}')
 def get_quotas_gpfs_endpoint(endpoint, background_tasks: BackgroundTasks):
     try:
-        quotas = gpfs.getQuotas(endpoint)
-        background_tasks.add_task(gpfs.loadAllQuotas)
-        background_tasks.add_task(gpfs.loadFilesystems)
-        background_tasks.add_task(gpfs.loadAllFilesets)
+        quotas = gpfs.get_quotas(endpoint)
+        background_tasks.add_task(gpfs.load_all_quotas)
+        background_tasks.add_task(gpfs.load_filesystems)
+        background_tasks.add_task(gpfs.load_all_filesets)
     except Exception as err:
        logging.error(f'Error reading {endpoint} quotas: {err}')
     return {'data': quotas }
@@ -57,10 +57,10 @@ def get_quotas_gpfs_endpoint(endpoint, background_tasks: BackgroundTasks):
 @app.get('/quota/gpfs/{endpoint}/{username}')
 def get_quota_gpfs_endpoint_username(endpoint, username, background_tasks: BackgroundTasks):
     try:
-        quota = gpfs.getQuota(endpoint, username)
-        background_tasks.add_task(gpfs.loadAllQuotas)
-        background_tasks.add_task(gpfs.loadFilesystems)
-        background_tasks.add_task(gpfs.loadAllFilesets)
+        quota = gpfs.get_quota(endpoint, username)
+        background_tasks.add_task(gpfs.load_all_quotas)
+        background_tasks.add_task(gpfs.load_filesystems)
+        background_tasks.add_task(gpfs.load_all_filesets)
     except Exception as err:
        logging.error(f'Error reading {endpoint} quota for {username}: {err}')
     return {'data': quota }
@@ -68,10 +68,10 @@ def get_quota_gpfs_endpoint_username(endpoint, username, background_tasks: Backg
 @app.get('/filesystems')
 def get_filesystems(background_tasks: BackgroundTasks):
     try:
-        filesystems = gpfs.getFilesystems()
-        background_tasks.add_task(gpfs.loadAllQuotas)
-        background_tasks.add_task(gpfs.loadFilesystems)
-        background_tasks.add_task(gpfs.loadAllFilesets)
+        filesystems = gpfs.get_filesystems()
+        background_tasks.add_task(gpfs.load_all_quotas)
+        background_tasks.add_task(gpfs.load_filesystems)
+        background_tasks.add_task(gpfs.load_all_filesets)
     except Exception as err:
        logging.error(f'Error reading filesystems: {err}')
     return {'data': filesystems }
@@ -79,10 +79,10 @@ def get_filesystems(background_tasks: BackgroundTasks):
 @app.get('/filesets/{filesystem}')
 def get_filesets(filesystem, background_tasks: BackgroundTasks):
     try:
-        filesets = gpfs.getFilesets(filesystem)
-        background_tasks.add_task(gpfs.loadAllQuotas)
-        background_tasks.add_task(gpfs.loadFilesystems)
-        background_tasks.add_task(gpfs.loadAllFilesets)
+        filesets = gpfs.get_filesets(filesystem)
+        background_tasks.add_task(gpfs.load_all_quotas)
+        background_tasks.add_task(gpfs.load_filesystems)
+        background_tasks.add_task(gpfs.load_all_filesets)
     except Exception as err:
        logging.error(f'Error reading filesystems: {err}')
     return {'data': filesets }

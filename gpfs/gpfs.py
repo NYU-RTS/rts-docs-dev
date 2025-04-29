@@ -37,9 +37,9 @@ class GPFS():
         if (filesystem, fileset) in self.filesystemset2db.keys():
             return self.filesystemset2db[(filesystem, fileset)]
 
-        redisClient = redis.Redis(host=self.server_redis, port=6379, db=5)
+        redis_client = redis.Redis(host=self.server_redis, port=6379, db=5)
         filesystemset2db_dynamic = {ast.literal_eval(k): v for k,v 
-                                    in json.loads(redisClient.get('filesystemset2db_dynamic')).items()}
+                                    in json.loads(redis_client.get('filesystemset2db_dynamic')).items()}
         if (filesystem, fileset) in filesystemset2db_dynamic.keys():
             return filesystemset2db_dynamic[(filesystem, fileset)]
     
@@ -48,26 +48,26 @@ class GPFS():
     def get_filesystemset(self, endpoint):
         if endpoint in self.endpoints2filesystemset.keys():
             return self.endpoints2filesystemset[endpoint]
-        redisClient = redis.Redis(host=self.server_redis, port=6379, db=5)
-        endpoint2filesystemset_dynamic = json.loads(redisClient.get('endpoints2filesystemset_dynamic'))
+        redis_client = redis.Redis(host=self.server_redis, port=6379, db=5)
+        endpoint2filesystemset_dynamic = json.loads(redis_client.get('endpoints2filesystemset_dynamic'))
         if endpoint in endpoint2filesystemset_dynamic.keys():
             return endpoint2filesystemset_dynamic[endpoint]
     
         raise ValueError("endpoint key not found")        
 
-    def loadPage(self, redis_client, quotas):
+    def load_quota_page(self, redis_client, quotas):
         for q in quotas:
             if q['quotaType'] == 'USR' and not q['objectName'].isnumeric():
                 redis_client.set(q['objectName'], json.dumps(q))
 
-    def loadQuotas(self, endpoint, force=False):
+    def load_quotas(self, endpoint, force=False):
         filesystem, fileset = self.get_filesystemset(endpoint)
-        redisClient = redis.Redis(host=self.server_redis, port=6379, 
+        redis_client = redis.Redis(host=self.server_redis, port=6379, 
                                   db=self.get_db(filesystem, fileset))
         
-        if redisClient.get('last_update'):
+        if redis_client.get('last_update'):
             current_timestamp = datetime.datetime.now().timestamp()
-            last_update_timestamp = float(redisClient.get('last_update').decode('utf-8'))
+            last_update_timestamp = float(redis_client.get('last_update').decode('utf-8'))
             if (current_timestamp - last_update_timestamp) < (60 * 20) and not force:   # 20 minutes 
                 return
 
@@ -77,107 +77,107 @@ class GPFS():
         except HTTPError as http_err:
             return json.dumps({'error': http_err.response.status_code})
         
-        self.loadPage(redisClient, response.json()["quotas"])
+        self.load_quota_page(redis_client, response.json()["quotas"])
         while True:
             try: 
-                nextPage = response.json()["paging"]["next"]
+                next_page = response.json()["paging"]["next"]
             except:
                 break
             
             try:
-                response = requests.get(f'https://{self.server}:443{nextPage}', 
+                response = requests.get(f'https://{self.server}:443{next_page}', 
                                  auth=(self.user, self.password), 
                                  verify=False)
-                self.loadPage(redisClient, response.json()["quotas"])
+                self.load_quota_page(redis_client, response.json()["quotas"])
             except HTTPError as http_err:
                 return json.dumps({'error': http_err.response.status_code})
 
         timestamp = datetime.datetime.now().timestamp()
-        redisClient.set('last_update', timestamp)
+        redis_client.set('last_update', timestamp)
 
-    def loadAllQuotas(self):
+    def load_all_quotas(self):
         for endpoint in self.endpoints2filesystemset.keys():
-            self.loadQuotas(endpoint)
-        redisClient = redis.Redis(host=self.server_redis, port=6379, db=5)
-        endpoints2filesystemset_dynamic = json.loads(redisClient.get('endpoints2filesystemset_dynamic'))
+            self.load_quotas(endpoint)
+        redis_client = redis.Redis(host=self.server_redis, port=6379, db=5)
+        endpoints2filesystemset_dynamic = json.loads(redis_client.get('endpoints2filesystemset_dynamic'))
         for endpoint in endpoints2filesystemset_dynamic.keys():
-            self.loadQuotas(endpoint)
+            self.load_quotas(endpoint)
 
 
-    def loadEverything(self):
-        self.loadAllQuotas()
-        self.loadFilesystems()
-        self.loadAllFilesets()
+    def load_everything(self):
+        self.load_all_quotas()
+        self.load_filesystems()
+        self.load_all_filesets()
 
-    def loadAllFilesets(self):
-        self.loadFilesets('dss_home')
-        self.loadFilesets('dss_scratch')
-        self.loadFilesets('dss_archive')
+    def load_all_filesets(self):
+        self.load_filesets('dss_home')
+        self.load_filesets('dss_scratch')
+        self.load_filesets('dss_archive')
         self.load_filesets_dynamic()
 
-    def getQuotas(self, endpoint):
+    def get_quotas(self, endpoint):
         filesystem, fileset = self.get_filesystemset(endpoint)
-        redisClient = redis.Redis(host=self.server_redis, port=6379, 
+        redis_client = redis.Redis(host=self.server_redis, port=6379, 
                                   db=self.get_db(filesystem, fileset))
         quota_list = []
-        for key in redisClient.scan_iter():
-            quota_list.append(json.loads(redisClient.get(key.decode('utf-8'))))
+        for key in redis_client.scan_iter():
+            quota_list.append(json.loads(redis_client.get(key.decode('utf-8'))))
 
         return quota_list
 
-    def getQuota(self, endpoint, username):
+    def get_quota(self, endpoint, username):
         filesystem, fileset = self.get_filesystemset(endpoint)
-        redisClient = redis.Redis(host=self.server_redis, port=6379,
+        redis_client = redis.Redis(host=self.server_redis, port=6379,
                                   db=self.get_db(filesystem, fileset))
-        quota_data = redisClient.get(username)
+        quota_data = redis_client.get(username)
         if quota_data:
             return json.loads(quota_data)
         else:
             return f'Error: username {username} not found'
         
-    def loadFilesystems(self):
+    def load_filesystems(self):
         response = requests.get(f'https://{self.server}:443/scalemgmt/v2/filesystems', 
                                 auth=(self.user, self.password), verify=False)
-        redisClient = redis.Redis(host=self.server_redis, port=6379, db=5)
+        redis_client = redis.Redis(host=self.server_redis, port=6379, db=5)
 
-        last_update = redisClient.get('last_update_filesystems')
+        last_update = redis_client.get('last_update_filesystems')
         if last_update:
             current_timestamp = datetime.datetime.now().timestamp()
             last_update_timestamp = float(last_update.decode('utf-8'))
             if (current_timestamp - last_update_timestamp) < (60 * 20):   # 20 minutes 
                 return
 
-        redisClient.set('filesystems', json.dumps(response.json()))
+        redis_client.set('filesystems', json.dumps(response.json()))
         timestamp = datetime.datetime.now().timestamp()
-        redisClient.set('last_update_filesystems', timestamp)
+        redis_client.set('last_update_filesystems', timestamp)
 
-    def getFilesystems(self):
-        redisClient = redis.Redis(host=self.server_redis, port=6379, db=5)
-        filesystems = redisClient.get('filesystems')
+    def get_filesystems(self):
+        redis_client = redis.Redis(host=self.server_redis, port=6379, db=5)
+        filesystems = redis_client.get('filesystems')
         if filesystems:
             return json.loads(filesystems)
         else:
             return f'Error: filesystems not found'
 
-    def loadFilesets(self, filesystem):
+    def load_filesets(self, filesystem):
         response = requests.get(f'https://{self.server}:443/scalemgmt/v2/filesystems/{filesystem}/filesets', 
                                 auth=(self.user, self.password), verify=False)
-        redisClient = redis.Redis(host=self.server_redis, port=6379, db=5)
+        redis_client = redis.Redis(host=self.server_redis, port=6379, db=5)
 
-        last_update = redisClient.get('last_update_filesets')
+        last_update = redis_client.get('last_update_filesets')
         if last_update:
             current_timestamp = datetime.datetime.now().timestamp()
             last_update_timestamp = float(last_update.decode('utf-8'))
             if (current_timestamp - last_update_timestamp) < (60 * 20):   # 20 minutes 
                 return
 
-        redisClient.set(f'filesets_{filesystem}', json.dumps(response.json()))
+        redis_client.set(f'filesets_{filesystem}', json.dumps(response.json()))
         timestamp = datetime.datetime.now().timestamp()
-        redisClient.set('last_update_filesets', timestamp)
+        redis_client.set('last_update_filesets', timestamp)
 
-    def getFilesets(self, filesystem):
-        redisClient = redis.Redis(host=self.server_redis, port=6379, db=5)
-        filesets = redisClient.get(f'filesets_{filesystem}')
+    def get_filesets(self, filesystem):
+        redis_client = redis.Redis(host=self.server_redis, port=6379, db=5)
+        filesets = redis_client.get(f'filesets_{filesystem}')
         if filesets:
             return json.loads(filesets)
         else:
@@ -188,8 +188,8 @@ class GPFS():
         endpoints2filesystemset_dynamic = {}
         filesystemset2db_dynamic = {}
 
-        redisClient = redis.Redis(host=self.server_redis, port=6379, db=5)
-        filesets = json.loads(redisClient.get(f'filesets_dss_scratch'))
+        redis_client = redis.Redis(host=self.server_redis, port=6379, db=5)
+        filesets = json.loads(redis_client.get(f'filesets_dss_scratch'))
         for v in filesets['filesets']:
             if v['filesetName'] not in list(self.endpoints2filesystemset.keys()):
                 endpoints2filesystemset_dynamic[v['filesetName']] = ('dss_scratch', v['filesetName'])
@@ -199,9 +199,9 @@ class GPFS():
             if curr_db > 10:
                 break
 
-        redisClient.set('endpoints2filesystemset_dynamic', json.dumps(endpoints2filesystemset_dynamic))
+        redis_client.set('endpoints2filesystemset_dynamic', json.dumps(endpoints2filesystemset_dynamic))
         filesystemset2db_dynamic_str_keys = {str(k): v for k, v in filesystemset2db_dynamic.items()}
-        redisClient.set('filesystemset2db_dynamic', json.dumps(filesystemset2db_dynamic_str_keys))
+        redis_client.set('filesystemset2db_dynamic', json.dumps(filesystemset2db_dynamic_str_keys))
 
 
 
@@ -209,9 +209,9 @@ class GPFS():
 # test.load_filesets_dynamic()
 # print('*** db: ', test.get_db('dss_scratch', 'hartleylab'))
 # print('*** tup: ', test.get_filesystemset('hartleylab'))
-# test.loadQuotas('hartleylab')
-# print(test.getQuotas('hartleylab'))
-# print(test.getQuota('hartleylab', 'ss18879'))
-# test.loadAllQuotas()
-# test.loadEverything()
+# test.load_quotas('hartleylab')
+# print(test.get_quotas('hartleylab'))
+# print(test.get_quota('hartleylab', 'ss18879'))
+# test.load_all_quotas()
+# test.load_everything()
 # print(test.get_filesystemset('root'))
