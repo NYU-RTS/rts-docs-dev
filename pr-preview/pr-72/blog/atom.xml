@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="atom.xsl"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://your-docusaurus-site.example.com/rts-docs-dev/pr-preview/pr-72/blog/</id>
-    <title>Research Technology Servcies Blog</title>
+    <title>Research Technology Services Blog</title>
     <updated>2021-08-01T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://your-docusaurus-site.example.com/rts-docs-dev/pr-preview/pr-72/blog/"/>
-    <subtitle>Research Technology Servcies Blog</subtitle>
+    <subtitle>Research Technology Services Blog</subtitle>
     <icon>https://your-docusaurus-site.example.com/rts-docs-dev/pr-preview/pr-72/img/NYU.ico</icon>
     <entry>
         <title type="html"><![CDATA[MDX Blog Post]]></title>
