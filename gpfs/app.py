@@ -31,6 +31,8 @@ def index():
 @app.get('/healthz')
 def healthz(background_tasks: BackgroundTasks):
     background_tasks.add_task(gpfs.loadAllQuotas)
+    background_tasks.add_task(gpfs.loadFilesystems)
+    background_tasks.add_task(gpfs.loadAllFilesets)
     return {'status': 'ok'}
 
 @app.get('/update_cache/{endpoint}')
@@ -46,6 +48,8 @@ def get_quotas_gpfs_endpoint(endpoint, background_tasks: BackgroundTasks):
     try:
         quotas = gpfs.getQuotas(endpoint)
         background_tasks.add_task(gpfs.loadAllQuotas)
+        background_tasks.add_task(gpfs.loadFilesystems)
+        background_tasks.add_task(gpfs.loadAllFilesets)
     except Exception as err:
        logging.error(f'Error reading {endpoint} quotas: {err}')
     return {'data': quotas }
@@ -55,6 +59,8 @@ def get_quota_gpfs_endpoint_username(endpoint, username, background_tasks: Backg
     try:
         quota = gpfs.getQuota(endpoint, username)
         background_tasks.add_task(gpfs.loadAllQuotas)
+        background_tasks.add_task(gpfs.loadFilesystems)
+        background_tasks.add_task(gpfs.loadAllFilesets)
     except Exception as err:
        logging.error(f'Error reading {endpoint} quota for {username}: {err}')
     return {'data': quota }
@@ -64,6 +70,8 @@ def get_filesystems(background_tasks: BackgroundTasks):
     try:
         filesystems = gpfs.getFilesystems()
         background_tasks.add_task(gpfs.loadAllQuotas)
+        background_tasks.add_task(gpfs.loadFilesystems)
+        background_tasks.add_task(gpfs.loadAllFilesets)
     except Exception as err:
        logging.error(f'Error reading filesystems: {err}')
     return {'data': filesystems }
@@ -73,6 +81,8 @@ def get_filesets(filesystem, background_tasks: BackgroundTasks):
     try:
         filesets = gpfs.getFilesets(filesystem)
         background_tasks.add_task(gpfs.loadAllQuotas)
+        background_tasks.add_task(gpfs.loadFilesystems)
+        background_tasks.add_task(gpfs.loadAllFilesets)
     except Exception as err:
        logging.error(f'Error reading filesystems: {err}')
     return {'data': filesets }

@@ -98,10 +98,22 @@ class GPFS():
     def loadAllQuotas(self):
         for endpoint in self.endpoints2filesystemset.keys():
             self.loadQuotas(endpoint)
+        redisClient = redis.Redis(host=self.server_redis, port=6379, db=5)
+        endpoints2filesystemset_dynamic = json.loads(redisClient.get('endpoints2filesystemset_dynamic'))
+        for endpoint in endpoints2filesystemset_dynamic.keys():
+            self.loadQuotas(endpoint)
+
+
+    def loadEverything(self):
+        self.loadAllQuotas()
         self.loadFilesystems()
+        self.loadAllFilesets()
+
+    def loadAllFilesets(self):
         self.loadFilesets('dss_home')
         self.loadFilesets('dss_scratch')
         self.loadFilesets('dss_archive')
+        self.load_filesets_dynamic()
 
     def getQuotas(self, endpoint):
         filesystem, fileset = self.get_filesystemset(endpoint)
@@ -171,7 +183,7 @@ class GPFS():
         else:
             return f'Error: filesets for {filesystem} not found'
 
-    def load_scratch_dicts(self):
+    def load_filesets_dynamic(self):
         curr_db = 6
         endpoints2filesystemset_dynamic = {}
         filesystemset2db_dynamic = {}
@@ -194,9 +206,12 @@ class GPFS():
 
 
 # test = GPFS()
-# test.load_scratch_dicts()
+# test.load_filesets_dynamic()
 # print('*** db: ', test.get_db('dss_scratch', 'hartleylab'))
 # print('*** tup: ', test.get_filesystemset('hartleylab'))
 # test.loadQuotas('hartleylab')
 # print(test.getQuotas('hartleylab'))
 # print(test.getQuota('hartleylab', 'ss18879'))
+# test.loadAllQuotas()
+# test.loadEverything()
+# print(test.get_filesystemset('root'))
