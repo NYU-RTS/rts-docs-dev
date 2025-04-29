@@ -103,6 +103,19 @@ Because this will build your foundations in understanding the different kinds of
 
 Similar to `/home`, users have access to multiple filesystems that are :
 
+```mermaid
+architecture-beta
+    service server(server)[Greene]
+    service disk1(disk)[home]
+    service disk2(disk)[scratch]
+    service disk3(disk)[archive]
+
+    server:B -- T:disk1
+    server:B -- T:disk2
+    server:B -- T:disk3
+
+```
+
 | Filesystem | User(s) space       | Purpose         | Env Variable |
 | ---------- | ---------------- | --------------- | --- |
 | /home      | /home/**Net_ID**/    | Workspace       | $HOME

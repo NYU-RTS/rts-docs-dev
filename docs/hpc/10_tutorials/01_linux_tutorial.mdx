@@ -9,6 +9,19 @@ Login to the Greene cluster as described in the section on [connecting to the HP
 
 Files Systems for usage:
 
+```mermaid
+architecture-beta
+    service server(server)[Greene]
+    service disk1(disk)[home]
+    service disk2(disk)[scratch]
+    service disk3(disk)[archive]
+
+    server:B -- T:disk1
+    server:B -- T:disk2
+    server:B -- T:disk3
+
+```
+
 The NYU HPC clusters have multiple file systems for user's file storage needs. Each file system is configured differently to serve a different purpose.
 
 | **Space** | **Environment Variable** | **Purpose** | **Flushed?** | **Allocation** (per user) |
