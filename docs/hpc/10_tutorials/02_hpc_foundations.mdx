@@ -109,10 +109,14 @@ architecture-beta
     service disk1(disk)[home]
     service disk2(disk)[scratch]
     service disk3(disk)[archive]
+    service disk4(disk)[vast]
+    service disk5(disk)[research project space]
 
-    server:B -- T:disk1
-    server:B -- T:disk2
-    server:B -- T:disk3
+    server:L -- R:disk1
+    server:L -- R:disk2
+    server:L -- R:disk3
+    server:L -- R:disk4
+    server:L -- R:disk5
 
 ```
 
