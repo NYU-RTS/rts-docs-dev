@@ -20,40 +20,58 @@ class GPFS():
         self.password = password
         self.server = server
         self.server_redis = os.environ['REDISSERVER']
-        self.endpoints2filesystemset = { 
-            'home': ('dss_home', 'root'),
-            'scratch': ('dss_scratch', 'root'),
-            'archive': ('dss_archive', 'root'),
-            'cgsb': ('dss_scratch', 'cgsb')
-        }
-        self.filesystemset2db = {
-            ('dss_home', 'root'): 1,
-            ('dss_scratch', 'root'): 2,
-            ('dss_archive', 'root'): 3,
-            ('dss_scratch', 'cgsb'): 4
-        }
+
+    def clear_gpfs_dbs(self):
+        for db_num in range(1,16):
+            if db_num > 0:  # extra protection for vast db
+                redis_client = redis.Redis(host=self.server_redis, port=6379, db=db_num)
+                redis_client.flushdb()
+
+    def create_file_systems_and_sets(self):
+        self.clear_gpfs_dbs()
+        self.load_filesystems_and_sets(force=True)
+        self.make_mapping_dicts()
+        self.load_all_quotas()
+
+    def make_mapping_dicts(self):
+        curr_db = 2
+        endpoints2filesystemset = {}
+        filesystemset2db = {}
+
+        filesystems = [_['name'] for _ in self.get_filesystems()['filesystems']]
+        for fsys in filesystems:
+            filesets_json = self.get_filesets(fsys)
+            if filesets_json:
+                filesets = [_['filesetName'] for _ in filesets_json['filesets']]
+                for fset in filesets:
+                    endpoints2filesystemset[fset] = (fsys, fset)
+                    filesystemset2db[(fsys, fset)] = curr_db
+                    curr_db += 1
+                    # TODO: remove after we increase default db size
+                    if curr_db > 15:
+                        break
+
+        redis_client = redis.Redis(host=self.server_redis, port=6379, db=1)
+        redis_client.set('endpoints2filesystemset', json.dumps(endpoints2filesystemset))
+        filesystemset2db_str_keys = {str(k): v for k, v in filesystemset2db.items()}
+        redis_client.set('filesystemset2db', json.dumps(filesystemset2db_str_keys))
 
     def get_db(self, filesystem, fileset):
-        if (filesystem, fileset) in self.filesystemset2db.keys():
-            return self.filesystemset2db[(filesystem, fileset)]
+        redis_client = redis.Redis(host=self.server_redis, port=6379, db=1)
+        filesystemset2db = {ast.literal_eval(k): v for k,v 
+                                in json.loads(redis_client.get('filesystemset2db')).items()}
+        try:
+            return filesystemset2db[(filesystem, fileset)]
+        except KeyError:
+            print(f"filesystem and fileset key ({filesystem}, {fileset}) not found.")
 
-        redis_client = redis.Redis(host=self.server_redis, port=6379, db=5)
-        filesystemset2db_dynamic = {ast.literal_eval(k): v for k,v 
-                                    in json.loads(redis_client.get('filesystemset2db_dynamic')).items()}
-        if (filesystem, fileset) in filesystemset2db_dynamic.keys():
-            return filesystemset2db_dynamic[(filesystem, fileset)]
-    
-        raise ValueError("filesystem and fileset key not found")
-    
     def get_filesystemset(self, endpoint):
-        if endpoint in self.endpoints2filesystemset.keys():
-            return self.endpoints2filesystemset[endpoint]
-        redis_client = redis.Redis(host=self.server_redis, port=6379, db=5)
-        endpoint2filesystemset_dynamic = json.loads(redis_client.get('endpoints2filesystemset_dynamic'))
-        if endpoint in endpoint2filesystemset_dynamic.keys():
-            return endpoint2filesystemset_dynamic[endpoint]
-    
-        raise ValueError("endpoint key not found")        
+        redis_client = redis.Redis(host=self.server_redis, port=6379, db=1)
+        endpoints2filesystemset = json.loads(redis_client.get('endpoints2filesystemset'))
+        try:
+            return endpoints2filesystemset[endpoint]
+        except KeyError:
+            print(f'Error: key {endpoint} not found in endpoint2filesystemset.')
 
     def load_quota_page(self, redis_client, quotas):
         for q in quotas:
@@ -96,24 +114,14 @@ class GPFS():
         redis_client.set('last_update', timestamp)
 
     def load_all_quotas(self):
-        for endpoint in self.endpoints2filesystemset.keys():
+        redis_client = redis.Redis(host=self.server_redis, port=6379, db=1)
+        endpoints2filesystemset = json.loads(redis_client.get('endpoints2filesystemset'))
+        for endpoint in endpoints2filesystemset.keys():
             self.load_quotas(endpoint)
-        redis_client = redis.Redis(host=self.server_redis, port=6379, db=5)
-        endpoints2filesystemset_dynamic = json.loads(redis_client.get('endpoints2filesystemset_dynamic'))
-        for endpoint in endpoints2filesystemset_dynamic.keys():
-            self.load_quotas(endpoint)
-
 
     def load_everything(self):
         self.load_all_quotas()
-        self.load_filesystems()
-        self.load_all_filesets()
-
-    def load_all_filesets(self):
-        self.load_filesets('dss_home')
-        self.load_filesets('dss_scratch')
-        self.load_filesets('dss_archive')
-        self.load_filesets_dynamic()
+        self.load_filesystems_and_sets()
 
     def get_quotas(self, endpoint):
         filesystem, fileset = self.get_filesystemset(endpoint)
@@ -134,74 +142,46 @@ class GPFS():
             return json.loads(quota_data)
         else:
             return f'Error: username {username} not found'
-        
-    def load_filesystems(self):
-        response = requests.get(f'https://{self.server}:443/scalemgmt/v2/filesystems', 
-                                auth=(self.user, self.password), verify=False)
-        redis_client = redis.Redis(host=self.server_redis, port=6379, db=5)
+         
+    def check_filesystems_and_sets_for_changes():
+        print('coming soon')
 
+    def load_filesystems_and_sets(self, force=False):
+        # TODO: add check against existing dict.  What should we do if/when they diverge??
+
+        redis_client = redis.Redis(host=self.server_redis, port=6379, db=1)
         last_update = redis_client.get('last_update_filesystems')
-        if last_update:
+        if last_update and not force:
             current_timestamp = datetime.datetime.now().timestamp()
             last_update_timestamp = float(last_update.decode('utf-8'))
             if (current_timestamp - last_update_timestamp) < (60 * 20):   # 20 minutes 
                 return
 
+        response = requests.get(f'https://{self.server}:443/scalemgmt/v2/filesystems', 
+                                auth=(self.user, self.password), verify=False)
         redis_client.set('filesystems', json.dumps(response.json()))
         timestamp = datetime.datetime.now().timestamp()
-        redis_client.set('last_update_filesystems', timestamp)
+
+        filesystems = [_['name'] for _ in response.json()['filesystems']]
+        for fs in filesystems:
+            response = requests.get(f'https://{self.server}:443/scalemgmt/v2/filesystems/{fs}/filesets', 
+                auth=(self.user, self.password), verify=False)
+            redis_client.set(f'filesets_{fs}', json.dumps(response.json()))
+
+        redis_client.set('last_update_filesystems_and_sets', timestamp)
 
     def get_filesystems(self):
-        redis_client = redis.Redis(host=self.server_redis, port=6379, db=5)
+        redis_client = redis.Redis(host=self.server_redis, port=6379, db=1)
         filesystems = redis_client.get('filesystems')
         if filesystems:
             return json.loads(filesystems)
         else:
             return f'Error: filesystems not found'
 
-    def load_filesets(self, filesystem):
-        response = requests.get(f'https://{self.server}:443/scalemgmt/v2/filesystems/{filesystem}/filesets', 
-                                auth=(self.user, self.password), verify=False)
-        redis_client = redis.Redis(host=self.server_redis, port=6379, db=5)
-
-        last_update = redis_client.get('last_update_filesets')
-        if last_update:
-            current_timestamp = datetime.datetime.now().timestamp()
-            last_update_timestamp = float(last_update.decode('utf-8'))
-            if (current_timestamp - last_update_timestamp) < (60 * 20):   # 20 minutes 
-                return
-
-        redis_client.set(f'filesets_{filesystem}', json.dumps(response.json()))
-        timestamp = datetime.datetime.now().timestamp()
-        redis_client.set('last_update_filesets', timestamp)
-
     def get_filesets(self, filesystem):
-        redis_client = redis.Redis(host=self.server_redis, port=6379, db=5)
+        redis_client = redis.Redis(host=self.server_redis, port=6379, db=1)
         filesets = redis_client.get(f'filesets_{filesystem}')
-        if filesets:
-            return json.loads(filesets)
-        else:
-            return f'Error: filesets for {filesystem} not found'
-
-    def load_filesets_dynamic(self):
-        curr_db = 6
-        endpoints2filesystemset_dynamic = {}
-        filesystemset2db_dynamic = {}
-
-        redis_client = redis.Redis(host=self.server_redis, port=6379, db=5)
-        filesets = json.loads(redis_client.get(f'filesets_dss_scratch'))
-        for v in filesets['filesets']:
-            if v['filesetName'] not in list(self.endpoints2filesystemset.keys()):
-                endpoints2filesystemset_dynamic[v['filesetName']] = ('dss_scratch', v['filesetName'])
-                filesystemset2db_dynamic[('dss_scratch', v['filesetName'])] = curr_db
-                curr_db += 1
-            # TODO: remove after we increase default db size
-            if curr_db > 10:
-                break
-
-        redis_client.set('endpoints2filesystemset_dynamic', json.dumps(endpoints2filesystemset_dynamic))
-        filesystemset2db_dynamic_str_keys = {str(k): v for k, v in filesystemset2db_dynamic.items()}
-        redis_client.set('filesystemset2db_dynamic', json.dumps(filesystemset2db_dynamic_str_keys))
+        return json.loads(filesets) if filesets else ''
 
 
 
@@ -215,3 +195,13 @@ class GPFS():
 # test.load_all_quotas()
 # test.load_everything()
 # print(test.get_filesystemset('root'))
+
+# test = GPFS()
+# test.create_file_systems_and_sets()
+# print(test.get_filesystemset('home'))
+# test.load_all_quotas()
+# print(test.get_quotas('hartleylab'))
+# print(test.get_quota('hartleylab', 'mm13852'))
+
+# test.load_all_quotas()
+# test.load_filesystems_and_sets()
