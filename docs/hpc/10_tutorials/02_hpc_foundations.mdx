@@ -120,11 +120,12 @@ architecture-beta
 
 ```
 
-| Filesystem | User(s) space       | Purpose         | Env Variable |
+| Filesystem | User(s) space       | Purpose           | Env Variable |
 | ---------- | ---------------- | --------------- | --- |
-| /home      | /home/**Net_ID**/    | Workspace       | $HOME
-| /scratch   | /scratch/**Net_ID**/ | General Storage | $SCRATCH
-| /archive   | /archive/**Net_ID**/ | Cold Storage    | $ARCHIVE
+| /home      | /home/**Net_ID**/    | Workspace        | $HOME
+| /scratch   | /scratch/**Net_ID**/ | General Storage  | $SCRATCH
+| /archive   | /archive/**Net_ID**/ | Cold Storage     | $ARCHIVE
+| /vast      | /vast/**Net_ID**/    | High I/O Storage | $VAST
 
 You will find more details about these filesystems at [Greene Storage Types page](../12_spec_sheet.mdx).
 
