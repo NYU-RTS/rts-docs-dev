@@ -105,19 +105,20 @@ Similar to `/home`, users have access to multiple filesystems that are :
 
 ```mermaid
 architecture-beta
-    service server(server)[Greene]
-    service disk1(disk)[home]
-    service disk2(disk)[scratch]
-    service disk3(disk)[archive]
-    service disk4(disk)[vast]
-    service disk5(disk)[research project space]
+    service greene(server)[Greene]
+    service home(disk)[home]
+    service scratch(disk)[scratch]
+    service archive(disk)[archive]
+    service vast(disk)[vast]
+    service rps(disk)[research project space]
+    service login(server)[login node]
 
-    server:L -- R:disk1
-    server:L -- R:disk2
-    server:L -- R:disk3
-    server:L -- R:disk4
-    server:L -- R:disk5
-
+    greene:L -- R:login
+    login:B -- T:archive
+    greene:T -- B:home
+    greene:B -- T:scratch
+    greene:R -- L:vast
+    greene:R -- L:rps
 ```
 
 | Filesystem | User(s) space       | Purpose           | Env Variable |
