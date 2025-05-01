@@ -103,11 +103,30 @@ Because this will build your foundations in understanding the different kinds of
 
 Similar to `/home`, users have access to multiple filesystems that are :
 
-| Filesystem | User(s) space       | Purpose         | Env Variable |
+```mermaid
+architecture-beta
+    service greene(server)[Greene]
+    service home(disk)[home]
+    service scratch(disk)[scratch]
+    service archive(disk)[archive]
+    service vast(disk)[vast]
+    service rps(disk)[research project space]
+    service login(server)[login node]
+
+    greene:L -- R:login
+    login:B -- T:archive
+    greene:T -- B:home
+    greene:B -- T:scratch
+    greene:R -- L:vast
+    greene:R -- L:rps
+```
+
+| Filesystem | User(s) space       | Purpose           | Env Variable |
 | ---------- | ---------------- | --------------- | --- |
-| /home      | /home/**Net_ID**/    | Workspace       | $HOME
-| /scratch   | /scratch/**Net_ID**/ | General Storage | $SCRATCH
-| /archive   | /archive/**Net_ID**/ | Cold Storage    | $ARCHIVE
+| /home      | /home/**Net_ID**/    | Workspace        | $HOME
+| /scratch   | /scratch/**Net_ID**/ | General Storage  | $SCRATCH
+| /archive   | /archive/**Net_ID**/ | Cold Storage     | $ARCHIVE
+| /vast      | /vast/**Net_ID**/    | High I/O Storage | $VAST
 
 You will find more details about these filesystems at [Greene Storage Types page](../12_spec_sheet.mdx).
 

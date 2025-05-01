@@ -1,4 +1,4 @@
-# Slurm Tutorial
+# Slurm: Tutorial
 
 ## Introduction to High Performance Computing Clusters
 
@@ -14,29 +14,29 @@ The Slurm software system is a resource manager and a job scheduler, which is de
 
 -   This tutorial assumes you have a NYU HPC account. If not, you may find the steps to apply for an account on the [Getting and renewing an account page](../01_getting_started/02_getting_and_renewing_an_account.md).
 
--   It also assumes you are comfortable with Linux command-line environment. To learn about linux please read \[Tutorial 1].
+-   It also assumes you are comfortable with Linux command-line environment. To learn about linux please read our [Linux Tutorial](../10_tutorials/01_linux_tutorial.mdx).
 
--   Please review the \[Hardware Specs page] for more information on Greene's hardware specifications.
+-   Please review the [Hardware Specs page](../12_spec_sheet.mdx) for more information on Greene's hardware specifications.
 
 ## Slurm Commands
 
-For an overview of useful Slurm commands, please read (Slurm Main Commands) page before continuing the tutorial.
+For an overview of useful Slurm commands, please read [Slurm Main Commands](./02_slurm_main_commands.md) page before continuing the tutorial.
 
 ## Software and Environment Modules
 
-Lmod, an Environment Module system, is a tool for managing multiple versions and configurations of software packages and is used by many HPC centers around the world. With Environment Modules, software packages are installed away from the base system directories, and for each pacakge, an associated modulefile describes what must be altered in a user's shell environment - such as the $PATH environment variable - in order to use the software package. The modulefile also describes dependencies and conflicts between this software package and other package and versions.
+Lmod, an Environment Module system, is a tool for managing multiple versions and configurations of software packages and is used by many HPC centers around the world. With Environment Modules, software packages are installed away from the base system directories, and for each pacakge, an associated modulefile describes what must be altered in a user's shell environment - such as the $PATH environment variable - in order to use the software package. The modulefile also describes dependencies and conflicts between this software package and other packages and versions.
 
 To use a given software package, you load the corresponding module. Unloading the module afterwards cleanly undoes the changes that loading the modules made to your environment, thus freeing you to use other software packages that might have conflicted with the first one.
 
 Below is a list of modules and their associated functions:
 
 -   `module load <module-name>` : loads a module
-    -   For example : `module load python3`
+    -   For example : `module load python`
 
 -   `module unload <module-name>` : unloads a module
-    -   For example : `module unload python3`
+    -   For example : `module unload python`
 
--   `module show <module-name>` : see exactly what effect loading a module will have with 
+-   `module show <module-name>` : see exactly what effect loading a module will have 
 
 -   `module purge` : remove all loaded modules from your environment
 
@@ -50,7 +50,7 @@ Below is a list of modules and their associated functions:
 
 ## Batch Job Example
 
-Batch jobs require a script file for the SLURM scheduler to interpret and execute. The SBATCH file contains both commands specific for SLURM to interpret as well as programs for it execute. Below is a simple example of a batch job to run a Stata do file, the file is named myscript.sbatch :
+Batch jobs require a script file for the SLURM scheduler to interpret and execute. The SBATCH file contains both commands specific for SLURM to interpret as well as programs for it to execute. Below is a simple example of a batch job to run a Stata do file, the file is named myscript.sbatch :
 
 ```sh
 #!/bin/bash
@@ -76,7 +76,7 @@ cd $RUNDIR
 stata -b do $DATADIR/data_0706.do
 ```
 
-Below we will break down each line of the SBATCH script. More options can be found on the (SchedMD website).
+Below we will break down each line of the SBATCH script. More options can be found on the [SchedMD website](https://slurm.schedmd.com/documentation.html).
 
 ```sh
 ## This tells the shell how to execute the script
@@ -135,7 +135,7 @@ You can submit the job with the following command:
 sbatch myscript.sbatch
 ```
 
-The command will result in the job queuing as it awaits resources to become available (which varies on the number of other jobs being run on the cluster). You can see the status of yor jobs with the following command:
+The command will result in the job queuing as it awaits resources to become available (which varies on the number of other jobs being run on the cluster and the resources requested). You can see the status of yor jobs with the following command:
 
 ```sh
 squeue --me
@@ -151,7 +151,7 @@ cat slurm-<job_ID>.out
 
 ## Interactive Job Example
 
-While the majority of the jobs on the cluster are submitted with the `sbatch` command, and executed in the background, there are also methods to run applications interactively throughthe `srun` command. Interactive jobs allow the users to enter commands and data on the command line (or in a graphical interface), providing an experience similar to working on a desktop or laptop. Examples of common interactive tasks are:
+While the majority of the jobs on the cluster are submitted with the `sbatch` command, and executed in the background, there are also methods to run applications interactively through the `srun` command. Interactive jobs allow the users to enter commands and data on the command line (or in a graphical interface), providing an experience similar to working on a desktop or laptop. Examples of common interactive tasks are:
 
 -   Editing files
 
@@ -232,18 +232,10 @@ exit
 
 MPI stands for "Message Passing Interface" and is managed by a program, such as OpenMPI, to coordinate code and resources across the HPC cluster for your job to run workloads in parallel. You may have heard of HPC sometimes referred to as "parallel computing" because the ability to run many processes simultaneously - aka in parallel - is how the best efficiencies can be realized on the cluster. Users interested in MPI generally must compile the program they want to run using an MPI compiler. 
 
-Greene supports two common OpenMPI versions, Intel and GCC. These can be loaded as modules:
-
-### Intel's OpenMPI
+Greene supports many MPI compilers. We'll be using the OpenMPI GCC compiler in this tutorial.  It can be loaded as a module:
 
 ```sh
-module load openmpi/intel/4.1.1
-```
-
-### GCC's OpenMPI
-
-```sh
-module load openmpi/gcc/4.1.1
+module load openmpi/gcc/4.1.6
 ```
 
 Below we will illustrate an example of how to compile a C script for MPI. Copy this into your working directory as ` hellompi.c ` :
@@ -271,7 +263,7 @@ int main(int argc, char *argv[], char *envp[]) {
 Once copied into your directory, load OpenMPI and compile it with the following:
 
 ```sh
-module load openmpi/intel/4.1.1
+module load openmpi/gcc/4.1.6
 mpicc hellompi.c -o hellompi
 ```
 
@@ -321,7 +313,18 @@ To request one GPU card, use SBATCH directives in job script:
 #SBATCH --gres=gpu:1
 ```
 
-To request a specific card type, use e.g. ` --gres=gpu:v100:1 `. The card types currently available are v100 and RTX 8000. As an example, let's submit an Amber job. Amber is a molecular dynamics software package. The recipe is:
+To request a specific card type, use e.g. ` --gres=gpu:v100:1 `. The card types currently available are:
+-   NVIDIA
+      -   RTX 8000
+      -   V100
+      -   A100 NVIDIA 8358
+      -   A100 NVIDIA 8380
+      -   H100 NVIDIA
+-   AMD
+      -   MI100
+      -   MI250
+ 
+ As an example, let's submit an Amber job. Amber is a molecular dynamics software package. The recipe is:
 
 ```sh
 mkdir -p /scratch/$USER/myambertest

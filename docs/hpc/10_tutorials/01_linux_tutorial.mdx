@@ -9,6 +9,24 @@ Login to the Greene cluster as described in the section on [connecting to the HP
 
 Files Systems for usage:
 
+```mermaid
+architecture-beta
+    service greene(server)[Greene]
+    service home(disk)[home]
+    service scratch(disk)[scratch]
+    service archive(disk)[archive]
+    service vast(disk)[vast]
+    service rps(disk)[research project space]
+    service login(server)[login node]
+
+    greene:L -- R:login
+    login:B -- T:archive
+    greene:T -- B:home
+    greene:B -- T:scratch
+    greene:R -- L:vast
+    greene:R -- L:rps
+```
+
 The NYU HPC clusters have multiple file systems for user's file storage needs. Each file system is configured differently to serve a different purpose.
 
 | **Space** | **Environment Variable** | **Purpose** | **Flushed?** | **Allocation** (per user) |
@@ -16,6 +34,7 @@ The NYU HPC clusters have multiple file systems for user's file storage needs. E
 | `/home` | `$HOME` | Program Development space; For storing small files, source code, scripts etc that are backed up | NO | 20GB |
 | `/scratch` | `$SCRATCH` | Computational Workspace; For storing large files/data, infrequent reads and writes | YES Files not accessed for 60 days are deleted | 5TB |
 | `/archive` | `$ARCHIVE` | Long Term Storage ( Cold storage ) | NO | 2TB |
+| `/vast`    | `$VAST`    | High I/O Storage | YES  Files not accessed for 60 days are deleted| 2TB |
 
 ## Basic Linux Commands
 
