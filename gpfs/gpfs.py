@@ -6,7 +6,6 @@ import datetime
 import requests
 from requests.exceptions import HTTPError
 import ast
-import sys
 
 urllib3.disable_warnings()
 
@@ -140,12 +139,7 @@ class GPFS():
         else:
             return f'Error: username {username} not found'
          
-    def check_filesystems_and_sets_for_changes():
-        print('coming soon')
-
     def load_filesystems_and_sets(self, force=False):
-        # TODO: add check against existing dict.  What should we do if/when they diverge??
-
         redis_client = redis.Redis(host=self.server_redis, port=6379, db=1)
         last_update = redis_client.get('last_update_filesystems')
         if last_update and not force:
