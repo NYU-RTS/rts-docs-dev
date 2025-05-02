@@ -22,7 +22,7 @@ class GPFS():
         self.server_redis = os.environ['REDISSERVER']
 
     def clear_gpfs_dbs(self):
-        for db_num in range(1,16):
+        for db_num in range(1,99):      # TODO: fix this magic number
             if db_num > 0:  # extra protection for vast db
                 redis_client = redis.Redis(host=self.server_redis, port=6379, db=db_num)
                 redis_client.flushdb()
@@ -47,9 +47,6 @@ class GPFS():
                     endpoints2filesystemset[fset] = (fsys, fset)
                     filesystemset2db[(fsys, fset)] = curr_db
                     curr_db += 1
-                    # TODO: remove after we increase default db size
-                    if curr_db > 15:
-                        break
 
         redis_client = redis.Redis(host=self.server_redis, port=6379, db=1)
         redis_client.set('endpoints2filesystemset', json.dumps(endpoints2filesystemset))
