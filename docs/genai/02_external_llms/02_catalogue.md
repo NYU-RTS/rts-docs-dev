@@ -12,6 +12,6 @@ We currently facilitate access to the following externally hosted LLMs:
 ## VertexAI
 -   Gemini-2.5-flash-preview-04-17
 -   Gemini-2.0 models (flash, flash-lite)
--   Gemini-1.5 models (flash, pro)
+-   Gemini-1.5 models (flash, pro) (deprecated)
 
 For a comprehensive list, please [refer to the VertexAI documentation](https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models).
