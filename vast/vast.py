@@ -113,10 +113,11 @@ class VASTClient(object):
         
     def load_user_quotas_redis(self, url, force = False):
         r = redis.Redis(host=os.environ['REDISSERVER'], port=6379, db=0)
-        current_timestamp = datetime.datetime.now().timestamp()
-        last_update_timestamp = float(r.get('last_update').decode('utf-8'))
-        if not force and ((current_timestamp - last_update_timestamp) < (60 * 20)):  # 20 minutes
-            return
+        if r.get('last_update'):
+            current_timestamp = datetime.datetime.now().timestamp()
+            last_update_timestamp = float(r.get('last_update').decode('utf-8'))
+            if not force and ((current_timestamp - last_update_timestamp) < (60 * 20)):  # 20 minutes
+                return
 
         client_response = self.get(url)
         self.parse_load_block(r, client_response['results'])
