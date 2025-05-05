@@ -1,5 +1,5 @@
 import logging
-from fastapi import FastAPI
+from fastapi import FastAPI, BackgroundTasks
 import uvicorn
 from pydantic import BaseModel
 from typing import (
@@ -19,6 +19,9 @@ class GroupMembers(BaseModel):
 app = FastAPI()
 gpfs = gpfs.GPFS()
 
+# create Redis stores and dictionaries
+gpfs.create_file_systems_and_sets()
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
@@ -29,44 +32,62 @@ def index():
     return {'data': 'Go away please'}
 
 @app.get('/healthz')
-def index():
+def healthz(background_tasks: BackgroundTasks):
+    background_tasks.add_task(gpfs.load_all_quotas)
+    background_tasks.add_task(gpfs.load_filesystems_and_sets)
     return {'status': 'ok'}
 
-@app.get('/message')
-def index():
-    return {'data': 'FastAPI is easy!'}
-
-@app.get('/quotas/gpfs/home')
-def index():
+@app.get('/update_cache/{endpoint}')
+def update_cache_gpfs_home(endpoint):
     try:
-        quotas = gpfs.getQuotas('dss_home', 'root')
+        gpfs.load_quotas(endpoint, force=True)
     except Exception as err:
-       logging.error(f'Error reading home quotas: {err}')
+        logging.error(f'Error updating home cache: {err}')
+    return {'status': 'ok'}
+
+@app.get('/quotas/gpfs/{endpoint}')
+def get_quotas_gpfs_endpoint(endpoint, background_tasks: BackgroundTasks):
+    quotas = ''
+    try:
+        quotas = gpfs.get_quotas(endpoint)
+        background_tasks.add_task(gpfs.load_all_quotas)
+        background_tasks.add_task(gpfs.load_filesystems_and_sets)
+    except Exception as err:
+       logging.error(f'Error reading {endpoint} quotas: {err}')
     return {'data': quotas }
 
-@app.get('/quotas/gpfs/scratch')
-def index():
+@app.get('/quota/gpfs/{endpoint}/{username}')
+def get_quota_gpfs_endpoint_username(endpoint, username, background_tasks: BackgroundTasks):
+    quota = ''
     try:
-        quotas = gpfs.getQuotas('dss_scratch', 'root')
+        quota = gpfs.get_quota(endpoint, username)
+        background_tasks.add_task(gpfs.load_all_quotas)
+        background_tasks.add_task(gpfs.load_filesystems_and_sets)
     except Exception as err:
-       logging.error(f'Error reading scratch quotas: {err}')
-    return {'data': quotas }
+       logging.error(f'Error reading {endpoint} quota for {username}: {err}')
+    return {'data': quota }
 
-@app.get('/quotas/gpfs/archive')
-def index():
+@app.get('/filesystems')
+def get_filesystems(background_tasks: BackgroundTasks):
+    filesystems = ''
     try:
-        quotas = gpfs.getQuotas('dss_archive', 'root')
+        filesystems = gpfs.get_filesystems()
+        background_tasks.add_task(gpfs.load_all_quotas)
+        background_tasks.add_task(gpfs.load_filesystems_and_sets)
     except Exception as err:
-       logging.error(f'Error reading archive quotas: {err}')
-    return {'data': quotas }
+       logging.error(f'Error reading filesystems: {err}')
+    return {'data': filesystems }
 
-@app.get('/quotas/gpfs/cgsb')
-def index():
+@app.get('/filesets/{filesystem}')
+def get_filesets(filesystem, background_tasks: BackgroundTasks):
+    filesets = ''
     try:
-        quotas = gpfs.getQuotas('dss_scratch', 'cgsb')
+        filesets = gpfs.get_filesets(filesystem)
+        background_tasks.add_task(gpfs.load_all_quotas)
+        background_tasks.add_task(gpfs.load_filesystems_and_sets)
     except Exception as err:
-       logging.error(f'Error reading cgsb quotas: {err}')
-    return {'data': quotas }
+       logging.error(f'Error reading filesystems: {err}')
+    return {'data': filesets }
 
 if __name__ == "__main__":
     uvicorn.run(app, host='0.0.0.0', port=8080)
