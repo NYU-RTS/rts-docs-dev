@@ -28,22 +28,20 @@ Applications are installed and managed via ArgoCD (```nyu-rts/rts-argocd```)
 1. ```nyu-rts/rts-argocd``` - deployment CI/CD
 
 ## Redis
-quotas are cached in a Redis store.<br>
-| filesystem              | Redis DB ID |
-|   :---                  |     :---:   |
-| /vast                   | 0           |
-| /gpfs/home              | 1           |
-| /gpfs/scratch           | 2           |
-| /gpfs/archive           | 3           |
-| /gpfs/cgsb              | 4           |
-| utils (not an endpoint) | 5           |
+Quotas are cached in a Redis store.<br>
+| filesystem                    | Redis DB ID |
+|   :---                        |    :---:    |
+| /vast                         | 0           |
+| utils (not an endpoint)       | 1           |
+| dynamically added filesystems | 2-99        |
 
-## Adding/Modifying GPFS Endpoints
-When adding or modifying GPFS endpoints, you'll need to update the following dictionaries in `gpfs/gpfs.py` in `__init__`:
+### Utils database
+The utils database contains two dictionaries that map the relationship between endoints, filesystems & filesets, and Redis databases:
+
 - endpoints2filesystemset
    - a mapping from endpoint to filesystem and fileset
 - filesystemset2db
    - a mapping from filesystem and fileset to Redis database number
 
-## Dynamic /gpfs/scratch endpoints
-The code stores 'dynamic' versions of the dictionaries endopints2filesystemset and filesystemset2db in the Redis utils cached (db=5).  These contain similar mappings, but for the /gpfs/scratch endpoints.
+### Dynamically added filesystems
+The code creates and maintains a database for each endpoint.  The databases are updated around every 20 minutes.  This can be changed by setting a different value in `load_user_quotas_redis()` in vast.py for Vast and in `load_quotas()` in gpfs.py for GPFS.
