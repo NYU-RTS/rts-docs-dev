@@ -43,7 +43,15 @@ class GPFS():
             if filesets_json:
                 filesets = [_['filesetName'] for _ in filesets_json['filesets']]
                 for fset in filesets:
-                    endpoints2filesystemset[fset] = (fsys, fset)
+                    if fset == 'root':
+                        e2f_key = fset + '_' + fsys if '_' not in fsys else fset + '_' + fsys.split('_')[1]
+                        print(e2f_key)
+                        endpoints2filesystemset[e2f_key] = (fsys, fset)
+                    elif fset in endpoints2filesystemset:
+                        print(f"WARNING: endpoint {fset} already exists. Creating endpoint {fset}_{fsys.split('_')[1]}")
+                        endpoints2filesystemset[fset + '_' + fsys.split('_')[1]] = (fsys, fset)
+                    else:
+                        endpoints2filesystemset[fset] = (fsys, fset)
                     filesystemset2db[(fsys, fset)] = curr_db
                     curr_db += 1
 
@@ -91,8 +99,13 @@ class GPFS():
         except HTTPError as http_err:
             return json.dumps({'error': http_err.response.status_code})
         
-        self.load_quota_page(redis_client, response.json()["quotas"])
-        while True:
+        try:
+            self.load_quota_page(redis_client, response.json()["quotas"])
+            enter_loop = True
+        except KeyError:
+            enter_loop = False
+
+        while enter_loop:
             try: 
                 next_page = response.json()["paging"]["next"]
             except:
