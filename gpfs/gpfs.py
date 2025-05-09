@@ -45,7 +45,6 @@ class GPFS():
                 for fset in filesets:
                     if fset == 'root':
                         e2f_key = fset + '_' + fsys if '_' not in fsys else fset + '_' + fsys.split('_')[1]
-                        print(e2f_key)
                         endpoints2filesystemset[e2f_key] = (fsys, fset)
                     elif fset in endpoints2filesystemset:
                         print(f"WARNING: endpoint {fset} already exists. Creating endpoint {fset}_{fsys.split('_')[1]}")
@@ -59,6 +58,13 @@ class GPFS():
         redis_client.set('endpoints2filesystemset', json.dumps(endpoints2filesystemset))
         filesystemset2db_str_keys = {str(k): v for k, v in filesystemset2db.items()}
         redis_client.set('filesystemset2db', json.dumps(filesystemset2db_str_keys))
+
+    def get_dicts(self):
+        redis_client = redis.Redis(host=self.server_redis, port=6379, db=1)
+        end2fss = json.loads(redis_client.get('endpoints2filesystemset').decode('utf-8'))
+        fss2db = json.loads(redis_client.get('filesystemset2db').decode('utf-8'))
+        return {'endpoint2filesystemset': end2fss,
+                'filesystemset2db': fss2db}
 
     def get_db(self, filesystem, fileset):
         redis_client = redis.Redis(host=self.server_redis, port=6379, db=1)
@@ -209,3 +215,9 @@ class GPFS():
 
 # test.load_all_quotas()
 # test.load_filesystems_and_sets()
+
+# foo = test.get_dicts()
+# print(foo)
+# foo_dict = json.loads(foo)
+# print(foo_dict.keys())
+

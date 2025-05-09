@@ -37,6 +37,11 @@ def healthz(background_tasks: BackgroundTasks):
     background_tasks.add_task(gpfs.load_filesystems_and_sets)
     return {'status': 'ok'}
 
+@app.get('/dicts')
+def get_dicts():
+    dicts = gpfs.get_dicts()
+    return {'data': dicts}
+
 @app.get('/update_cache/{endpoint}')
 def update_cache_gpfs_home(endpoint):
     try:
