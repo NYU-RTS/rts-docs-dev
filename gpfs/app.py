@@ -1,5 +1,5 @@
 import logging
-from fastapi import FastAPI, BackgroundTasks
+from fastapi import FastAPI, BackgroundTasks, HTTPException
 import uvicorn
 from pydantic import BaseModel
 from typing import (
@@ -7,6 +7,7 @@ from typing import (
 )
 import urllib3
 import gpfs as gpfs
+import re
 
 class Group(BaseModel):
     name: str
@@ -55,10 +56,14 @@ def get_quotas_gpfs_endpoint(endpoint, background_tasks: BackgroundTasks):
     quotas = ''
     try:
         quotas = gpfs.get_quotas(endpoint)
-        background_tasks.add_task(gpfs.load_all_quotas)
-        background_tasks.add_task(gpfs.load_filesystems_and_sets)
+        if quotas == 'bad endpoint':
+            raise HTTPException(status_code=404, detail="Not a valid endpoint")
     except Exception as err:
        logging.error(f'Error reading {endpoint} quotas: {err}')
+    finally:
+        background_tasks.add_task(gpfs.load_all_quotas)
+        background_tasks.add_task(gpfs.load_filesystems_and_sets)
+
     return {'data': quotas }
 
 @app.get('/quota/gpfs/{endpoint}/{username}')
@@ -66,10 +71,14 @@ def get_quota_gpfs_endpoint_username(endpoint, username, background_tasks: Backg
     quota = ''
     try:
         quota = gpfs.get_quota(endpoint, username)
-        background_tasks.add_task(gpfs.load_all_quotas)
-        background_tasks.add_task(gpfs.load_filesystems_and_sets)
+        if quota == 'bad endpoint' or re.fullmatch(r'Error: username [a-z0-9]* not found', quota):
+            raise HTTPException(status_code=404, detail="Not a valid endpoint")
+
     except Exception as err:
        logging.error(f'Error reading {endpoint} quota for {username}: {err}')
+    finally:
+        background_tasks.add_task(gpfs.load_all_quotas)
+        background_tasks.add_task(gpfs.load_filesystems_and_sets)
     return {'data': quota }
 
 @app.get('/filesystems')

@@ -82,6 +82,7 @@ class GPFS():
             return endpoints2filesystemset[endpoint]
         except KeyError:
             print(f'Error: key {endpoint} not found in endpoint2filesystemset.')
+            return ('','')
 
     def load_quota_page(self, redis_client, quotas):
         for q in quotas:
@@ -90,6 +91,11 @@ class GPFS():
 
     def load_quotas(self, endpoint, force=False):
         filesystem, fileset = self.get_filesystemset(endpoint)
+
+        if not filesystem:
+            print(f'WARNING: bad endpoint {endpoint} in load_quota')
+            return
+        
         redis_client = redis.Redis(host=self.server_redis, port=6379, 
                                   db=self.get_db(filesystem, fileset))
         
@@ -140,6 +146,10 @@ class GPFS():
 
     def get_quotas(self, endpoint):
         filesystem, fileset = self.get_filesystemset(endpoint)
+
+        if not filesystem:
+            return 'bad endpoint'
+        
         redis_client = redis.Redis(host=self.server_redis, port=6379, 
                                   db=self.get_db(filesystem, fileset))
         quota_list = []
@@ -150,6 +160,10 @@ class GPFS():
 
     def get_quota(self, endpoint, username):
         filesystem, fileset = self.get_filesystemset(endpoint)
+
+        if not filesystem:
+            return 'bad endpoint'
+        
         redis_client = redis.Redis(host=self.server_redis, port=6379,
                                   db=self.get_db(filesystem, fileset))
         quota_data = redis_client.get(username)
