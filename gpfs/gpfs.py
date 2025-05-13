@@ -77,7 +77,12 @@ class GPFS():
 
     def get_filesystemset(self, endpoint):
         redis_client = redis.Redis(host=self.server_redis, port=6379, db=1)
-        endpoints2filesystemset = json.loads(redis_client.get('endpoints2filesystemset'))
+        try:
+            endpoints2filesystemset = json.loads(redis_client.get('endpoints2filesystemset'))
+        except TypeError:
+            print(f'Error: endpoints2filesystemset not found in cache!')
+            return ('','')
+
         try:
             return endpoints2filesystemset[endpoint]
         except KeyError:
@@ -141,8 +146,8 @@ class GPFS():
             self.load_quotas(endpoint)
 
     def load_everything(self):
-        self.load_all_quotas()
         self.load_filesystems_and_sets()
+        self.load_all_quotas()
 
     def get_quotas(self, endpoint):
         filesystem, fileset = self.get_filesystemset(endpoint)
@@ -234,4 +239,5 @@ class GPFS():
 # print(foo)
 # foo_dict = json.loads(foo)
 # print(foo_dict.keys())
+
 

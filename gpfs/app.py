@@ -43,6 +43,11 @@ def get_dicts():
     dicts = gpfs.get_dicts()
     return {'data': dicts}
 
+@app.get('/rebuild_cache')
+def rebuild_redis(background_tasks: BackgroundTasks):
+    background_tasks.add_task(gpfs.create_file_systems_and_sets)
+    return {'status': 'ok'}
+
 @app.get('/update_cache/{endpoint}')
 def update_cache_gpfs_home(endpoint):
     try:
