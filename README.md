@@ -45,3 +45,28 @@ The utils database contains two dictionaries that map the relationship between e
 
 ### Dynamically added filesystems
 The code creates and maintains a database for each endpoint.  The databases are updated around every 20 minutes.  This can be changed by setting a different value in `load_user_quotas_redis()` in vast.py for Vast and in `load_quotas()` in gpfs.py for GPFS.
+
+## Valid endpoints
+
+- `/dicts`
+   - return the utility dictionaries described above
+- `/filesets/{filesystem}`
+   - returns all filesets for a given filesystem
+- `/filesystems`
+   - returns all filesystems
+- `/healthz`
+   - returns a status message of 'ok' to confirm that the system is running normally
+   - also starts a background task to check and update the cache
+- `/quota/gpfs/{endpoint}/{username}`
+   - returns a given user's quota for a given endpoint
+      - Note: endpoints are defined in the endpoints2filesystemset dictionary described above
+   - also starts a background task to check and update the cache
+- `/quotas/gpfs/{endpoint}`
+   - returns all quotas for a given endpoint
+      - Note: endpoints are defined in the endpoints2filesystemset dictionary described above
+   - also starts a background task to check and update the cache
+- `/rebuild_cache`
+   - does a full rebuild of the Redis cache
+- `/update_cache/{endpoint}`
+   - updates the cache for a given endpoint
+   - Note: endpoints are defined in the endpoints2filesystemset dictionary described above
