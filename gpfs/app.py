@@ -35,24 +35,19 @@ def index():
 
 @app.get('/healthz')
 def healthz(background_tasks: BackgroundTasks):
-    background_tasks.add_task(gpfs.check_file_systems_sets)
-    background_tasks.add_task(gpfs.load_all_quotas)
-    background_tasks.add_task(gpfs.load_filesystems_and_sets)
-
+    background_tasks.add_task(gpfs.load_everything)
     return {'status': 'ok'}
 
 
 @app.get('/dicts')
 def get_dicts():
     dicts = gpfs.get_dicts()
-
     return {'data': dicts}
 
 
 @app.get('/rebuild_cache')
 def rebuild_redis(background_tasks: BackgroundTasks):
     background_tasks.add_task(gpfs.create_file_systems_and_sets)
-
     return {'status': 'ok'}
 
 
@@ -76,9 +71,7 @@ def get_quotas_gpfs_endpoint(endpoint, background_tasks: BackgroundTasks):
     except Exception as err:
        logging.error(f'Error reading {endpoint} quotas: {err}')
     finally:
-        background_tasks.add_task(gpfs.check_file_systems_sets)
-        background_tasks.add_task(gpfs.load_all_quotas)
-        background_tasks.add_task(gpfs.load_filesystems_and_sets)
+        background_tasks.add_task(gpfs.load_everything)
 
     return {'data': quotas }
 
@@ -94,9 +87,7 @@ def get_quota_gpfs_endpoint_username(endpoint, username, background_tasks: Backg
     except Exception as err:
        logging.error(f'Error reading {endpoint} quota for {username}: {err}')
     finally:
-        background_tasks.add_task(gpfs.check_file_systems_sets)
-        background_tasks.add_task(gpfs.load_all_quotas)
-        background_tasks.add_task(gpfs.load_filesystems_and_sets)
+        background_tasks.add_task(gpfs.load_everything)
 
     return {'data': quota }
 
@@ -109,9 +100,7 @@ def get_filesystems(background_tasks: BackgroundTasks):
     except Exception as err:
        logging.error(f'Error reading filesystems: {err}')
     finally:
-        background_tasks.add_task(gpfs.check_file_systems_sets)
-        background_tasks.add_task(gpfs.load_all_quotas)
-        background_tasks.add_task(gpfs.load_filesystems_and_sets)
+        background_tasks.add_task(gpfs.load_everything)
 
     return {'data': filesystems }
 
@@ -124,9 +113,7 @@ def get_filesets(filesystem, background_tasks: BackgroundTasks):
     except Exception as err:
        logging.error(f'Error reading filesystems: {err}')
     finally:
-        background_tasks.add_task(gpfs.check_file_systems_sets)
-        background_tasks.add_task(gpfs.load_all_quotas)
-        background_tasks.add_task(gpfs.load_filesystems_and_sets)
+        background_tasks.add_task(gpfs.load_everything)
 
     return {'data': filesets }
 

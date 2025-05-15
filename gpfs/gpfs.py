@@ -146,8 +146,9 @@ class GPFS():
             self.load_quotas(endpoint)
 
     def load_everything(self):
-        self.load_filesystems_and_sets()
-        self.load_all_quotas()
+        if self.check_file_systems_sets:
+            self.load_filesystems_and_sets()
+            self.load_all_quotas()
 
     def get_quotas(self, endpoint):
         filesystem, fileset = self.get_filesystemset(endpoint)
@@ -179,7 +180,8 @@ class GPFS():
          
     def check_file_systems_sets(self):
         '''Check if file systems and sets are the same in Redis and on the server and 
-           do a full reload if they differ'''
+           do a full reload if they differ.
+           Returns True if they are the same and False if not.'''
         response = requests.get(f'https://{self.server}:443/scalemgmt/v2/filesystems', 
                                 auth=(self.user, self.password), verify=False)
         server_fsys = response.json()
@@ -189,7 +191,7 @@ class GPFS():
         if server_fsys != redis_fsys:
             print('WARNING: found difference in filesystems between Redis and server.  Rebuilding all ...')
             self.create_file_systems_and_sets()
-            return
+            return False
 
         for fsys in redis_fsys['filesystems']:
             response = requests.get(f'https://{self.server}:443/scalemgmt/v2/filesystems/{fsys["name"]}/filesets', 
@@ -200,7 +202,9 @@ class GPFS():
             if server_fsets != redis_fsets:
                 print('WARNING: found difference in fileset between Redis and server.  Rebuilding all ...')
                 self.create_file_systems_and_sets()
-                return
+                return False
+        
+        return True
             
     def load_filesystems_and_sets(self, force=False):
         redis_client = redis.Redis(host=self.server_redis, port=6379, db=1)
