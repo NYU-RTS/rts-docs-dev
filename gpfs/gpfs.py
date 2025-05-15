@@ -177,6 +177,31 @@ class GPFS():
         else:
             return f'Error: username {username} not found'
          
+    def check_file_systems_sets(self):
+        '''Check if file systems and sets are the same in Redis and on the server and 
+           do a full reload if they differ'''
+        response = requests.get(f'https://{self.server}:443/scalemgmt/v2/filesystems', 
+                                auth=(self.user, self.password), verify=False)
+        server_fsys = response.json()
+        redis_client = redis.Redis(host=self.server_redis, port=6379, db=1)
+        redis_fsys = json.loads(redis_client.get('filesystems').decode('utf-8'))
+        
+        if server_fsys != redis_fsys:
+            print('WARNING: found difference in filesystems between Redis and server.  Rebuilding all ...')
+            self.create_file_systems_and_sets()
+            return
+
+        for fsys in redis_fsys['filesystems']:
+            response = requests.get(f'https://{self.server}:443/scalemgmt/v2/filesystems/{fsys["name"]}/filesets', 
+                                    auth=(self.user, self.password), verify=False)
+            server_fsets = response.json()['filesets']
+            redis_fsets = self.get_filesets(fsys['name'])['filesets']
+            
+            if server_fsets != redis_fsets:
+                print('WARNING: found difference in fileset between Redis and server.  Rebuilding all ...')
+                self.create_file_systems_and_sets()
+                return
+            
     def load_filesystems_and_sets(self, force=False):
         redis_client = redis.Redis(host=self.server_redis, port=6379, db=1)
         last_update = redis_client.get('last_update_filesystems')
@@ -239,5 +264,8 @@ class GPFS():
 # print(foo)
 # foo_dict = json.loads(foo)
 # print(foo_dict.keys())
+
+# test = GPFS()
+# test.check_file_systems_sets()
 
 
