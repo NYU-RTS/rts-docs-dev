@@ -1,4 +1,4 @@
-# How to raise an Allocation Request
+# How to submit an Allocation Request
 
 If you would ike to raise an allocation request, please first login to coldfront page and you'll see "Project" navigation bar.
 Click the "Project" navigation bar and click "Projects" to choose which project you would like to raise the allocation request for.
