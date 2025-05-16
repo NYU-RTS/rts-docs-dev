@@ -33,7 +33,7 @@ from portkey_ai import Portkey
 portkey = Portkey(
     base_url="https://ai-gateway.apps.cloud.rt.nyu.edu/v1/",
     api_key="",  # Replace with your Portkey API key
-    virtual_key="",  # Replace with your virtual key for Google
+    virtual_key="",  # Replace with your virtual key
 )
 
 completion = portkey.chat.completions.create(
@@ -41,7 +41,7 @@ completion = portkey.chat.completions.create(
         {"role": "system", "content": "You are not a helpful assistant"},
         {"role": "user", "content": "Say this is a test"},
     ],
-    model="gemini-2.0-flash-lite-preview-02-05",
+    model="gemini-2.0-flash-lite",
 )
 
 print(completion)
