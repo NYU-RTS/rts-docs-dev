@@ -1,19 +1,24 @@
-facebook:
-  label: Facebook
-  permalink: /facebook
-  description: Facebook tag description
+pythia:
+  label: Pythia
+  permalink: /pythia
+  description: Pythia, GenAI platform for research
 
-hello:
-  label: Hello
-  permalink: /hello
-  description: Hello tag description
+hpc:
+  label: HPC
+  permalink: /hpc
+  description: High Performance Computing
 
-docusaurus:
-  label: Docusaurus
-  permalink: /docusaurus
-  description: Docusaurus tag description
+srde:
+  label: SRDE
+  permalink: /srde
+  description: Secure Research Data Environments
 
-hola:
-  label: Hola
-  permalink: /hola
-  description: Hola tag description
+rtc:
+  label: Research Technology Cloud
+  permalink: /rtc
+  description: Research Technology Cloud, on-prem
+
+hsrn:
+  label: High Speed Resarch Network
+  permalink: /hsrn
+  description: High Speed Research Network
