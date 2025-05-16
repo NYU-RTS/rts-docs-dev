@@ -36,12 +36,12 @@ ssh <netID>@greene.hpc.nyu.edu
 ### Outside the NYU network (non-Windows)
 From an off-campus location (outside NYU-NET), logging in to the HPC clusters is a two-step process:
 
-1. log in to the gateway host, `gw.hpc.nyu.edu`. From a Mac or Linux workstation, this is a simple terminal command (replace `<netID>` with your netID). Your password is the same password you use for NYU Home:
+1.  log in to the gateway host, `gw.hpc.nyu.edu`. From a Mac or Linux workstation, this is a simple terminal command (replace `<netID>` with your netID). Your password is the same password you use for NYU Home:
 ```bash
 ssh <netID>@gw.hpc.nyu.edu
 ```
 
-Next, log in to the cluster. For Greene, this is done with:
+1.  log in to the cluster. For Greene, this is done with:
 ```bash
 ssh <netID>@greene.hpc.nyu.edu
 ```
@@ -218,7 +218,7 @@ Host greene
 You'll need to replace the sections above labelled `<Your NetID>` with your NetID.  You can find more details about this at the [Quickstart section of Accessing HPC at NYU](https://sites.google.com/nyu.edu/nyu-hpc/accessing-hpc#h.7t97br4zzvip)
 
 ## Logging onto the system
-With all of this in mind, let’s connect to our remote HPC system. In this tutorial, we will connect to Greene — an HPC system located at New York University. Although it’s unlikely that every system will be exactly like Greene, it’s a very good example of what you can expect from an HPC installation. To connect to Greene we will use SSH (if you are using PuTTY, [see above](./02_connecting_to_hpc.md#opening-a-terminal)).
+With all of this in mind, let’s connect to our remote HPC system. In this tutorial, we will connect to Greene — an HPC system located at New York University. Although it’s unlikely that every system will be exactly like Greene, it’s a very good example of what you can expect from an HPC installation. To connect to Greene we will use SSH (if you are using PuTTY see [details above](./02_connecting_to_hpc.mdx#opening-a-terminal)).
 
 SSH allows us to connect to UNIX computers remotely, and use them as if they were our own. The general syntax of the connection command follows the format:
 ```bash
