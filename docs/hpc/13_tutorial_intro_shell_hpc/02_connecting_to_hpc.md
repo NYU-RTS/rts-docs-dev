@@ -272,9 +272,9 @@ You can see that the prompt has changed after you log into a remote system.  Let
 
 This change presents a small complication that we will need to navigate throughout this workshop. Exactly what is reported before the `$` in the terminal when it is connected to the local system and the remote system will typically be different for every user. We still need to indicate which system we are entering commands on though so we will adopt the following convention:
 
-- `[local]$` when the command is to be entered on a terminal connected to your local computer
-- `[netID@glogin-1 ~]$` when the command is to be entered on a terminal connected to the remote system
-- `$` when it really doesn’t matter which system the terminal is connected to
+-   `[local]$` when the command is to be entered on a terminal connected to your local computer
+-   `[netID@glogin-1 ~]$` when the command is to be entered on a terminal connected to the remote system
+-   `$` when it really doesn’t matter which system the terminal is connected to
 
 ### Being certain which system your terminal is connected to
 If you ever need to be certain which system a terminal you are using is connected to then use the following command: 
