@@ -30,20 +30,20 @@ From within the NYU network, that is, from an on-campus location, or after you V
 
 To log in to the HPC cluster (Greene), simply use:
 ```bash
-ssh <netID>@greene.hpc.nyu.edu
+ssh <NetID>@greene.hpc.nyu.edu
 ```
 
 ### Outside the NYU network (non-Windows)
 From an off-campus location (outside NYU-NET), logging in to the HPC clusters is a two-step process:
 
-1.  log in to the gateway host, `gw.hpc.nyu.edu`. From a Mac or Linux workstation, this is a simple terminal command (replace `<netID>` with your netID). Your password is the same password you use for NYU Home:
+1.  log in to the gateway host, `gw.hpc.nyu.edu`. From a Mac or Linux workstation, this is a simple terminal command (replace `<NetID>` with your NetID). Your password is the same password you use for NYU Home:
 ```bash
-ssh <netID>@gw.hpc.nyu.edu
+ssh <NetID>@gw.hpc.nyu.edu
 ```
 
 1.  log in to the cluster. For Greene, this is done with:
 ```bash
-ssh <netID>@greene.hpc.nyu.edu
+ssh <NetID>@greene.hpc.nyu.edu
 ```
 
 ### From Windows
@@ -62,12 +62,12 @@ There are many different versions (aka “flavours”) of Linux and how to open 
 
 To connect to the gateway servers, simply open a terminal application and enter the following command:
 ```bash
-ssh <netID>@gw.hpc.nyu.edu
+ssh <NetID>@gw.hpc.nyu.edu
 ```
 After typing in your password you will be logged in to the cluster. Once this connection is established, you can make one more hop and connect to one of the HPC clusters:
 ```bash
 # this will connect you to Greene HPC cluster
-ssh <netID>@greene.hpc.nyu.edu
+ssh <NetID>@greene.hpc.nyu.edu
 ```
 
 ### Mac
@@ -75,12 +75,12 @@ Macs have had a terminal built in since the first version of OS X, since it is b
 
 To connect to the gateway servers, simply open a terminal application and enter the following command:
 ```bash
-ssh <netID>@gw.hpc.nyu.edu
+ssh <NetID>@gw.hpc.nyu.edu
 ```
 After typing in your password you will be logged in to the cluster. Once this connection is established, you can make one more hop and connect to Greene:
 ```bash
 # this will connect you to Greene HPC cluster
-ssh <netID>@greene.hpc.nyu.edu
+ssh <NetID>@greene.hpc.nyu.edu
 ```
 
 ### Windows
@@ -229,19 +229,19 @@ Let’s attempt to connect to the HPC system now:
 
 If you'd like to connect without typing your password you'll need to copy your public key file to greene first:
 ```bash
-scp ~/.ssh/id_Greene_rsa.pub <netID>@greene.hpc.nyu.edu:/home/<netID>/.ssh/authorized_keys
+scp ~/.ssh/id_Greene_rsa.pub <NetID>@greene.hpc.nyu.edu:/home/<NetID>/.ssh/authorized_keys
 ```
 
 If you are on NYU WiFi or VPN you can connect directly with:
 ```bash
-ssh <netID>@greene.hpc.nyu.edu
+ssh <NetID>@greene.hpc.nyu.edu
 ```
 
 otherwise, you'll need to go through the NYU gateway first:
 
 ```bash
-ssh <netID>@gw.hpc.nyu.edu
-ssh <netID>@greene.hpc.nyu.edu
+ssh <NetID>@gw.hpc.nyu.edu
+ssh <NetID>@greene.hpc.nyu.edu
 ```
 
 When you are logged in you will see information about your last login, the host you've connected to, and your storage quota.  It should look something like this:
@@ -259,7 +259,7 @@ Space        Variable      /Flushed?    Space / Files    Space(%) / Files(%)
 /archive     $ARCHIVE      Yes/No        2.0TB/20.0K       0.00GB(0.00%)/1(0.00%)
 /vast        $VAST         NO/YES        2TB/5.0M           0.0TB(0.0%)/2(0%)
 
-[netID@log-1 ~]$
+[NetID@log-1 ~]$
 ```
 
 By looking at the information after *Hostname:* and in the prompt you'll notice that the machine you're currently logged into is not Greene.  This is expected.  You've just logged into a _login node_ that is connected to Greene.  It is from the login nodes that you will submit jobs to Greene.
@@ -268,12 +268,12 @@ If you logged in using PuTTY this will not apply because it does not offer a loc
 
 ### Telling the Difference between the Local Terminal and the Remote Terminal
 
-You can see that the prompt has changed after you log into a remote system.  Let's take a closer look at the prompt after login: `[netID@log-1 ~]$` (in this example) tells us that we are logged into the login node `log-1` with the identity `netID`.
+You can see that the prompt has changed after you log into a remote system.  Let's take a closer look at the prompt after login: `[NetID@log-1 ~]$` (in this example) tells us that we are logged into the login node `log-1` with the identity `NetID`.
 
 This change presents a small complication that we will need to navigate throughout this workshop. Exactly what is reported before the `$` in the terminal when it is connected to the local system and the remote system will typically be different for every user. We still need to indicate which system we are entering commands on though so we will adopt the following convention:
 
 -   `[local]$` when the command is to be entered on a terminal connected to your local computer
--   `[netID@glogin-1 ~]$` when the command is to be entered on a terminal connected to the remote system
+-   `[NetID@glogin-1 ~]$` when the command is to be entered on a terminal connected to the remote system
 -   `$` when it really doesn’t matter which system the terminal is connected to
 
 ### Being certain which system your terminal is connected to
@@ -283,5 +283,5 @@ $ hostname
 ```
 
 ### Keep two terminal windows open
-It is strongly recommended that you have two terminals open, one connected to the local system and one connected to the remote system that you can switch back and forth between. If you only use one terminal window then you will need to reconnect to the remote system using one of the methods above when you see a change from `[local]$` to `[netID@login-1 ~]$` and disconnect when you see the reverse.
+It is strongly recommended that you have two terminals open, one connected to the local system and one connected to the remote system that you can switch back and forth between. If you only use one terminal window then you will need to reconnect to the remote system using one of the methods above when you see a change from `[local]$` to `[NetID@login-1 ~]$` and disconnect when you see the reverse.
 
