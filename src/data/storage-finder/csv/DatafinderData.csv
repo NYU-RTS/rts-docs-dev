@@ -1,0 +1,172 @@
+id,title,label,value,weight
+9,Amazon S3,Alumni Access,<p>Not Available<p>,10
+9,Amazon S3,Backup,<p>Available for additional cost.</p>,11
+9,Amazon S3,Eligibility,<p>Staff and Faculty.</p>,7
+9,Amazon S3,Limitations,<p>AWS S3 is a chargeback service and an NYU chartfield is required for chargeback.<br>Max individual file upload size is 5TB.</p><p>&nbsp;</p>,5
+9,Amazon S3,Links,"<p><a href=""https://www.nyu.edu/servicelink/KB0020307"">Amazon S3</a></p>",2
+9,Amazon S3,Permission Settings,"<p dir=""ltr"">Restricted access by individual or group.</p>",6
+9,Amazon S3,Storable Files,"<p>High, Moderate, &amp; Low Risk.<br>&nbsp;</p>",3
+9,Amazon S3,Synchronous Access,<p>Not Available</p>,9
+9,Amazon S3,Use Case,"<p>Archive and long-term, high-security storage of large datasets.</p>",4
+15,Distributed storage on the HSRN,Alumni Access,<p>Available</p>,10
+15,Distributed storage on the HSRN,Backup,"<p>Yes, 30 day retention&nbsp;</p>",11
+15,Distributed storage on the HSRN,Eligibility,<p>Faculty sponsored</p>,7
+15,Distributed storage on the HSRN,Limitations,<p>2TB limit with 60 day purge policy for untouched files</p>,5
+15,Distributed storage on the HSRN,Links,"<p><a href=""http://hpc.nyu.edu/"">hpc.nyu.edu</a></p>",2
+15,Distributed storage on the HSRN,Permission Settings,<p>User controlled using facl</p>,6
+15,Distributed storage on the HSRN,Storable Files,<p>Moderate&nbsp;&amp; Low risk</p>,3
+15,Distributed storage on the HSRN,Synchronous Access,<p>Yes</p>,9
+15,Distributed storage on the HSRN,Use Case,<p>Long term storage</p>,4
+5,File Sharing (Windows),Alumni Access,<p>Not Available</p>,10
+5,File Sharing (Windows),Backup,"<p dir=""ltr"">Backed up daily, retains last 30 days; monitored 24x7</p>",11
+5,File Sharing (Windows),Eligibility,"<p dir=""ltr"">NYU Units, Faculty, Staff, Researchers</p>",7
+5,File Sharing (Windows),Limitations,"<p dir=""ltr"">Workstations will have to be joined to NYU's Active Directory</p>",5
+5,File Sharing (Windows),Links,"<p><a href=""https://www.nyu.edu/life/information-technology/communication-and-collaboration/document-collaboration-and-sharing/file-sharing-windows.html"">File Sharing (Windows)</a></p>",2
+5,File Sharing (Windows),Permission Settings,"<p dir=""ltr"">Options for read only, modify, or remove. Activated in NYU's Active Directory security groups via role-based access.</p>",6
+5,File Sharing (Windows),Storable Files,"<p dir=""ltr"">High, Moderate, &amp; Low Risk</p>",3
+5,File Sharing (Windows),Synchronous Access,"<p dir=""ltr"">Unlimited access to the file share but files can only be editable by one person unless the application allows otherwise.</p>",9
+5,File Sharing (Windows),Use Case,"<p dir=""ltr"">NYU departments that want to store &amp; share files of low &amp; moderate security</p>",4
+14,HPC AI Storage,Alumni Access,<p>Available</p>,10
+14,HPC AI Storage,Backup,<p>No</p>,11
+14,HPC AI Storage,Eligibility,<p>Faculty sponsored</p>,7
+14,HPC AI Storage,Limitations,<p>2TB limit with 60 day purge policy for untouched files</p>,5
+14,HPC AI Storage,Links,"<p><a href=""http://hpc.nyu.edu/"">hpc.nyu.edu</a></p>",2
+14,HPC AI Storage,Permission Settings,<p>User controlled using facl</p>,6
+14,HPC AI Storage,Storable Files,<p>Moderate&nbsp;&amp; Low risk</p>,3
+14,HPC AI Storage,Synchronous Access,<p>Yes</p>,9
+14,HPC AI Storage,Use Case,<p>Temporary&nbsp;storage</p>,4
+20,HPC Archive,Alumni Access,<p>Available</p>,10
+20,HPC Archive,Backup,"<p>Yes, 30 day retention</p>",11
+20,HPC Archive,Eligibility,<p>Faculty sponsored</p>,7
+20,HPC Archive,Limitations,<p>2TB limit</p>,5
+20,HPC Archive,Links,"<p><a href=""http://hpc.nyu.edu/"">hpc.nyu.edu</a></p>",2
+20,HPC Archive,Permission Settings,<p>User controlled using facl</p>,6
+20,HPC Archive,Storable Files,<p>Moderate&nbsp;&amp; Low risk</p>,3
+20,HPC Archive,Synchronous Access,<p>Yes</p>,9
+20,HPC Archive,Use Case,<p>Long term storage</p>,4
+8,HPC Research Project Space,Alumni Access,<p>Available to Alumni and external collaborators with sponsorship.</p>,10
+8,HPC Research Project Space,Backup,<p>Retains past 30 days.</p>,11
+8,HPC Research Project Space,Eligibility,"<p>Faculty, Researcher, and Graduate Student&nbsp;HPC user account holders.</p>",7
+8,HPC Research Project Space,Limitations,"<p dir=""ltr"">Storage space and number of inodes (files) are available for a fee.&nbsp;</p><p dir=""ltr"">No limit on the amount of storage that can be purchased, but significant purchases may require approval.</p>",5
+8,HPC Research Project Space,Links,"<p><a href=""https://sites.google.com/nyu.edu/nyu-hpc/hpc-systems/hpc-storage/data-management/research-project-space-rps"">Research Project Space</a></p>",2
+8,HPC Research Project Space,Permission Settings,"<p dir=""ltr"">Restricted access by individual or group using Access Control Lists (ACLs).</p><p dir=""ltr"">Sharing with external collaborators is possible using&nbsp;<a href=""https://www.nyu.edu/life/information-technology/research-computing-services/research-data-and-tools/globus-data-transfer-node.html"">Globus Data Transfer Node</a> .</p>",6
+8,HPC Research Project Space,Storable Files,<p>Moderate &amp; Low Risk<br>&nbsp;</p>,3
+8,HPC Research Project Space,Synchronous Access,<p>Not Available.</p>,9
+8,HPC Research Project Space,Use Case,<p>Use of the high-security HPC environment to actively analyze research data.</p>,4
+12,HPC Scratch,Alumni Access,<p>Available</p>,10
+12,HPC Scratch,Backup,<p>No</p>,11
+12,HPC Scratch,Eligibility,<p>Faculty sponsored</p>,7
+12,HPC Scratch,Limitations,<p>2TB limit with 60 day purge policy for untouched files</p>,5
+12,HPC Scratch,Links,"<p><a href=""http://hpc.nyu.edu/"">hpc.nyu.edu</a></p>",2
+12,HPC Scratch,Permission Settings,<p>User controlled using facl</p>,6
+12,HPC Scratch,Storable Files,<p>Moderate&nbsp;&amp; Low risk</p>,3
+12,HPC Scratch,Synchronous Access,<p>Yes</p>,9
+12,HPC Scratch,Use Case,<p>Temporary&nbsp;storage</p>,4
+3,NYU Box,Alumni Access,<p>Not Available</p>,10
+3,NYU Box,Backup,"<p dir=""ltr"">Retains up to 100 previous versions of a single file</p>",11
+3,NYU Box,Eligibility,"<p dir=""ltr"">Faculty, Staff, Researchers</p>",7
+3,NYU Box,Limitations,<p>Max upload is 50 GB for an single file</p>,5
+3,NYU Box,Links,"<p><a href=""https://www.nyu.edu/life/information-technology/communication-and-collaboration/document-collaboration-and-sharing/nyu-box.html"">NYU Box</a></p>",2
+3,NYU Box,Permission Settings,"<p dir=""ltr"">Permissions granted by NYU IT Admin</p>",6
+3,NYU Box,Storable Files,"<p dir=""ltr"">High, Moderate, &amp; Low Risk</p>",3
+3,NYU Box,Synchronous Access,"<p dir=""ltr"">Up to 20 users can edit and comment simultaneously</p>",9
+3,NYU Box,Use Case,"<p dir=""ltr"">Storage of NYU data with high security &amp; the ability to collaborate with external associates</p>",4
+2,NYU Google Drive,Alumni Access,"<p dir=""ltr""><strong>My Drive:</strong> Available&nbsp;<br><strong>Shared drives:&nbsp;</strong>Not Available</p>",10
+2,NYU Google Drive,Backup,"<p dir=""ltr"">Retains last 30 days or 100 revisions</p>",11
+2,NYU Google Drive,Eligibility,"<p dir=""ltr"">Faculty, Staff, Students, Researchers</p>",7
+2,NYU Google Drive,Limitations,"<p dir=""ltr"">My Drive: max storage is 20 GB<br>Shared Drives: max storage TBD</p>",5
+2,NYU Google Drive,Links,"<p><a href=""https://www.nyu.edu/life/information-technology/communication-and-collaboration/document-collaboration-and-sharing/nyu-drive.html"">NYU Drive</a></p>",2
+2,NYU Google Drive,Permission Settings,"<p>View, comment, edit and temp access to comment and view</p>",6
+2,NYU Google Drive,Storable Files,"<p dir=""ltr"">Moderate &amp; Low Risk</p>",3
+2,NYU Google Drive,Synchronous Access,"<p dir=""ltr"">Up to 100 users can edit &amp; comment simultaneously</p>",9
+2,NYU Google Drive,Use Case,<p>Storage of NYU data with moderate security &amp; the ability to collaborate with external associates<br>&nbsp;</p>,4
+21,NYU Shared Google Drive,Alumni Access,<p><strong>My Drive:</strong> Available&nbsp;<br><strong>Shared drives:&nbsp;</strong>Not Available</p>,10
+21,NYU Shared Google Drive,Backup,<p>Retains last 30 days or 100 revisions</p>,11
+21,NYU Shared Google Drive,Eligibility,"<p>Faculty, Staff, Students, Researchers</p>",7
+21,NYU Shared Google Drive,Limitations,<p>My Drive: max storage is 20 GB<br>Shared Drives: max storage TBD</p>,5
+21,NYU Shared Google Drive,Links,"<p><a href=""https://www.nyu.edu/life/information-technology/communication-and-collaboration/document-collaboration-and-sharing/nyu-drive.html"">NYU Drive</a></p>",2
+21,NYU Shared Google Drive,Permission Settings,"<p>View, comment, edit and temp access to comment and view</p>",6
+21,NYU Shared Google Drive,Storable Files,<p>Moderate &amp; Low Risk</p>,3
+21,NYU Shared Google Drive,Synchronous Access,<p>Up to 100 users can edit &amp; comment simultaneously</p>,9
+21,NYU Shared Google Drive,Use Case,<p>Storage of NYU data with moderate security &amp; the ability to collaborate with external associates</p>,4
+7,NYU Stream,Alumni Access,"<p dir=""ltr"">Not Available</p>",10
+7,NYU Stream,Backup,<p>Indefinite</p>,11
+7,NYU Stream,Eligibility,"<p>Students, Faculty, Staff<br>&nbsp;</p>",7
+7,NYU Stream,Limitations,<p>User must have nyu.edu account; Student must be actively enrolled<br>&nbsp;</p>,5
+7,NYU Stream,Links,"<p><a href=""https://www.nyu.edu/life/information-technology/teaching-and-learning-services/instructional-media/nyu-stream.html"">NYU Stream</a></p>",2
+7,NYU Stream,Permission Settings,"<p dir=""ltr"">Options to restrict access to content by individual or group</p>",6
+7,NYU Stream,Storable Files,<p>Low Risk</p>,3
+7,NYU Stream,Synchronous Access,"<p dir=""ltr"">Not Available</p>",9
+7,NYU Stream,Use Case,"<p dir=""ltr"">Video and audio</p>",4
+19,Qualtrics,Alumni Access,<p>Available</p>,10
+19,Qualtrics,Backup,"<p>Yes, backed up daily by Qualtrics</p>",11
+19,Qualtrics,Eligibility,"<p>Current Faculty, Retired Faculty, Staff, Students &amp; Researchers</p>",7
+19,Qualtrics,Limitations,"<p>No limit for storage, 10 GB export limit per CSV file</p>",5
+19,Qualtrics,Links,"<p><a href=""https://www.nyu.edu/life/information-technology/research-computing-services/research-data-and-tools/nyu-survey-service-qualtrics.html"">nyu.qualtrics.com</a></p>",2
+19,Qualtrics,Permission Settings,"<p>One owner, adjustable collaboration permissions for teamwork</p>",6
+19,Qualtrics,Storable Files,<p>Low Risk</p>,3
+19,Qualtrics,Synchronous Access,<p>Yes</p>,9
+19,Qualtrics,Use Case,"<p>To create and administer web surveys for research, teaching and administrative purposes</p>",4
+18,REDCap,Alumni Access,<p>Not Available</p>,10
+18,REDCap,Backup,"<p>Yes, backed up daily</p>",11
+18,REDCap,Eligibility,"<p>Faculty, Research staff, Student research affiliates &amp; External research collaborators</p>",7
+18,REDCap,Limitations,<p>Small to medium sized projects</p>,5
+18,REDCap,Links,"<p><a href=""https://www.nyu.edu/life/information-technology/research-computing-services/research-data-and-tools/redcap.html"">redcap.nyu.edu</a></p>",2
+18,REDCap,Permission Settings,"<p>Customizable rights, roles and access to data can be given for collaborators with an approved NYU REDCap account</p>",6
+18,REDCap,Storable Files,"<p>High, Moderate &amp; Low Risk</p>",3
+18,REDCap,Synchronous Access,<p>Yes<br>&nbsp;</p>,9
+18,REDCap,Use Case,<p>A secure web application for managing online surveys that involves collection of High Risk data and in compliance with multiple government standards</p>,4
+13,Research Archival Storage,Alumni Access,<p>Available</p>,10
+13,Research Archival Storage,Backup,"<p>Yes, 30 day retention</p>",11
+13,Research Archival Storage,Eligibility,<p>Faculty sponsored</p>,7
+13,Research Archival Storage,Limitations,<p>2TB limit</p>,5
+13,Research Archival Storage,Links,"<p><a href=""http://hpc.nyu.edu/"">hpc.nyu.edu</a></p>",2
+13,Research Archival Storage,Permission Settings,<p>User controlled using facl</p>,6
+13,Research Archival Storage,Storable Files,<p>Moderate&nbsp;&amp; Low risk</p>,3
+13,Research Archival Storage,Synchronous Access,<p>Yes</p>,9
+13,Research Archival Storage,Use Case,<p>Long term storage</p>,4
+22,Research Data Lake (Pilot),Alumni Access,<p>Not Available</p>,10
+22,Research Data Lake (Pilot),Backup,"<p>Yes, available as configurable snapshotting</p>",11
+22,Research Data Lake (Pilot),Eligibility,"<p>Faculty, and Researchers</p>",7
+22,Research Data Lake (Pilot),Limitations,"<p>During pilot phase, projects must be approved by RTS staff</p>",5
+22,Research Data Lake (Pilot),Links,<p>datalake.nyu.edu ( dummy link )</p>,2
+22,Research Data Lake (Pilot),Permission Settings,"<p>Project dependent, role-based permissions. Users added by PI request</p>",6
+22,Research Data Lake (Pilot),Storable Files,<p>Moderate&nbsp;&amp; Low risk</p>,3
+22,Research Data Lake (Pilot),Synchronous Access,<p>Yes</p>,9
+22,Research Data Lake (Pilot),Use Case,<p>High-performance storage for active research datasets with multiple users. Supports structured and semi-structured data</p>,4
+4,Research Workspace,Alumni Access,<p>Not Available</p>,10
+4,Research Workspace,Backup,<p>Retains last 30 days</p>,11
+4,Research Workspace,Eligibility,"<p dir=""ltr"">Faculty; or Staff/Student with full-time faculty sponsorship</p>",7
+4,Research Workspace,Limitations,"<p dir=""ltr"">Requires faculty, staff; or student with full-time NYU faculty sponsorship</p>",5
+4,Research Workspace,Links,"<p><a href=""https://www.nyu.edu/life/information-technology/research-computing-services/research-data-and-tools/research-workspace.html"">Research Workspace</a></p>",2
+4,Research Workspace,Permission Settings,"<p dir=""ltr"">Options for fully private, read only, or editable</p>",6
+4,Research Workspace,Storable Files,"<p dir=""ltr"">Moderate &amp; Low Risk</p>",3
+4,Research Workspace,Synchronous Access,<p>Not Available</p>,9
+4,Research Workspace,Use Case,"<p dir=""ltr"">Storage of NYU research data &amp; collaboration with non-NYU researchers</p>",4
+6,Secure Research Data Environments,Alumni Access,<p>Available with faculty sponsorship</p>,10
+6,Secure Research Data Environments,Backup,"<p dir=""ltr"">Not Available</p>",11
+6,Secure Research Data Environments,Eligibility,<p>Faculty; or Staff/Student with full-time faculty sponsorship</p>,7
+6,Secure Research Data Environments,Limitations,"<p dir=""ltr"">Requires secure data stewardship knowledge</p>",5
+6,Secure Research Data Environments,Links,"<p><a href=""https://sites.google.com/nyu.edu/nyu-hpc/training-support/supported-research-initiatives/secure-research-data-environment-srde"">SRDE Pilot</a></p>",2
+6,Secure Research Data Environments,Permission Settings,"<p dir=""ltr"">Project dependent, role-based permissions, requires data steward role</p>",6
+6,Secure Research Data Environments,Storable Files,"<p dir=""ltr"">High, Moderate, &amp; Low Risk</p>",3
+6,Secure Research Data Environments,Synchronous Access,<p>Not Available</p>,9
+6,Secure Research Data Environments,Use Case,<p>Researchers using the HPC clusters to data analysis of simulations sharing data amongst group members</p>,4
+17,Spatial Data Repository,Alumni Access,<p>Not Available</p>,10
+17,Spatial Data Repository,Backup,<p>Yes</p>,11
+17,Spatial Data Repository,Eligibility,"<p>Current Faculty, Staff, Students &amp; Researchers</p>",7
+17,Spatial Data Repository,Limitations,<p>Not Available</p>,5
+17,Spatial Data Repository,Links,"<p><a href=""https://geo.nyu.edu/"">geo.nyu.edu</a></p>",2
+17,Spatial Data Repository,Permission Settings,<p>Not Available</p>,6
+17,Spatial Data Repository,Storable Files,<p>Low Risk</p>,3
+17,Spatial Data Repository,Synchronous Access,<p>Not Available</p>,9
+17,Spatial Data Repository,Use Case,<p>A collection of Geospatial Data from Open Data and proprietary resources. Users can download layers and work with them in many GIS platforms</p>,4
+16,Ultraviolet Repository,Alumni Access,<p>Available</p>,10
+16,Ultraviolet Repository,Backup,"<p>Yes, backed up as different versions</p>",11
+16,Ultraviolet Repository,Eligibility,"<p>Faculty, Staff, Students &amp; Researchers</p>",7
+16,Ultraviolet Repository,Limitations,"<p>Recommended to 100 files or 50GB (per file), contact repository team <a href=""mailto:uv@nyu.edu"">uv@nyu.edu</a> if exceeds this limit</p>",5
+16,Ultraviolet Repository,Links,"<p><a href=""https://www.nyu.edu/life/information-technology/web-and-digital-publishing/collections-and-repositories/ultraviolet.html"">ultraviolet.library.nyu.edu</a></p>",2
+16,Ultraviolet Repository,Permission Settings,<p>Public visibility by default</p>,6
+16,Ultraviolet Repository,Storable Files,<p>Low Risk</p>,3
+16,Ultraviolet Repository,Synchronous Access,<p>Not Available</p>,9
+16,Ultraviolet Repository,Use Case,<p>To deposit scholarly materials as open access publication and long-term preservation</p>,4
