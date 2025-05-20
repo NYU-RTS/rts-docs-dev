@@ -81,9 +81,8 @@ def get_quota_gpfs_endpoint_username(endpoint, username, background_tasks: Backg
     quota = ''
     try:
         quota = gpfs.get_quota(endpoint, username)
-        if quota == 'bad endpoint' or re.fullmatch(r'Error: username [a-z0-9]* not found', quota):
+        if isinstance(quota, str) and (quota == 'bad endpoint' or re.fullmatch(r'Error: username [a-z0-9]* not found', quota)):
             raise HTTPException(status_code=404, detail="Not a valid endpoint")
-
     except Exception as err:
        logging.error(f'Error reading {endpoint} quota for {username}: {err}')
     finally:
