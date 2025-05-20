@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[7472],{55513:e=>{e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"o4-mini is now available!","permalink":"/rts-docs-dev/pr-preview/pr-88/blog/2025-05-02-o4-mini","unlisted":false,"date":"2025-05-02T00:00:00.000Z"}]}')}}]);
