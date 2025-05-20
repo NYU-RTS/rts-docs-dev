@@ -3,6 +3,11 @@ pythia:
   permalink: /pythia
   description: Pythia, GenAI platform for research
 
+genai:
+  label: GenAI
+  permalink: /genai
+  description: Generative AI
+
 hpc:
   label: HPC
   permalink: /hpc
