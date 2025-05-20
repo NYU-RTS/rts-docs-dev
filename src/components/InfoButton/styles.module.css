@@ -1,0 +1,27 @@
+/** @author Ka Pui (August) Cheung */
+
+.infoButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-left: calc(var(--ifm-spacing-horizontal) * 0.5);
+  padding: 0;
+  font-weight: var(--ifm-font-weight-bold);
+  font-size: calc(var(--ifm-font-size-base) * 0.75);
+  font-style: normal;
+  vertical-align: middle;
+  border: none;
+  border-radius: var(--ifm-button-border-radius);
+  cursor: pointer;
+}
+
+.infoContent {
+  font-size: var(--ifm-font-size-base);
+  line-height: var(--ifm-line-height-base);
+}
+
+.infoContent p:last-child {
+  margin-bottom: 0;
+}
