@@ -20,5 +20,6 @@
             <uri>https://github.com/s-sajid-ali/</uri>
         </author>
         <category label="Pythia" term="Pythia"/>
+        <category label="GenAI" term="GenAI"/>
     </entry>
 </feed>
