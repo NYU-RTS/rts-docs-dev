@@ -288,13 +288,13 @@ Using the filesystem diagram below, if `pwd` displays `/Users/thing`, what will 
 ```mermaid
 block-beta
     columns 7
-    space space space a["Users"] space space space
-    space space space space space space space 
-    space b["thing"] space space space c["backup"] space
-    space space space space space space space 
-    space d["backup"] space space e["original"] f["pnas_final"] g["pnas_sub"]
-    space space space space space space space 
-    h["2012-12-01"] i["2013-01-08"] j["2013-01-27"] space space space space
+    space:3 a["📁 Users"] space:3
+    space:7 
+    space b["📁 thing"] space:3 c["📁 backup"] space
+    space:7 
+    space d["📁 backup"] space:2 e["📁 original"] f["📁 pnas_final"] g["📁 pnas_sub"]
+    space:7
+    h["📁 2012-12-01"] i["📁 2013-01-08"] j["📁 2013-01-27"] space:4
 
     a --> b
     a --> c
