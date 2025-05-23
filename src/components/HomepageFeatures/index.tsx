@@ -52,16 +52,15 @@ const FeatureList: FeatureItem[] = [
     to: "/docs/genai/getting_started/intro/",
   },
   {
-    title: "RTC",
+    title: "Cloud Computing",
     Svg: ReactSvg,
     description: (
       <>
-        Research Technology Cloud is our hybrid cloud platform for researchers
-        that includes access to an on-prem OpenShift cluster and access to the
-        Google Cloud Platform.
+        We facilitate access to Google Cloud Platform and also host an on-prem
+        OpenShift cluster called Research Technology Cloud.
       </>
     ),
-    to: "/docs/rtc/intro/",
+    to: "/docs/cloud/intro/",
   },
   {
     title: "SRDE",

@@ -100,9 +100,9 @@ const config: Config = {
         },
         {
           type: "docSidebar",
-          sidebarId: "rtcSidebar",
+          sidebarId: "cloudSidebar",
           position: "right",
-          label: "RTC",
+          label: "Cloud",
         },
         {
           type: "docSidebar",
