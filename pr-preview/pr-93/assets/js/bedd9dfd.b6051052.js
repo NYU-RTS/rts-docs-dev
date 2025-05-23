@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkrts_docs_dev=self.webpackChunkrts_docs_dev||[]).push([[7141],{55995:e=>{e.exports=JSON.parse('{"metadata":{"permalink":"/rts-docs-dev/pr-preview/pr-93/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Blog"}}')}}]);
