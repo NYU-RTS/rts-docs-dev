@@ -40,7 +40,7 @@ const FeatureList: FeatureItem[] = [
     to: "https://hsrn.nyu.edu/docs/",
   },
   {
-    title: "Pythia",
+    title: "GenAI",
     Svg: TreeSvg,
     description: (
       <>

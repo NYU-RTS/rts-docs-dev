@@ -10,9 +10,7 @@ if (process.env.PREVIEW_PATH) {
 }
 
 const config: Config = {
-  title: "Research Technology Services",
-  tagline:
-    "Connecting researchers to computational resources at NYU and beyond. Reach out to us to help accelerate your research!",
+  title: "Connecting researchers to computational resources.",
   favicon: "img/NYU.ico",
 
   // Set the production url of your site here
@@ -83,7 +81,7 @@ const config: Config = {
     navbar: {
       title: "Research Technology Services",
       logo: {
-        alt: "My Site Logo",
+        alt: "NYU torch logo",
         src: "img/NYU.svg",
       },
       items: [
@@ -123,7 +121,7 @@ const config: Config = {
       style: "dark",
       links: [
         {
-          title: "Feedback",
+          title: "Contact",
           items: [
             {
               label: "Email",
@@ -145,7 +143,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Built with Docusaurus!`,
+      copyright: "Made with \u{1F49C} in NYC with Docusaurus!",
     },
     prism: {
       theme: prismThemes.oneLight,

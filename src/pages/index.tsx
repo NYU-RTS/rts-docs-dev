@@ -12,7 +12,7 @@ function HomepageHeader() {
   return (
     <header className={clsx("hero hero--primary", styles.heroBanner)}>
       <div className="container">
-        <Heading as="h1" className="hero__title">
+        <Heading as="h4" className="hero__title">
           {siteConfig.title}
         </Heading>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
@@ -22,11 +22,10 @@ function HomepageHeader() {
 }
 
 export default function Home() {
-  const { siteConfig } = useDocusaurusContext();
   return (
     <Layout
       description="Description will go into a meta tag in <head />"
-      title={`Hello from ${siteConfig.title}`}
+      title="NYU Research Technology Services"
     >
       <HomepageHeader />
       <main>
