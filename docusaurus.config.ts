@@ -11,7 +11,8 @@ if (process.env.PREVIEW_PATH) {
 
 const config: Config = {
   title: "Research Technology Services",
-  tagline: "NYU",
+  tagline:
+    "Connecting researchers to computational resources at NYU and beyond. Reach out to us to help accelerate your research!",
   favicon: "img/NYU.ico",
 
   // Set the production url of your site here
