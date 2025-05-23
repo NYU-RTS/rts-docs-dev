@@ -37,7 +37,7 @@ const FeatureList: FeatureItem[] = [
         sciences.
       </>
     ),
-    to: "/docs/hsrn/intro/",
+    to: "https://hsrn.nyu.edu/docs/",
   },
   {
     title: "Pythia",

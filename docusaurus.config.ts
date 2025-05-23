@@ -100,12 +100,6 @@ const config: Config = {
         },
         {
           type: "docSidebar",
-          sidebarId: "hsrnSidebar",
-          position: "right",
-          label: "HSRN",
-        },
-        {
-          type: "docSidebar",
           sidebarId: "rtcSidebar",
           position: "right",
           label: "RTC",
@@ -115,6 +109,11 @@ const config: Config = {
           sidebarId: "srdeSidebar",
           position: "right",
           label: "SRDE",
+        },
+        {
+          href: "https://hsrn.nyu.edu/docs/",
+          position: "right",
+          label: "HSRN",
         },
         { to: "/blog", label: "Announcements", position: "right" },
       ],
