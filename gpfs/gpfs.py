@@ -43,7 +43,14 @@ class GPFS():
             if filesets_json:
                 filesets = [_['filesetName'] for _ in filesets_json['filesets']]
                 for fset in filesets:
-                    endpoints2filesystemset[fset] = (fsys, fset)
+                    if fset == 'root':
+                        e2f_key = fset + '_' + fsys if '_' not in fsys else fset + '_' + fsys.split('_')[1]
+                        endpoints2filesystemset[e2f_key] = (fsys, fset)
+                    elif fset in endpoints2filesystemset:
+                        print(f"WARNING: endpoint {fset} already exists. Creating endpoint {fset}_{fsys.split('_')[1]}")
+                        endpoints2filesystemset[fset + '_' + fsys.split('_')[1]] = (fsys, fset)
+                    else:
+                        endpoints2filesystemset[fset] = (fsys, fset)
                     filesystemset2db[(fsys, fset)] = curr_db
                     curr_db += 1
 
@@ -51,6 +58,13 @@ class GPFS():
         redis_client.set('endpoints2filesystemset', json.dumps(endpoints2filesystemset))
         filesystemset2db_str_keys = {str(k): v for k, v in filesystemset2db.items()}
         redis_client.set('filesystemset2db', json.dumps(filesystemset2db_str_keys))
+
+    def get_dicts(self):
+        redis_client = redis.Redis(host=self.server_redis, port=6379, db=1)
+        end2fss = json.loads(redis_client.get('endpoints2filesystemset').decode('utf-8'))
+        fss2db = json.loads(redis_client.get('filesystemset2db').decode('utf-8'))
+        return {'endpoint2filesystemset': end2fss,
+                'filesystemset2db': fss2db}
 
     def get_db(self, filesystem, fileset):
         redis_client = redis.Redis(host=self.server_redis, port=6379, db=1)
@@ -63,11 +77,17 @@ class GPFS():
 
     def get_filesystemset(self, endpoint):
         redis_client = redis.Redis(host=self.server_redis, port=6379, db=1)
-        endpoints2filesystemset = json.loads(redis_client.get('endpoints2filesystemset'))
+        try:
+            endpoints2filesystemset = json.loads(redis_client.get('endpoints2filesystemset'))
+        except TypeError:
+            print(f'Error: endpoints2filesystemset not found in cache!')
+            return ('','')
+
         try:
             return endpoints2filesystemset[endpoint]
         except KeyError:
             print(f'Error: key {endpoint} not found in endpoint2filesystemset.')
+            return ('','')
 
     def load_quota_page(self, redis_client, quotas):
         for q in quotas:
@@ -76,6 +96,11 @@ class GPFS():
 
     def load_quotas(self, endpoint, force=False):
         filesystem, fileset = self.get_filesystemset(endpoint)
+
+        if not filesystem:
+            print(f'WARNING: bad endpoint {endpoint} in load_quota')
+            return
+        
         redis_client = redis.Redis(host=self.server_redis, port=6379, 
                                   db=self.get_db(filesystem, fileset))
         
@@ -91,8 +116,13 @@ class GPFS():
         except HTTPError as http_err:
             return json.dumps({'error': http_err.response.status_code})
         
-        self.load_quota_page(redis_client, response.json()["quotas"])
-        while True:
+        try:
+            self.load_quota_page(redis_client, response.json()["quotas"])
+            enter_loop = True
+        except KeyError:
+            enter_loop = False
+
+        while enter_loop:
             try: 
                 next_page = response.json()["paging"]["next"]
             except:
@@ -116,11 +146,16 @@ class GPFS():
             self.load_quotas(endpoint)
 
     def load_everything(self):
-        self.load_all_quotas()
-        self.load_filesystems_and_sets()
+        if self.check_file_systems_sets:
+            self.load_filesystems_and_sets()
+            self.load_all_quotas()
 
     def get_quotas(self, endpoint):
         filesystem, fileset = self.get_filesystemset(endpoint)
+
+        if not filesystem:
+            return 'bad endpoint'
+        
         redis_client = redis.Redis(host=self.server_redis, port=6379, 
                                   db=self.get_db(filesystem, fileset))
         quota_list = []
@@ -131,6 +166,10 @@ class GPFS():
 
     def get_quota(self, endpoint, username):
         filesystem, fileset = self.get_filesystemset(endpoint)
+
+        if not filesystem:
+            return 'bad endpoint'
+        
         redis_client = redis.Redis(host=self.server_redis, port=6379,
                                   db=self.get_db(filesystem, fileset))
         quota_data = redis_client.get(username)
@@ -139,6 +178,34 @@ class GPFS():
         else:
             return f'Error: username {username} not found'
          
+    def check_file_systems_sets(self):
+        '''Check if file systems and sets are the same in Redis and on the server and 
+           do a full reload if they differ.
+           Returns True if they are the same and False if not.'''
+        response = requests.get(f'https://{self.server}:443/scalemgmt/v2/filesystems', 
+                                auth=(self.user, self.password), verify=False)
+        server_fsys = response.json()
+        redis_client = redis.Redis(host=self.server_redis, port=6379, db=1)
+        redis_fsys = json.loads(redis_client.get('filesystems').decode('utf-8'))
+        
+        if server_fsys != redis_fsys:
+            print('WARNING: found difference in filesystems between Redis and server.  Rebuilding all ...')
+            self.create_file_systems_and_sets()
+            return False
+
+        for fsys in redis_fsys['filesystems']:
+            response = requests.get(f'https://{self.server}:443/scalemgmt/v2/filesystems/{fsys["name"]}/filesets', 
+                                    auth=(self.user, self.password), verify=False)
+            server_fsets = response.json()['filesets']
+            redis_fsets = self.get_filesets(fsys['name'])['filesets']
+            
+            if server_fsets != redis_fsets:
+                print('WARNING: found difference in fileset between Redis and server.  Rebuilding all ...')
+                self.create_file_systems_and_sets()
+                return False
+        
+        return True
+            
     def load_filesystems_and_sets(self, force=False):
         redis_client = redis.Redis(host=self.server_redis, port=6379, db=1)
         last_update = redis_client.get('last_update_filesystems')
@@ -196,3 +263,13 @@ class GPFS():
 
 # test.load_all_quotas()
 # test.load_filesystems_and_sets()
+
+# foo = test.get_dicts()
+# print(foo)
+# foo_dict = json.loads(foo)
+# print(foo_dict.keys())
+
+# test = GPFS()
+# test.check_file_systems_sets()
+
+
