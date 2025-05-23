@@ -10,8 +10,7 @@ if (process.env.PREVIEW_PATH) {
 }
 
 const config: Config = {
-  title: "Research Technology Services",
-  tagline: "NYU",
+  title: "Connecting researchers to computational resources.",
   favicon: "img/NYU.ico",
 
   // Set the production url of your site here
@@ -82,7 +81,7 @@ const config: Config = {
     navbar: {
       title: "Research Technology Services",
       logo: {
-        alt: "My Site Logo",
+        alt: "NYU torch logo",
         src: "img/NYU.svg",
       },
       items: [
@@ -100,21 +99,20 @@ const config: Config = {
         },
         {
           type: "docSidebar",
-          sidebarId: "hsrnSidebar",
+          sidebarId: "cloudSidebar",
           position: "right",
-          label: "HSRN",
-        },
-        {
-          type: "docSidebar",
-          sidebarId: "rtcSidebar",
-          position: "right",
-          label: "RTC",
+          label: "Cloud",
         },
         {
           type: "docSidebar",
           sidebarId: "srdeSidebar",
           position: "right",
           label: "SRDE",
+        },
+        {
+          href: "https://hsrn.nyu.edu/docs/",
+          position: "right",
+          label: "HSRN",
         },
         { to: "/blog", label: "Announcements", position: "right" },
       ],
@@ -123,7 +121,7 @@ const config: Config = {
       style: "dark",
       links: [
         {
-          title: "Feedback",
+          title: "Contact",
           items: [
             {
               label: "Email",
@@ -145,7 +143,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Built with Docusaurus!`,
+      copyright: "Made with \u{1F49C} in NYC with Docusaurus!",
     },
     prism: {
       theme: prismThemes.oneLight,
