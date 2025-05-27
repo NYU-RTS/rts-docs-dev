@@ -24,7 +24,7 @@ jobs:
 
       - name: Install and Build
         run: |
-          pnpm install --prod --frozen-lockfile
+          pnpm install --prod --frozen-lockfile --ignore-scripts
           pnpm run build
 
       - name: Deploy
