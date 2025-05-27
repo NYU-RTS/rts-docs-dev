@@ -153,6 +153,7 @@ const config: Config = {
   } satisfies Preset.ThemeConfig,
 
   future: {
+    v4: true, // opt-in to v4 to ease transition in the future
     experimental_faster: {
       rspackBundler: true, // required flag
       rspackPersistentCache: true, // new flag
