@@ -41,7 +41,7 @@ Thus you can consider the following options
 -   Reinstall your packages if some of the files get deleted
     -   You can do this manually 
     -   You can do this automatically. For example, within a workflow of a pipeline software like [Nextflow](https://www.nextflow.io/)
--   Pay for "Research Project Space" - read more [here](../03_storage/05_research_project_space.md)
+-   Pay for "Research Project Space" - read more [here](../03_storage/05_research_project_space.mdx)
 -   Use Singularity and install packages within a corresponding overlay file - read more [here](../07_containers/03_singularity_with_conda.md)  
 
 ## Python
