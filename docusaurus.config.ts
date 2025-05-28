@@ -124,8 +124,29 @@ const config: Config = {
           title: "Contact",
           items: [
             {
-              label: "Email",
+              label: "Email for HPC support",
               href: "mailto:hpc@nyu.edu",
+            },
+            {
+              label: "Email for general GenAI support",
+              href: "mailto:genai-support@nyu.edu",
+            },
+            {
+              label: "Email for GenAI for research support",
+              href: "mailto:Genai-research-support@nyu.edu",
+            },
+          ],
+        },
+        {
+          title: "Links",
+          items: [
+            {
+              label: "NYU Libraries Research Guides",
+              href: "https://guides.nyu.edu/",
+            },
+            {
+              label: "FORC camp",
+              href: "https://sites.google.com/nyu.edu/forc-camp/home",
             },
           ],
         },
@@ -143,7 +164,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: "Made with \u{1F49C} in NYC with Docusaurus!",
+      copyright: "Made with \u{1F49C} in NYC!",
     },
     prism: {
       theme: prismThemes.oneLight,
