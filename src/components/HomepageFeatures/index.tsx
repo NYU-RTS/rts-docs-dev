@@ -1,7 +1,9 @@
 import Link from "@docusaurus/Link";
-import MountainSvg from "@site/static/img/undraw_docusaurus_mountain.svg";
+import CloudSvg from "@site/static/img/cloud.svg";
+import HPCSvg from "@site/static/img/hpc.svg";
+import HSRNSvg from "@site/static/img/hsrn.svg";
+import SRDESvg from "@site/static/img/srde.svg";
 import ReactSvg from "@site/static/img/undraw_docusaurus_react.svg";
-import TreeSvg from "@site/static/img/undraw_docusaurus_tree.svg";
 import Heading from "@theme/Heading";
 import clsx from "clsx";
 import { type ComponentProps } from "react";
@@ -18,7 +20,7 @@ interface FeatureItem {
 const FeatureList: FeatureItem[] = [
   {
     title: "High Performance Computing",
-    Svg: MountainSvg,
+    Svg: HPCSvg,
     description: (
       <>
         Seamless access to advanced computing resources, consultation services
@@ -29,7 +31,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: "High Speed Research Network",
-    Svg: TreeSvg,
+    Svg: HSRNSvg,
     description: (
       <>
         The High Speed Research Network (HSRN) is NYU&apos;s high-throughput,
@@ -41,7 +43,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: "GenAI",
-    Svg: TreeSvg,
+    Svg: ReactSvg,
     description: (
       <>
         The Pythia Platform is a suite of tools for researchers to harness
@@ -53,7 +55,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: "Cloud Computing",
-    Svg: ReactSvg,
+    Svg: CloudSvg,
     description: (
       <>
         We facilitate access to Google Cloud Platform and also host an on-prem
@@ -64,7 +66,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: "SRDE",
-    Svg: ReactSvg,
+    Svg: SRDESvg,
     description: (
       <>
         The Secure Research Data Environment (SRDE) is a centralized secure
