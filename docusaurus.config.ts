@@ -128,6 +128,10 @@ const config: Config = {
               href: "mailto:hpc@nyu.edu",
             },
             {
+              label: "Email for HSRN support",
+              href: "mailto:hsrn-support@nyu.edu",
+            },
+            {
               label: "Email for general GenAI support",
               href: "mailto:genai-support@nyu.edu",
             },
