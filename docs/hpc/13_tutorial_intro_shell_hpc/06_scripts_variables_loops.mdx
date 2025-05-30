@@ -1,4 +1,6 @@
 import { Smile } from "lucide-react";
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Scripts, variables, and loops
 
@@ -63,53 +65,56 @@ drwxrwxr-x 2 yourUsername tc001     4096 Jan 16 19:16 fastq
 
 That’s a huge amount of output: a full listing of everything in the directory. Let’s see if we can understand what each field of a given row represents, working from the left to right.
 
-### Column 1: File/Directory Permissions
-This column contains a block of subcolumns that define the permissions for a file or directory given in each row.  The permissions are shown for three user types to perform three actions each.
-
-The user types are:
--   user (`u`): This refers to your permissions for this file/directory.
--   group (`g`): This refers to the permissions for people in the same group as this file/directory.  You will see the group in the 4th column.
--   other (`o`): This refers to the permissions for all other users.
-
-The actions are:
--   read (`r`): This refers to the permission to read this file.
--   write (`w`): This refers to the permission to write to this file.
--   execute (`x`): This refers to the permission to execute this file.
-
-The following table show what each of the subcolumns refer to and their possible values:
-
-| directory  | user read  | user write | user execute | group read | group write | group execute | other read | other write | other execute |
-| ---------- | ---------- | ---------- | ------------ | ---------- | ----------- | ------------- | ---------- | ----------- | ------------- |
-| `d` or `-` | `r` or `-` | `w` or `-` | `x` or `-`   | `r` or `-` | `w` or `-`  | `x` or `-`    | `r` or `-` | `w` or `-`  | `x` or `-`    |
-
-If there is a `-` in the directory column, the row refers to a file.  If it contains a `d`, the row refers to a directory.  The following columns behave in a similar manner. If they contain a `-`, the associated action is not allowed for the associated user type.
-
-### Column 2: References
-This counts the number of references (hard links) to the item (file, folder, symbolic link or “shortcut”).
-
-### Column 3: Owner
-This is the username of the user who owns the file.
-:::note
-Their permissions are indicated in the first permissions block of three after the directory column
-:::
-
-### Column 4: Group
-Each user has a primary group and is optionally a member of other groups. When a user creates a file, it is normally associated with the user’s primary group. At NYU HPC, all users are in a group named ‘users’, so group permission has little meaning.
-:::note
-Other members of this group have the permissions in the second block of three after the directory column
-:::
-
-### Column 5: Size of item
-This is the number of bytes in a file, or the number of filesystem blocks occupied by the contents of a folder.
-:::note
-We can use the `-h` option here to get a human-readable file size in megabytes, gigabytes, etc.
-:::
-
-### Column 6: Time last modified
-This is the last time the file was modified.
-
-### Column 7: Filename
-This is the name of the file/directory.
+::::info[What each column of the output above means:]
+<Tabs>
+  <TabItem value="column1" label="File/Directory Permissions">
+        This column contains a block of subcolumns that define the permissions for a file or directory given in each row.  The permissions are shown for three user types to perform three actions each.
+        
+        The user types are:
+        -   user (`u`): This refers to your permissions for this file/directory.
+        -   group (`g`): This refers to the permissions for people in the same group as this file/directory.  You will see the group in the 4th column.
+        -   other (`o`): This refers to the permissions for all other users.
+        
+        The actions are:
+        -   read (`r`): This refers to the permission to read this file.
+        -   write (`w`): This refers to the permission to write to this file.
+        -   execute (`x`): This refers to the permission to execute this file.
+        
+        The following table show what each of the subcolumns refer to and their possible values:
+        
+        | directory  | user read  | user write | user execute | group read | group write | group execute | other read | other write | other execute |
+        | ---------- | ---------- | ---------- | ------------ | ---------- | ----------- | ------------- | ---------- | ----------- | ------------- |
+        | `d` or `-` | `r` or `-` | `w` or `-` | `x` or `-`   | `r` or `-` | `w` or `-`  | `x` or `-`    | `r` or `-` | `w` or `-`  | `x` or `-`    |
+        
+        If there is a `-` in the directory column, the row refers to a file.  If it contains a `d`, the row refers to a directory.  The following columns behave in a similar manner. If they contain a `-`, the associated action is not allowed for the associated user type.
+    </TabItem>
+    <TabItem value="column2" label="References">
+        This counts the number of references (hard links) to the item (file, folder, symbolic link or “shortcut”).        
+    </TabItem>
+    <TabItem value="column3" label="Owner">    
+        This is the username of the user who owns the file.
+        :::tip
+        Their permissions are indicated in the first permissions block of three after the directory column
+        :::
+    </TabItem>    
+    <TabItem value="column4" label="Group">
+        Each user has a primary group and is optionally a member of other groups. When a user creates a file, it is normally associated with the user’s primary group. At NYU HPC, all users are in a group named ‘users’, so group permission has little meaning.
+        ::: tip
+        Other members of this group have the permissions in the second block of three after the directory column
+        :::
+    </TabItem>
+    <TabItem value="column5" label="Size of item">
+        This is the number of bytes in a file, or the number of filesystem blocks occupied by the contents of a folder.
+        We can use the `-h` option here to get a human-readable file size in megabytes, gigabytes, etc.
+    </TabItem>
+    <TabItem value="column6" label="Time last modified">
+        This is the last time the file was modified.
+    </TabItem>
+    <TabItem value="column7" label="Filename">
+        This is the name of the file/directory.
+    </TabItem>
+</Tabs>
+::::
 
 ## Changing Permissions
 As previously mentioned, in Unix a file has three basic permissions, each of which can be set for three types of user. Those three permission also have a numeric value:
