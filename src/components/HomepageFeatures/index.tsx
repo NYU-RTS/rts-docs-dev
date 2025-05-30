@@ -1,10 +1,7 @@
 import Link from "@docusaurus/Link";
-import CloudSvg from "@site/static/img/cloud.svg";
-import HPCSvg from "@site/static/img/hpc.svg";
-import HSRNSvg from "@site/static/img/hsrn.svg";
-import SRDESvg from "@site/static/img/srde.svg";
-import ReactSvg from "@site/static/img/undraw_docusaurus_react.svg";
+import useBaseUrl from "@docusaurus/useBaseUrl";
 import Heading from "@theme/Heading";
+import ThemedImage from "@theme/ThemedImage";
 import clsx from "clsx";
 import { type ComponentProps } from "react";
 
@@ -12,7 +9,8 @@ import styles from "./styles.module.css";
 
 interface FeatureItem {
   title: string;
-  Svg: React.ComponentType<React.ComponentProps<"svg">>;
+  light_img_path: string;
+  dark_img_path: string;
   description: React.ReactNode;
   to?: ComponentProps<typeof Link>["to"];
 }
@@ -20,18 +18,21 @@ interface FeatureItem {
 const FeatureList: FeatureItem[] = [
   {
     title: "High Performance Computing",
-    Svg: HPCSvg,
+    light_img_path: "img/hpc.svg",
+    dark_img_path: "img/hpc_dark.svg",
     description: (
       <>
-        Seamless access to advanced computing resources, consultation services
-        and expertise for research.
+        Seamless access to High Performance Computing resources, consultation
+        services to enable your workflows and access to cloud-based bursting
+        resources.
       </>
     ),
     to: "/docs/hpc/getting_started/intro/",
   },
   {
     title: "High Speed Research Network",
-    Svg: HSRNSvg,
+    light_img_path: "img/hsrn.svg",
+    dark_img_path: "img/hsrn_dark.svg",
     description: (
       <>
         The High Speed Research Network (HSRN) is NYU&apos;s high-throughput,
@@ -43,7 +44,8 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: "GenAI",
-    Svg: ReactSvg,
+    light_img_path: "img/undraw_docusaurus_react.svg",
+    dark_img_path: "img/undraw_docusaurus_react.svg",
     description: (
       <>
         The Pythia Platform is a suite of tools for researchers to harness
@@ -55,7 +57,8 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: "Cloud Computing",
-    Svg: CloudSvg,
+    light_img_path: "img/cloud.svg",
+    dark_img_path: "img/cloud_dark.svg",
     description: (
       <>
         We facilitate access to Google Cloud Platform and also host an on-prem
@@ -66,7 +69,8 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: "SRDE",
-    Svg: SRDESvg,
+    light_img_path: "img/srde.svg",
+    dark_img_path: "img/srde_dark.svg",
     description: (
       <>
         The Secure Research Data Environment (SRDE) is a centralized secure
@@ -78,13 +82,26 @@ const FeatureList: FeatureItem[] = [
   },
 ];
 
-function Feature({ title, Svg, description, to }: FeatureItem) {
+function Feature({
+  title,
+  light_img_path,
+  dark_img_path,
+  description,
+  to,
+}: FeatureItem) {
   const Wrapper = to ? Link : "div";
 
   return (
     <Wrapper className={clsx("col col--4", to && styles.featureLink)} to={to}>
       <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
+        <ThemedImage
+          alt="Docusaurus themed image"
+          className={styles.featureSvg}
+          sources={{
+            light: useBaseUrl(light_img_path),
+            dark: useBaseUrl(dark_img_path),
+          }}
+        />
       </div>
       <div className="text--center padding-horiz--md">
         <Heading as="h3">{title}</Heading>
