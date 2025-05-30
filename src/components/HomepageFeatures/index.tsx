@@ -22,8 +22,9 @@ const FeatureList: FeatureItem[] = [
     dark_img_path: "img/hpc_dark.svg",
     description: (
       <>
-        Seamless access to advanced computing resources, consultation services
-        and expertise for research.
+        Seamless access to High Performance Computing resources, consultation
+        services to enable your workflows and access to cloud-based bursting
+        resources.
       </>
     ),
     to: "/docs/hpc/getting_started/intro/",
