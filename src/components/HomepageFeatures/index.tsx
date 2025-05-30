@@ -19,7 +19,7 @@ const FeatureList: FeatureItem[] = [
   {
     title: "High Performance Computing",
     light_img_path: "img/hpc.svg",
-    dark_img_path: "img/hpc.svg",
+    dark_img_path: "img/hpc_dark.svg",
     description: (
       <>
         Seamless access to advanced computing resources, consultation services
@@ -31,7 +31,7 @@ const FeatureList: FeatureItem[] = [
   {
     title: "High Speed Research Network",
     light_img_path: "img/hsrn.svg",
-    dark_img_path: "img/hsrn.svg",
+    dark_img_path: "img/hsrn_dark.svg",
     description: (
       <>
         The High Speed Research Network (HSRN) is NYU&apos;s high-throughput,
@@ -44,7 +44,7 @@ const FeatureList: FeatureItem[] = [
   {
     title: "GenAI",
     light_img_path: "img/undraw_docusaurus_react.svg",
-    dark_img_path: "img/undraw_docusaurus_tree.svg",
+    dark_img_path: "img/undraw_docusaurus_react.svg",
     description: (
       <>
         The Pythia Platform is a suite of tools for researchers to harness
@@ -69,7 +69,7 @@ const FeatureList: FeatureItem[] = [
   {
     title: "SRDE",
     light_img_path: "img/srde.svg",
-    dark_img_path: "img/srde.svg",
+    dark_img_path: "img/srde_dark.svg",
     description: (
       <>
         The Secure Research Data Environment (SRDE) is a centralized secure
