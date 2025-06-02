@@ -24,11 +24,11 @@ jobs:
 
       - name: Install and Build
         run: |
-          pnpm install --frozen-lockfile
-          pnpm build
-      - uses: actions/checkout@v4
-      - run: npm i && npm run build
-      - uses: JamesIves/github-pages-deploy-action@v4
+          pnpm install --prod --frozen-lockfile --ignore-scripts
+          pnpm run build
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: build
           branch: gh-pages

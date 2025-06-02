@@ -28,12 +28,12 @@ An all flash file system, using [VAST Flash storage](https://www.vastdata.com/),
 :::
 
 ## Research Project Space (RPS)
-[Research Project Space (RPS)](./05_research_project_space.md) volumes provide working spaces for sharing data and code amongst project or lab members.
+[Research Project Space (RPS)](./05_research_project_space.mdx) volumes provide working spaces for sharing data and code amongst project or lab members.
 -   RPS directories are available on the Greene HPC cluster.
 -   There is no old-file purging policy on RPS.
 -   RPS is backed up. 
 -   There is a cost per TB per year and inodes per year for RPS volumes.
 
-Please see [Research Project Space](./05_research_project_space.md) for more information.
+Please see [Research Project Space](./05_research_project_space.mdx) for more information.
 
 

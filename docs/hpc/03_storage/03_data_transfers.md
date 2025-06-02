@@ -13,7 +13,7 @@ Attached to the NYU HPC cluster Greene, the Greene Data Transfer Node (gDTN) are
 -   Ethernet connectivity to the NYU High-Speed Research Network ( HSRN ):  200Gbit  - 1x Mellanox ConnectX-5 EDR IB/100GbE VPI Dual-Port x16 PCIe 3.0 HCA
 
 ### Data Transfer Node Access
-The HPC cluster filesystems include `/home`, `/scratch`, `/archive` and the [HPC Research Project Space](./05_research_project_space.md) are available on the gDTN.
+The HPC cluster filesystems include `/home`, `/scratch`, `/archive` and the [HPC Research Project Space](./05_research_project_space.mdx) are available on the gDTN.
 
 The Data-Transfer Node (DTN) can be accessed in a variety of ways
 -   From NYU-net and the High Speed Research Network: use SSH to the DTN hostname `gdtn.hpc.nyu.edu`
