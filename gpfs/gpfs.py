@@ -33,7 +33,7 @@ class GPFS():
         self.load_all_quotas()
 
     def make_mapping_dicts(self):
-        curr_db = 2
+        curr_db = 10   # ID to start GPFS at
         endpoints2filesystemset = {}
         filesystemset2db = {}
 
