@@ -1,16 +1,7 @@
 # Data Transfers
 
 ## Data-Transfer nodes
-Attached to the NYU HPC cluster Greene, the Greene Data Transfer Node (gDTN) are  nodes optimized for transferring data between cluster file systems (e.g. scratch)  and other endpoints outside the NYU HPC clusters, including user laptops and desktops. The gDTNs have 100-Gb/s Ethernet connections to the High Speed Research Network (HSRN) and are connected to the HDR Infiniband fabric of the HPC clusters. 
-
-### Data Transfer Nodes Specs (gDTN)
--   Node type: Lenovo SR630
--   Number of nodes: 2
--   CPU:  2x Intel Xeon Gold 6244 8C 150W 3.6GHz Processor
--   Memory: 192GB   (total) - 12x 16GB DDR4, 2933MHz
--   Local disk:  1x 1.92TB SSD
--   Infiniband interconnect: 1x Mellanox ConnectX-6 HDR100 /100GbE VPI 1-Port x16 PCIe 3.0 HCA
--   Ethernet connectivity to the NYU High-Speed Research Network ( HSRN ):  200Gbit  - 1x Mellanox ConnectX-5 EDR IB/100GbE VPI Dual-Port x16 PCIe 3.0 HCA
+Attached to the NYU HPC cluster Greene, the Greene Data Transfer Node (gDTN) are  nodes optimized for transferring data between cluster file systems (e.g. scratch)  and other endpoints outside the NYU HPC clusters, including user laptops and desktops. The gDTNs have 100-Gb/s Ethernet connections to the High Speed Research Network (HSRN) and are connected to the HDR Infiniband fabric of the HPC clusters. More information on the hardware characteristics is available at [Greene spec sheet](../11_spec_sheet.mdx).
 
 ### Data Transfer Node Access
 The HPC cluster filesystems include `/home`, `/scratch`, `/archive` and the [HPC Research Project Space](./05_research_project_space.mdx) are available on the gDTN.
