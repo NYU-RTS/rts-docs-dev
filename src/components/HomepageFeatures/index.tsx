@@ -43,12 +43,12 @@ const FeatureList: FeatureItem[] = [
     to: "https://hsrn.nyu.edu/docs/",
   },
   {
-    title: "GenAI",
-    light_img_path: "img/undraw_docusaurus_react.svg",
-    dark_img_path: "img/undraw_docusaurus_react.svg",
+    title: "Pythia",
+    light_img_path: "img/pythia.svg",
+    dark_img_path: "img/pythia_dark.svg",
     description: (
       <>
-        The Pythia Platform is a suite of tools for researchers to harness
+        The Pythia GenAI Platform is a suite of tools for researchers to harness
         generative AI including a secure access to a chat portal, API access to
         LLMs and an on-prem vector database.
       </>
