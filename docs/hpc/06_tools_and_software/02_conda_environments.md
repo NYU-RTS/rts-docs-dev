@@ -145,7 +145,7 @@ If you installed extra packages using pip (Python)
 
 In this you can use
 ```sh
-export PYTHONNOUSERSITE=True  ## to ingnore packages in ~/.local/lib/python<version>
+export PYTHONNOUSERSITE=True  ## to ignore packages in ~/.local/lib/python<version>
 # save
 conda list --export > conda_requirements.txt
 pip freeze > pip_requirements.txt
@@ -162,7 +162,7 @@ However, this may fail if your conda environment is created as a sub-directory o
 
 Installed extra packages using install.packages? (R)
 
-Usecase: You need packages not availalbe in conda channels, and want to use install.packages.
+Usecase: You need packages not available in conda channels, and want to use install.packages.
 
 Command `conda list --export` will not include packages installed by "install.packages". So, do not use `conda install` at all. To have reproducibility in this case you need to use Conda and renv together, as described below
 
