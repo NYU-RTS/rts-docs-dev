@@ -68,7 +68,7 @@ Launch the appropriate Singularity container in read/write mode (with the :rw fl
 singularity exec --overlay overlay-15GB-500K.ext3:rw /scratch/work/public/singularity/cuda12.1.1-cudnn8.9.0-devel-ubuntu22.04.2.sif /bin/bash
 ```
 
-The above starts a bash shell inside the referenced Singularity Container overlayed with the 15GB 500K you set up earlier. This creates the functional illusion of having a writable filesystem inside the typically read-only Singularity container.
+The above starts a bash shell inside the referenced Singularity Container overlaid with the 15GB 500K you set up earlier. This creates the functional illusion of having a writable filesystem inside the typically read-only Singularity container.
 
 Now, inside the container, download and install miniforge to `/ext3/miniforge3`
 ```sh
@@ -227,7 +227,7 @@ singularity exec --nv \
 	    /bin/bash -c "source /ext3/env.sh; python torch-test.py"
 ```
 
-You will notice that the singularity exec command features the '--nv flag' - this flag is reguired to pass the CUDA drivers from a GPU to the Singularity container.
+You will notice that the singularity exec command features the '--nv flag' - this flag is required to pass the CUDA drivers from a GPU to the Singularity container.
 
 Run the run-test.SBATCH script
 ```sh
@@ -273,7 +273,7 @@ singularity exec --overlay /scratch/<NetID>/pytorch-example/my_pytorch.sqf:ro /s
 
 #### Adding Packages to a Full ext3 or squashFS Image 
 
-If the first ext3 overlay image runs out of space or you are using a squashFS conda enviorment, but need to install a new package inside, please copy another writable ext3 overlay image to work together.
+If the first ext3 overlay image runs out of space or you are using a squashFS conda environment, but need to install a new package inside, please copy another writable ext3 overlay image to work together.
 
 Open the first image in read only mode
 ```sh
@@ -490,7 +490,7 @@ To use modules installed into `/share/apps` you can make two directories
 mkdir julia-compiled julia-logs
 ```
 
-Now, in this example, the absoulte paths are as follows
+Now, in this example, the absolute paths are as follows
 ```sh
 /scratch/<NetID>/julia/julia-compiled
 /scratch/<NetID>/julia/julia-logs

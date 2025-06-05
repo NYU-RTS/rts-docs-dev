@@ -10,7 +10,7 @@ Storing your data in the [SQLite](https://www.sqlite.org/index.html) format allo
 ### Some use-cases
 
 -   You think you need MySQL, PostreSQL, etc for your ML project. Usually you don't
--   You have to deal with hundreds of GB of table-stuctured data (or larger) and your script (for whatever reason) can't be made parallel.
+-   You have to deal with hundreds of GB of table-structured data (or larger) and your script (for whatever reason) can't be made parallel.
 -   You would request a lot of RAM and work with data slowly.
 :::warning
 This would be a waste of RAM.

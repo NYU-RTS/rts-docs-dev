@@ -6,7 +6,7 @@ In a High Performance Computing Cluster, such as the NYU-IT HPC Greene cluster, 
 
 Linux operating system ( in our case Red Hat Enterprise Linux) runs on each of the nodes individually. The resources are shared among many users for their technical or scientific computing purposes.
 
-Slurm is a cluster software layer built on top of the interconnected nodes, aiming at orchestrating the nodes' computing activites, so that the cluster could be viewed as a unified, enhanced and scalable computing system by its users.
+Slurm is a cluster software layer built on top of the interconnected nodes, aiming at orchestrating the nodes' computing activities, so that the cluster could be viewed as a unified, enhanced and scalable computing system by its users.
 
 In NYU HPC clusters the users coming from many departments with various disciplines and subjects, with their own computing projects, impose on us very diverse requirements regarding hardware, software resources, and processing parallelism. Users submit jobs, which compete for computing resources.
 
@@ -24,7 +24,7 @@ For an overview of useful Slurm commands, please read [Slurm Main Commands](./02
 
 ## Software and Environment Modules
 
-Lmod, an Environment Module system, is a tool for managing multiple versions and configurations of software packages and is used by many HPC centers around the world. With Environment Modules, software packages are installed away from the base system directories, and for each pacakge, an associated modulefile describes what must be altered in a user's shell environment - such as the $PATH environment variable - in order to use the software package. The modulefile also describes dependencies and conflicts between this software package and other packages and versions.
+Lmod, an Environment Module system, is a tool for managing multiple versions and configurations of software packages and is used by many HPC centers around the world. With Environment Modules, software packages are installed away from the base system directories, and for each package, an associated modulefile describes what must be altered in a user's shell environment - such as the $PATH environment variable - in order to use the software package. The modulefile also describes dependencies and conflicts between this software package and other packages and versions.
 
 To use a given software package, you load the corresponding module. Unloading the module afterwards cleanly undoes the changes that loading the modules made to your environment, thus freeing you to use other software packages that might have conflicted with the first one.
 
@@ -135,7 +135,7 @@ You can submit the job with the following command:
 sbatch myscript.sbatch
 ```
 
-The command will result in the job queuing as it awaits resources to become available (which varies on the number of other jobs being run on the cluster and the resources requested). You can see the status of yor jobs with the following command:
+The command will result in the job queuing as it awaits resources to become available (which varies on the number of other jobs being run on the cluster and the resources requested). You can see the status of your jobs with the following command:
 
 ```sh
 squeue --me

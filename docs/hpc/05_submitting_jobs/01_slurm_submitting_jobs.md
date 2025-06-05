@@ -312,7 +312,7 @@ or as a command-line option to sbatch when you submit the job:
 ### Options for running many similar jobs
 
 -   `-a, --array=indexes`
-    -   Submit an array of jobs with array ids as specified. Array ids can be specified as a numerical range, a comma-seperated list of numbers, or as some combination of the two. Each job instance will have an environment variable `SLURM_ARRAY_JOB_ID` and `SLURM_ARRAY_TASK_ID`. For example:
+    -   Submit an array of jobs with array ids as specified. Array ids can be specified as a numerical range, a comma-separated list of numbers, or as some combination of the two. Each job instance will have an environment variable `SLURM_ARRAY_JOB_ID` and `SLURM_ARRAY_TASK_ID`. For example:
     -   `--array=1-11`, to start an array job with index from 1 to 11
     -   `--array=1-7:2`, to submit an array job with index step size 2
     -   `--array=1-9%4`, to submit an array job with simultaneously running job elements set to 4
@@ -489,7 +489,7 @@ cd /scratch/$USER/myambertest
 pmemd.cuda -O
 ```
 
-The demo Amber job should take ~2 minutes to finish once it starts runnning. When the job is done, several output files are generated. Check the one named "mdout", which has a section most relevant here:
+The demo Amber job should take ~2 minutes to finish once it starts running. When the job is done, several output files are generated. Check the one named "mdout", which has a section most relevant here:
 
 ```sh
 |--------------------- INFORMATION ---------------------- 
@@ -599,7 +599,7 @@ If you do not request resources you will get the default settings. If after some
     -   Enable X forwarding, so programs using a GUI can be used during the session (provided you have X forwarding to your workstation set up)
     -   To leave an interactive batch session, type `exit` at the command prompt
 
-Certain tasks need user iteraction - such as debugging and some GUI-based applications. However the HPC clusters rely on batch job scheduling to efficiently allocate resources. Interactive batch jobs allow these apparently conflicting requirements to be met.
+Certain tasks need user interaction - such as debugging and some GUI-based applications. However the HPC clusters rely on batch job scheduling to efficiently allocate resources. Interactive batch jobs allow these apparently conflicting requirements to be met.
 
 ### Interactive Bash Job Examples
 

@@ -112,7 +112,7 @@ man squeue # for more information
 | ------- | ----------- |
 | `--me` | Prints queued jobs for the current user |
 | `--user` | Prints queued jobs under a specific user, or a comma list of users |
-| `--job` | Specify a comma seperated list of job IDs to display |
+| `--job` | Specify a comma separated list of job IDs to display |
 | `--help` | Print a help message describing all options squeue |
 
 ## sacct

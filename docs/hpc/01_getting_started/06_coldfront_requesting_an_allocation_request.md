@@ -11,9 +11,9 @@ If you scroll down a bit, you'll see "+Request Resource Allocation" button.
 !["PI request allocation" section](./static/PI_request_allocation.png)
 
 After clicking "+Request Resource Allocation", you'll see a list of resources you can request for.
-Basically, you'll see general "Univeristy HPC" which is default for all and school-wise resources (e.g., Tandon(Genric)) based on a school that your project belongs to.
-Please select a resource and fill in justification to complete the allocation reqeust process.
-!["Univeristy HPC resource" section](./static/uni_resource.png)
+Basically, you'll see general "University HPC" which is default for all and school-wise resources (e.g., Tandon(Generic)) based on a school that your project belongs to.
+Please select a resource and fill in justification to complete the allocation request process.
+!["University HPC resource" section](./static/uni_resource.png)
 !["School-wise resource" section](./static/school_resource.png)
 
 Now your allocation request is created! You'll see an allocation request with "New" status.

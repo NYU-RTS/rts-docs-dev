@@ -24,7 +24,7 @@ logout
 ### Linux & Mac Tools
 #### scp and rsync
 :::warning
-Please use Data Transfer Nodes (DTNs) with these tools. While one can transfer data while on login nodes, it is  considered a bad practice because it can degrate the node's performance.
+Please use Data Transfer Nodes (DTNs) with these tools. While one can transfer data while on login nodes, it is  considered a bad practice because it can degrade the node's performance.
 :::
 
 Sometimes these two tools are convenient for transferring small files. Using the DTNs does not require to set up an SSH tunnel; use the hostname `dtn.hpc.nyu.edu` for one-step copying. See below for examples of commands invoked on the command line on a laptop running a Unix-like operating system:

@@ -1,12 +1,12 @@
 # Temperature
 
-Generating text (or images) from LLMs is inherently probabilistic. However, as an end user you have many parameters at your disposal to tweak the behavior of LLMs. Of these, temperature is the most commonly used. Broadly, it controls the randonmess of the generated text. A lower temperature produces more deterministic outputs, while a higher temperature produces more random "creative" output. For a more comprehensive explanation on this topic, refer to the following:
+Generating text (or images) from LLMs is inherently probabilistic. However, as an end user you have many parameters at your disposal to tweak the behavior of LLMs. Of these, temperature is the most commonly used. Broadly, it controls the randomness of the generated text. A lower temperature produces more deterministic outputs, while a higher temperature produces more random "creative" output. For a more comprehensive explanation on this topic, refer to the following:
 -   [How to generate text: using different decoding methods for language generation with Transformers](https://huggingface.co/blog/how-to-generate)
 -   [What is LLM Temperature?](https://www.ibm.com/think/topics/llm-temperature)
 
 :::tip
 
-The effect of temperature is probabalistic, so you might need to run the script repeatedly to obtain a representative sample of generated text from the LLM.
+The effect of temperature is probabilistic, so you might need to run the script repeatedly to obtain a representative sample of generated text from the LLM.
 
 :::
 
