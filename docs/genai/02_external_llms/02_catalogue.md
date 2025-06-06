@@ -10,7 +10,7 @@ We currently facilitate access to the following externally hosted LLMs:
 -   text-embedding-3-small
 
 ## VertexAI
--   Gemini-2.5-flash-preview-04-17
+-   gemini-2.5-flash-preview-05-20
 -   Gemini-2.0 models (flash, flash-lite)
 -   Gemini-1.5 models (flash, pro) (deprecated)
 
