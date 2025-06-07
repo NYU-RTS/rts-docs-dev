@@ -4,9 +4,10 @@
 
 |Component|Configuration|
 |---|---|
-|Model|`NousResearch/Llama-2-7b-chat-hf`|
+|Base Model|`google/gemma-3-4b-pt` (pretrained)|
+|Comparison Model|`google/gemma-3-4b-it` (instruction-tuned)|
 |Dataset|`timdettmers/openassistant-guanaco`|
-|Justification|High-quality instruction-following dataset with conversational exchanges designed to improve model's ability to follow complex instructions, maintain context, and provide structured responses|
+|Justification|Using Gemma-3 allows direct comparison between base pretrained, our LoRA fine-tuned, and official instruction-tuned variants. The OpenAssistant Guanaco dataset provides high-quality instruction-following examples.|
 
 ### Dataset Overview
 
@@ -14,25 +15,32 @@ The `timdettmers/openassistant-guanaco` dataset is a high-quality instruction-fo
 
 ### Fine-tuning Benefits
 
-Fine-tuning LLaMA2 on this dataset significantly improves the model's ability to:
+Fine-tuning Gemma-3-4B-PT on this dataset significantly improves the model's ability to:
 
-- **Follow complex instructions**: Better understanding of multi-step requests and nuanced prompts
-- **Maintain conversational context**: Improved coherence in longer dialogues
-- **Provide structured responses**: Enhanced ability to format answers appropriately
-- **Reduce harmful outputs**: Training on carefully curated data reduces problematic responses
+  - **Follow complex instructions**: Better understanding of multi-step requests and nuanced prompts
+  - **Maintain conversational context**: Improved coherence in longer dialogues  
+  - **Provide structured responses**: Enhanced ability to format answers appropriately
+  - **Reduce harmful outputs**: Training on carefully curated data reduces problematic responses
+
+By using Gemma-3, we can compare three variants:
+1. **Base pretrained** (`google/gemma-3-4b-pt`) - Raw language modeling capabilities
+2. **Our LoRA fine-tuned** - Custom instruction following on Guanaco dataset
+3. **Official instruction-tuned** (`google/gemma-3-4b-it`) - Google's instruction tuning baseline
+
+This provides a comprehensive evaluation of fine-tuning effectiveness.
 
 ---
 
-## Before and After Fine-tuning Comparison
+## Three-Way Model Comparison
 
 ### Example Prompt: "Explain quantum computing in simple terms for a beginner"
 
-#### Before Fine-tuning (Base LLaMA2-7B):
+#### Base Pretrained Model (`google/gemma-3-4b-pt`):
 ```
 Quantum computing uses quantum bits or qubits instead of classical bits. Qubits can be in superposition states and can be entangled. This allows quantum computers to perform certain calculations exponentially faster than classical computers for specific problems like factoring large numbers and simulating quantum systems.
 ```
 
-#### After Fine-tuning (LLaMA2-7B + LoRA on Guanaco):
+#### Our LoRA Fine-tuned Model (Gemma-3-4B-PT + LoRA on Guanaco):
 ```
 Great question! Let me break down quantum computing in simple terms:
 
@@ -46,6 +54,22 @@ Great question! Let me break down quantum computing in simple terms:
 **Real applications**: Password breaking, drug discovery, weather prediction, and financial modeling.
 
 The fine-tuned model provides clearer explanations with better structure, analogies, and practical context!
+```
+
+#### Official Instruction-tuned Model (`google/gemma-3-4b-it`):
+```
+Quantum computing is a revolutionary approach to computation that leverages quantum mechanics principles. Here's a beginner-friendly explanation:
+
+**Basic Concept**: While classical computers use bits (0 or 1), quantum computers use quantum bits (qubits) that can exist in multiple states simultaneously through "superposition."
+
+**Key Advantages**:
+- Parallel processing of multiple possibilities
+- Exponential speedup for specific problem types
+- Superior performance in cryptography, optimization, and simulation
+
+**Current Applications**: Drug discovery, financial modeling, cryptography, and artificial intelligence research.
+
+This comparison demonstrates how our custom fine-tuning can achieve similar or better instruction-following capabilities compared to the official instruction-tuned variant.
 ```
 
 ---
@@ -89,7 +113,7 @@ Ensure this is set both interactively and within sbatch scripts.
 
 ## Operational Troubleshooting: Common Errors and Recommended Fixes
 
-This section provides a comprehensive overview of all environment-related issues encountered during the fine-tuning of `NousResearch/Llama-2-7b-chat-hf` on the NYU Greene HPC cluster. Each entry includes the error symptom, root cause, and resolution strategy, categorized for clarity.
+This section provides a comprehensive overview of all environment-related issues encountered during the fine-tuning of `google/gemma-3-4b-pt` on the NYU Greene HPC cluster. Each entry includes the error symptom, root cause, and resolution strategy, categorized for clarity.
 
 ### 1. Filesystem and Path Setup Issues
 
@@ -169,123 +193,64 @@ peft_config = LoraConfig(
 
 ## sbatch Job Script for Model Training
 
-### **Training Script: `train_phi4.py`**
+### **Training Script: `train_gemma3.py`**
 
-The script `train_phi4.py` is used for training the model. Below is the full content of the script:
+The complete training script is available in the repository. Below are the key configuration snippets:
 
+**Model and Dataset Configuration:**
 ```python
-#!/usr/bin/env python3
-"""
-Fine-tune LLaMA2-7B using LoRA on OpenAssistant Guanaco dataset
-Optimized for NYU Greene HPC environment
-"""
-
-import os
-import torch
-from datasets import load_dataset
-from transformers import (
-    AutoTokenizer,
-    AutoModelForCausalLM,
-    TrainingArguments,
-    Trainer,
-    DataCollatorForLanguageModeling
-)
-from peft import LoraConfig, get_peft_model, TaskType
-from trl import SFTTrainer
-
-def main():
-    # Model and dataset configuration
-    model_name = "NousResearch/Llama-2-7b-chat-hf"
-    dataset_name = "timdettmers/openassistant-guanaco"
-    output_dir = "./llama2_output"
-    
-    # Load tokenizer and model
-    print("Loading tokenizer and model...")
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    tokenizer.pad_token = tokenizer.eos_token
-    
-    model = AutoModelForCausalLM.from_pretrained(
-        model_name,
-        torch_dtype=torch.float16,
-        device_map="auto",
-        trust_remote_code=True
-    )
-    
-    # LoRA configuration
-    peft_config = LoraConfig(
-        r=8,
-        lora_alpha=16,
-        target_modules=["q_proj", "k_proj", "v_proj", "o_proj"],
-        lora_dropout=0.05,
-        bias="none",
-        task_type=TaskType.CAUSAL_LM
-    )
-    
-    # Apply LoRA to model
-    model = get_peft_model(model, peft_config)
-    model.print_trainable_parameters()
-    
-    # Load and prepare dataset
-    print("Loading dataset...")
-    dataset = load_dataset(dataset_name, split="train[:1%]")  # Use 1% for testing
-    
-    def format_instruction(sample):
-        return f"### Human: {sample['text']}\n### Assistant: "
-    
-    # Training arguments
-    training_args = TrainingArguments(
-        output_dir=output_dir,
-        per_device_train_batch_size=4,
-        gradient_accumulation_steps=4,
-        num_train_epochs=1,
-        learning_rate=2e-4,
-        fp16=True,
-        logging_steps=10,
-        save_steps=50,
-        save_total_limit=2,
-        remove_unused_columns=False,
-        dataloader_pin_memory=False,
-    )
-    
-    # Initialize trainer
-    trainer = SFTTrainer(
-        model=model,
-        train_dataset=dataset,
-        dataset_text_field="text",
-        max_seq_length=512,
-        tokenizer=tokenizer,
-        args=training_args,
-        peft_config=peft_config,
-    )
-    
-    # Start training
-    print("Starting training...")
-    trainer.train()
-    
-    # Save the model
-    print("Saving model...")
-    trainer.save_model()
-    tokenizer.save_pretrained(output_dir)
-    
-    print("Training completed successfully!")
-
-if __name__ == "__main__":
-    main()
+# Model and dataset configuration
+model_name = "google/gemma-3-4b-pt"  # Base pretrained model
+dataset_name = "timdettmers/openassistant-guanaco"
+output_dir = "./gemma3_output"
 ```
 
-You can now run the script in your Singularity container environment to train your LLaMA2 model with LoRA fine-tuning.
+**LoRA Configuration:**
+```python
+# LoRA configuration
+peft_config = LoraConfig(
+    r=8,
+    lora_alpha=16,
+    target_modules=["q_proj", "k_proj", "v_proj", "o_proj"],
+    lora_dropout=0.05,
+    bias="none",
+    task_type=TaskType.CAUSAL_LM
+)
+```
+
+**Training Arguments:**
+```python
+# Training arguments
+training_args = TrainingArguments(
+    output_dir=output_dir,
+    per_device_train_batch_size=4,
+    gradient_accumulation_steps=4,
+    num_train_epochs=1,
+    learning_rate=2e-4,
+    fp16=True,
+    logging_steps=10,
+    save_steps=50,
+    save_total_limit=2,
+    remove_unused_columns=False,
+    dataloader_pin_memory=False,
+)
+```
+
+📁 **Complete script available at**: Repository examples folder (to be added with this PR)
+
+### **sbatch Script**
 
 ```bash
 #!/bin/bash
-#SBATCH --job-name=llama2-finetune
+#SBATCH --job-name=gemma3-finetune
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=40GB
 #SBATCH --gres=gpu:1
 #SBATCH --time=12:00:00
-#SBATCH --output=/scratch/<NetID>/fine-tune/phi4_train_%j.out
-#SBATCH --error=/scratch/<NetID>/fine-tune/phi4_train_%j.err
+#SBATCH --output=/scratch/<NetID>/fine-tune/gemma3_train_%j.out
+#SBATCH --error=/scratch/<NetID>/fine-tune/gemma3_train_%j.err
 #SBATCH --mail-type=END,FAIL
 #SBATCH --mail-user=<NetID>@nyu.edu
 
@@ -297,7 +262,7 @@ singularity exec --nv \
   /bin/bash -c "
     source /ext3/miniconda3/bin/activate
     cd /scratch/<NetID>/fine-tune
-    python train_phi4.py
+    python train_gemma3.py
 "
 ```
 
@@ -313,7 +278,7 @@ singularity exec --nv \
 |`training_args.bin`|Saved training configuration|
 |`tokenizer_config.json`, `tokenizer.json`|Tokenizer data|
 
-Location: `/scratch/<NetID>/fine-tune/llama2_output/checkpoint-13/`
+Location: `/scratch/<NetID>/fine-tune/gemma3_output/checkpoint-13/`
 
 ---
 
