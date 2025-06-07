@@ -17,10 +17,10 @@ The `timdettmers/openassistant-guanaco` dataset is a high-quality instruction-fo
 
 Fine-tuning Gemma-3-4B-PT on this dataset significantly improves the model's ability to:
 
-  - **Follow complex instructions**: Better understanding of multi-step requests and nuanced prompts
-  - **Maintain conversational context**: Improved coherence in longer dialogues  
-  - **Provide structured responses**: Enhanced ability to format answers appropriately
-  - **Reduce harmful outputs**: Training on carefully curated data reduces problematic responses
+- **Follow complex instructions**: Better understanding of multi-step requests and nuanced prompts
+- **Maintain conversational context**: Improved coherence in longer dialogues  
+- **Provide structured responses**: Enhanced ability to format answers appropriately
+- **Reduce harmful outputs**: Training on carefully curated data reduces problematic responses
 
 By using Gemma-3, we can compare three variants:
 1. **Base pretrained** (`google/gemma-3-4b-pt`) - Raw language modeling capabilities
