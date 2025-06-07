@@ -17,15 +17,16 @@ The `timdettmers/openassistant-guanaco` dataset is a high-quality instruction-fo
 
 Fine-tuning Gemma-3-4B-PT on this dataset significantly improves the model's ability to:
 
-- **Follow complex instructions**: Better understanding of multi-step requests and nuanced prompts
-- **Maintain conversational context**: Improved coherence in longer dialogues  
-- **Provide structured responses**: Enhanced ability to format answers appropriately
-- **Reduce harmful outputs**: Training on carefully curated data reduces problematic responses
+-   **Follow complex instructions**: Better understanding of multi-step requests and nuanced prompts
+-   **Maintain conversational context**: Improved coherence in longer dialogues  
+-   **Provide structured responses**: Enhanced ability to format answers appropriately
+-   **Reduce harmful outputs**: Training on carefully curated data reduces problematic responses
 
 By using Gemma-3, we can compare three variants:
-1. **Base pretrained** (`google/gemma-3-4b-pt`) - Raw language modeling capabilities
-2. **Our LoRA fine-tuned** - Custom instruction following on Guanaco dataset
-3. **Official instruction-tuned** (`google/gemma-3-4b-it`) - Google's instruction tuning baseline
+
+1.  **Base pretrained** (`google/gemma-3-4b-pt`) - Raw language modeling capabilities
+2.  **Our LoRA fine-tuned** - Custom instruction following on Guanaco dataset
+3.  **Official instruction-tuned** (`google/gemma-3-4b-it`) - Google's instruction tuning baseline
 
 This provides a comprehensive evaluation of fine-tuning effectiveness.
 
@@ -36,11 +37,13 @@ This provides a comprehensive evaluation of fine-tuning effectiveness.
 ### Example Prompt: "Explain quantum computing in simple terms for a beginner"
 
 #### Base Pretrained Model (`google/gemma-3-4b-pt`):
+
 ```
 Quantum computing uses quantum bits or qubits instead of classical bits. Qubits can be in superposition states and can be entangled. This allows quantum computers to perform certain calculations exponentially faster than classical computers for specific problems like factoring large numbers and simulating quantum systems.
 ```
 
 #### Our LoRA Fine-tuned Model (Gemma-3-4B-PT + LoRA on Guanaco):
+
 ```
 Great question! Let me break down quantum computing in simple terms:
 
@@ -57,6 +60,7 @@ The fine-tuned model provides clearer explanations with better structure, analog
 ```
 
 #### Official Instruction-tuned Model (`google/gemma-3-4b-it`):
+
 ```
 Quantum computing is a revolutionary approach to computation that leverages quantum mechanics principles. Here's a beginner-friendly explanation:
 
@@ -198,6 +202,7 @@ peft_config = LoraConfig(
 The complete training script is available in the repository. Below are the key configuration snippets:
 
 **Model and Dataset Configuration:**
+
 ```python
 # Model and dataset configuration
 model_name = "google/gemma-3-4b-pt"  # Base pretrained model
@@ -206,6 +211,7 @@ output_dir = "./gemma3_output"
 ```
 
 **LoRA Configuration:**
+
 ```python
 # LoRA configuration
 peft_config = LoraConfig(
@@ -219,6 +225,7 @@ peft_config = LoraConfig(
 ```
 
 **Training Arguments:**
+
 ```python
 # Training arguments
 training_args = TrainingArguments(
