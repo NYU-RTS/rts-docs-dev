@@ -15,10 +15,10 @@ The `timdettmers/openassistant-guanaco` dataset is a high-quality instruction-fo
 ### Fine-tuning Benefits
 
 Fine-tuning LLaMA2 on this dataset significantly improves the model's ability to:
-- **Follow complex instructions**: Better understanding of multi-step requests and nuanced prompts
-- **Maintain conversational context**: Improved coherence in longer dialogues
-- **Provide structured responses**: Enhanced ability to format answers appropriately
-- **Reduce harmful outputs**: Training on carefully curated data reduces problematic responses
+    - **Follow complex instructions**: Better understanding of multi-step requests and nuanced prompts
+    - **Maintain conversational context**: Improved coherence in longer dialogues
+    - **Provide structured responses**: Enhanced ability to format answers appropriately
+    - **Reduce harmful outputs**: Training on carefully curated data reduces problematic responses
 
 ---
 
