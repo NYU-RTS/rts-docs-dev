@@ -28,3 +28,22 @@
   --ifm-color-primary-lightest: #fff;
   --docusaurus-highlighted-code-line-bg: rgb(0 0 0 / 30%);
 }
+
+html {
+  scroll-padding-top: var(--ifm-navbar-height);
+}
+
+button,
+.button {
+  font-family: var(--ifm-font-family-base);
+}
+
+select {
+  font-family: var(--ifm-font-family-base);
+}
+
+.lucide-icon {
+  display: inline-block;
+  margin-right: 0.4em;
+  vertical-align: middle;
+}

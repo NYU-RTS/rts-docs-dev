@@ -6,8 +6,8 @@
 
 Broadly it facilitates:
 -   **Route requests** via configurations that can allow for fallbacks, load balance, etc
--   **Observability** via the control pane that displays your usage statistics and logs. You can retrive your logs via an API.
--   **Prompt management** via the prompt playground. You can compare the respone for a prompt across multiple LLMs, collaborate with your team and export your prompts.
+-   **Observability** via the control pane that displays your usage statistics and logs. You can retrieve your logs via an API.
+-   **Prompt management** via the prompt playground. You can compare the response for a prompt across multiple LLMs, collaborate with your team and export your prompts.
 -   **Guardrails** usage by allowing you to define them or integrate with third party guardrails.
 -   **Agentic workflows** by integrating with various agentic frameworks like langchain, llamaindex, etc.
 -   **Security & Governance** by allowing you to set budget and rate limits on the API keys created for your workspace
@@ -33,7 +33,7 @@ from portkey_ai import Portkey
 portkey = Portkey(
     base_url="https://ai-gateway.apps.cloud.rt.nyu.edu/v1/",
     api_key="",  # Replace with your Portkey API key
-    virtual_key="",  # Replace with your virtual key for Google
+    virtual_key="",  # Replace with your virtual key
 )
 
 completion = portkey.chat.completions.create(
@@ -41,7 +41,7 @@ completion = portkey.chat.completions.create(
         {"role": "system", "content": "You are not a helpful assistant"},
         {"role": "user", "content": "Say this is a test"},
     ],
-    model="gemini-2.0-flash-lite-preview-02-05",
+    model="gemini-2.0-flash-lite",
 )
 
 print(completion)

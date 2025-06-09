@@ -44,7 +44,7 @@ Thus you can consider the following options
 -   Reinstall your packages if some of the files get deleted
     -   You can do this manually 
     -   You can do this automatically. For example, within a workflow of a pipeline software like [Nextflow](https://www.nextflow.io/)
--   Pay for "Research Project Space" - for details see [Research Project Space](../03_storage/05_research_project_space.md)
+-   Pay for "Research Project Space" - for details see [Research Project Space](../03_storage/05_research_project_space.mdx)
 -   Use Singularity and install packages within a corresponding overlay file - for details see [Singularity with Conda](../07_containers/03_singularity_with_conda.md)  
 
 ## Python
@@ -148,7 +148,7 @@ If you installed extra packages using pip (Python)
 
 In this you can use
 ```sh
-export PYTHONNOUSERSITE=True  ## to ingnore packages in ~/.local/lib/python<version>
+export PYTHONNOUSERSITE=True  ## to ignore packages in ~/.local/lib/python<version>
 # save
 conda list --export > conda_requirements.txt
 pip freeze > pip_requirements.txt
@@ -165,7 +165,7 @@ However, this may fail if your conda environment is created as a sub-directory o
 
 Installed extra packages using install.packages? (R)
 
-Usecase: You need packages not availalbe in conda channels, and want to use install.packages.
+Usecase: You need packages not available in conda channels, and want to use install.packages.
 
 Command `conda list --export` will not include packages installed by "install.packages". So, do not use `conda install` at all. To have reproducibility in this case you need to use Conda and renv together, as described below
 

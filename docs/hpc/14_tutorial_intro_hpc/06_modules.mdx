@@ -1,0 +1,217 @@
+# Accessing software via Modules
+:::info[Overview]
+Questions
+- How do we load and unload software packages?
+
+Objectives
+- Load and use a software package.
+- Explain how the shell environment changes when the module mechanism loads or unloads packages.
+:::
+
+On a high-performance computing system, it is seldom the case that the software we want to use is available when we log in. It is installed, but we will need to “load” it before it can run.
+
+Before we start using individual software packages, however, we should understand the reasoning behind this approach. The three biggest factors are:
+-   software incompatibilities
+-   versioning
+-   dependencies
+
+Software incompatibility is a major headache for programmers. Sometimes the presence (or absence) of a software package will break others that depend on it. Two well known examples are Python and C compiler versions. Python 3 famously provides a `python` command that conflicts with that provided by Python 2. Software compiled against a newer version of the C libraries and then run on a machine that has older C libraries installed will result in a nasty `'GLIBCXX_3.4.20' not found` error.
+
+Software versioning is another common issue. A team might depend on a certain package version for their research project - if the software version was to change (for instance, if a package was updated), it might affect their results. Having access to multiple software versions allows a set of researchers to prevent software versioning issues from affecting their results.
+
+Dependencies are where a particular software package (or even a particular version) depends on having access to another software package (or even a particular version of another software package). For example, the VASP materials science software may depend on having a particular version of the FFTW (Fastest Fourier Transform in the West) software library available for it to work.
+
+## Environment Modules
+Environment modules are the solution to these problems. A *module* is a self-contained description of a software package – it contains the settings required to run a software package and, usually, encodes required dependencies on other software packages.
+
+There are a number of different environment module implementations commonly used on HPC systems: the two most common are *TCL modules* and *Lmod*. Both of these use similar syntax and the concepts are the same so learning to use one will allow you to use whichever is installed on the system you are using. In both implementations the `module` command is used to interact with environment modules. An additional subcommand is usually added to the command to specify what you want to do. For a list of subcommands you can use `module -h` or `module help`. As for all commands, you can access the full help on the *man* pages with `man module`.
+
+On login you may start out with a default set of modules loaded or you may start out with an empty environment; this depends on the setup of the system you are using.
+
+# Listing Available Modules
+To see available software modules, use `module avail`:
+```bash
+[NetID@log-1 ~]$ module avail
+
+----------------------------------------------- /share/apps/modulefiles -----------------------------------------------
+   abyss/intel/2.3.0                          liftoff/1.6.1
+   admixtools/intel/7.0.2                     liftoff/1.6.3
+   admixture/1.3.0                            llvm/11.0.0
+   advanpix-mct/4.9.3.15018                   lofreq/2.1.5
+   amber/openmpi/24.00                        lp_solve/intel/5.5.2.9
+   amber/openmpi/intel/20.06                  lua/5.3.6
+   amber/openmpi/intel/20.11                  macs2/2.1.1.20160309
+   amber/openmpi/intel/22.00                  macs2/intel/2.2.7.1
+   amber/openmpi/intel/22.03                  macs3/intel/3.0.0a5
+   ampl/20240308                              mafft/intel/7.475
+   amplgurobilink/11.0.1                      mambaforge/23.1.0
+
+[removed most of the output here for clarity]
+```
+
+## Listing Currently Loaded Modules
+You can use the `module list` command to see which modules you currently have loaded in your environment. If you have no modules loaded, you will see a message telling you so
+```bash
+[NetID@log-1 ~]$ module list
+No modules loaded
+```
+
+## Loading and Unloading Software
+To load a software module, use `module load`. In this example we will use R.
+
+Initially, R is not loaded. We can test this by using the `which` command. `which` looks for programs the same way that Bash does, so we can use it to tell us where a particular piece of software is stored.
+```bash
+[NetID@log-1 ~]$ which R
+/usr/bin/which: no R in 
+(share/apps/singularity/bin:
+/share/apps/local/bin:
+/home/yourUsername/.local/bin:
+/home/yourUsername/bin:
+/share/apps/singularity/bin:
+/share/apps/local/bin:
+/usr/local/bin:
+/usr/bin:
+/usr/local/sbin:
+/usr/sbin:
+/usr/lpp/mmfs/bin:
+/opt/slurm/bin:)
+```
+We can load the `R` command with `module load`:
+```bash
+[NetID@log-1 ~]$ module load r/gcc/4.4.0 
+[NetID@log-1 ~]$ which R
+/share/apps/r/4.4.0/gcc/bin/R
+```
+
+So, what just happened?
+
+To understand the output, first we need to understand the nature of the `$PATH` environment variable. `$PATH` is a special environment variable that controls where a UNIX system looks for software. Specifically `$PATH` is a list of directories (separated by :) that the OS searches through for a command before giving up and telling us it can’t find it. As with all environment variables we can print it out using `echo`.
+```bash
+[NetID@log-1 ~]$ echo $PATH
+/share/apps/r/4.4.0/gcc/bin:
+/share/apps/singularity/bin:
+/share/apps/local/bin:
+/home/yourUsername/.local/bin:
+/home/yourUsername/bin:
+/usr/local/bin:
+/usr/bin:
+/usr/local/sbin:
+/usr/sbin:
+/usr/lpp/mmfs/bin:
+/opt/slurm/bin:
+```
+You’ll notice a similarity to the output of the `which` command. In this case, there’s only one difference: the different directory at the beginning. When we ran the `module load` command, it added a directory to the beginning of our `$PATH`. Let’s examine what’s there:
+
+```bash
+[NetID@log-1 ~]$ ls /share/apps/r/4.4.0/gcc/bin
+R  Rscript  __run_base.bash
+```
+
+Taking this to its conclusion, `module load` will add software to your `$PATH`. It “loads” software. A special note on this - depending on which version of the `module` program that is installed at your site, `module load` will also load required software dependencies.
+
+Let's see an example of this when loading the module `lammps/openmpi/intel/20231214`:
+
+To start, let’s use module list. module list shows all loaded software modules.
+```bash
+[NetID@log-1 ~]$ module list
+No modules loaded
+[NetID@log-1 ~]$ module load lammps/openmpi/intel/20231214
+[NetID@log-1 ~]$ module list
+
+Currently Loaded Modules:
+  1) szip/intel/2.1.1               5) gsl/intel/2.6              9) python/intel/3.8.6
+  2) hdf5/intel/1.12.0              6) openmpi/intel/4.0.5       10) boost/intel/1.74.0
+  3) netcdf-c/intel/4.7.4           7) fftw/openmpi/intel/3.3.9  11) plumed/openmpi/intel/2.8.3
+  4) pnetcdf/openmpi/intel/1.12.1   8) intel/19.1.2              12) lammps/openmpi/intel/20231214
+```
+
+So in this case, loading the `lammps` module (a molecular dynamics software package), also loaded 11 other modules as well. Let’s try unloading the `lammps` package.
+```bash
+[NetID@log-1 ~]$ module unload lammps/openmpi/intel/20231214
+[NetID@log-1 ~]$ module list
+No modules loaded
+```
+So using `module unload` “un-loads” a module along with its dependencies. If we wanted to unload everything at once, we could run `module purge` (unloads everything).
+```bash
+[NetID@log-1 ~]$ module purge
+No modules loaded
+```
+
+:::note
+This module loading process happens principally through the manipulation of environment variables like `$PATH`. There is usually little or no data transfer involved.
+:::
+
+The module loading process manipulates other special environment variables as well, including variables that influence where the system looks for software libraries, and sometimes variables which tell commercial software packages where to find license servers.
+
+The module command also restores these shell environment variables to their previous state when a module is unloaded.
+
+## Software Versioning
+So far, we’ve learned how to load and unload software packages. This is very useful. However, we have not yet addressed the issue of software versioning. At some point or other, you will run into issues where only one particular version of some software will be suitable. Perhaps a key bugfix only happened in a certain version, or version X broke compatibility with a file format you use. In either of these example cases, it helps to be very specific about what software is loaded.
+
+Let’s examine the output of `module avail` more closely.
+```bash
+[NetID@log-1 ~]$ module avail
+
+----------------------------------------------- /share/apps/modulefiles -----------------------------------------------
+   abyss/intel/2.3.0                          liftoff/1.6.1
+   admixtools/intel/7.0.2                     liftoff/1.6.3
+   admixture/1.3.0                            llvm/11.0.0
+   advanpix-mct/4.9.3.15018                   lofreq/2.1.5
+   amber/openmpi/24.00                        lp_solve/intel/5.5.2.9
+   amber/openmpi/intel/20.06                  lua/5.3.6
+   amber/openmpi/intel/20.11                  macs2/2.1.1.20160309
+   amber/openmpi/intel/22.00                  macs2/intel/2.2.7.1
+   amber/openmpi/intel/22.03                  macs3/intel/3.0.0a5
+   ampl/20240308                              mafft/intel/7.475
+   amplgurobilink/11.0.1                      mambaforge/23.1.0
+
+[removed most of the output here for clarity]
+```
+Let’s take a closer look at the `nextflow` module. Nextflow is a scientific workflow system predominantly used for bioinformatic data analysis In this case, we have:
+```bash
+   nextflow/20.07.1    nextflow/20.11.0-edge    nextflow/21.10.5    nextflow/23.04.1
+   nextflow/20.10.0    nextflow/21.04.3         nextflow/21.10.6    nextflow/24.04.3
+```
+How do we load each copy and which copy is the default?
+```bash
+[NetID@log-1 ~]$ module load Nextflow
+Lmod has detected the following error:  The following module(s) are unknown: "Nextflow"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore-cache load "Nextflow"
+
+Also make sure that all modulefiles written in TCL start with the string #%Module
+```
+
+To load a software module we must specify the full module name:
+```bash
+[NYUNetID@log-1 ~]$ module load nextflow/24.04.3
+[NYUNetID@log-1 ~]$ nextflow -version
+```
+
+<details>
+<summary>
+:::info[Using Software Modules in Scripts]
+Create a job that is able to run `R --version`. Remember, no software is loaded by default! Running a job is just like logging on to the system (you should not assume a module loaded on the login node is loaded on a compute node). <br />
+**[Click for Solution]**
+:::
+</summary>
+:::tip[Solution]
+```bash
+[NetID@log-1 ~]$ nano r-module.sh
+[NetID@log-1 ~]$ cat r-module.sh
+#!/bin/bash
+#SBATCH #SBATCH -t 00:00:30
+
+module load r/gcc/4.4.0
+
+R --version
+[NetID@log-1 ~]$ sbatch r-module.sh
+:::
+</details>
+
+:::tip[Key Points]
+-   Load software with `module load softwareName`.
+-   Unload software with `module unload`
+-   The module system handles software versioning and package conflicts for you automatically.

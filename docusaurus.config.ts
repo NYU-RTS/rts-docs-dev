@@ -10,8 +10,7 @@ if (process.env.PREVIEW_PATH) {
 }
 
 const config: Config = {
-  title: "Research Technology Servcies",
-  tagline: "NYU",
+  title: "Connecting researchers to computational resources.",
   favicon: "img/NYU.ico",
 
   // Set the production url of your site here
@@ -31,6 +30,11 @@ const config: Config = {
 
   //https://docusaurus.io/docs/deployment#docusaurusconfigjs-settings
   trailingSlash: true,
+
+  markdown: {
+    mermaid: true,
+  },
+  themes: ["@docusaurus/theme-mermaid"],
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -77,7 +81,7 @@ const config: Config = {
     navbar: {
       title: "Research Technology Services",
       logo: {
-        alt: "My Site Logo",
+        alt: "NYU torch logo",
         src: "img/NYU.svg",
       },
       items: [
@@ -95,21 +99,20 @@ const config: Config = {
         },
         {
           type: "docSidebar",
-          sidebarId: "hsrnSidebar",
+          sidebarId: "cloudSidebar",
           position: "right",
-          label: "HSRN",
-        },
-        {
-          type: "docSidebar",
-          sidebarId: "rtcSidebar",
-          position: "right",
-          label: "RTC",
+          label: "Cloud",
         },
         {
           type: "docSidebar",
           sidebarId: "srdeSidebar",
           position: "right",
           label: "SRDE",
+        },
+        {
+          href: "https://hsrn.nyu.edu/docs/",
+          position: "right",
+          label: "HSRN",
         },
         { to: "/blog", label: "Announcements", position: "right" },
       ],
@@ -118,11 +121,36 @@ const config: Config = {
       style: "dark",
       links: [
         {
-          title: "Feedback",
+          title: "Contact",
           items: [
             {
-              label: "Email",
+              label: "Email for HPC support",
               href: "mailto:hpc@nyu.edu",
+            },
+            {
+              label: "Email for HSRN support",
+              href: "mailto:hsrn-support@nyu.edu",
+            },
+            {
+              label: "Email for general GenAI support",
+              href: "mailto:genai-support@nyu.edu",
+            },
+            {
+              label: "Email for GenAI for research support",
+              href: "mailto:Genai-research-support@nyu.edu",
+            },
+          ],
+        },
+        {
+          title: "Links",
+          items: [
+            {
+              label: "NYU Libraries Research Guides",
+              href: "https://guides.nyu.edu/",
+            },
+            {
+              label: "FORC camp",
+              href: "https://sites.google.com/nyu.edu/forc-camp/home",
             },
           ],
         },
@@ -140,7 +168,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Built with Docusaurus!`,
+      copyright: "Made with \u{1F49C} in NYC!",
     },
     prism: {
       theme: prismThemes.oneLight,
@@ -148,6 +176,14 @@ const config: Config = {
       additionalLanguages: ["bash", "shell-session", "lua", "sql", "julia"],
     },
   } satisfies Preset.ThemeConfig,
+
+  future: {
+    v4: true, // opt-in to v4 to ease transition in the future
+    experimental_faster: {
+      rspackBundler: true, // required flag
+      rspackPersistentCache: true, // new flag
+    },
+  },
 };
 
 export default config;

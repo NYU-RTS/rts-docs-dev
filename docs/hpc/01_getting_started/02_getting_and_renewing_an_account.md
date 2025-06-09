@@ -8,7 +8,7 @@
 
 [hpc account request form link for courses]: https://docs.google.com/forms/d/e/1FAIpQLSdehngqL1xso-YV6MOhplKNwxXjASHYnDtM_5THB3P2vrDKcg/viewform?usp=sf_link
 
-This section deals with the eligibility for getting HPC accounts and the process to create new ones, renew existing oaccountsThis section deals with the eligibility for getting HPC accounts, the process to create new accounts, renew existing ones and touches on access policies after graduation fom NYU and access for non-NYU researchers.
+This section deals with the eligibility for getting HPC accounts and the process to create new ones, renew existing oaccountsThis section deals with the eligibility for getting HPC accounts, the process to create new accounts, renew existing ones and touches on access policies after graduation from NYU and access for non-NYU researchers.
 
 :::info
 
@@ -61,7 +61,7 @@ HPC faculty sponsors are expected to:
 
 -   Respond promptly to account-related requests from HPC staff
 
-Each year, your sponosred users must renew their account. You will need to approve the renewal by logging into the [NYU Identity Management service][nyu ims link]. We have a [walkthrogh of the approval process here](./03_walkthrough_approve_hpc_account_request.md)
+Each year, your sponsored users must renew their account. You will need to approve the renewal by logging into the [NYU Identity Management service][nyu ims link]. We have a [walkthrogh of the approval process here](./03_walkthrough_approve_hpc_account_request.md)
 
 ## Bulk HPC Accounts for Courses
 
@@ -95,7 +95,7 @@ If you are not part of a collaboration, your access to cluster will end together
 
 :::note
 
-In order to request a new HPC account or renew an expired one, you need to be connected to the NYU VPN if you are working remotely, Please see [instructions on how to install and use the NYU VPN][nyu vpn link]. Linux clients are not officially supported, however we were able to successfully use openVPN client. Here are installation and connection instructions for a debian linux distribution with apt pacakge manager:
+In order to request a new HPC account or renew an expired one, you need to be connected to the NYU VPN if you are working remotely, Please see [instructions on how to install and use the NYU VPN][nyu vpn link]. Linux clients are not officially supported, however we were able to successfully use openVPN client. Here are installation and connection instructions for a debian linux distribution with apt package manager:
 
 ```sh
 apt-get install openconnect
