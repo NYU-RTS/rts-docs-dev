@@ -9,7 +9,7 @@ Conda provides a great way to install packages that are already compiled, so you
 
 :::tip
 **Reproducibility**:
-One of the ways to ensure the reproducibility of your results is to have an independent conda environment in the directory of each project (one of the options shown below). This will also keep conda environment files away from your /home/$USER directory.
+One of the ways to ensure the reproducibility of your results is to have an independent conda environment in the directory of each project (one of the options shown below). This will also keep conda environment files away from your `/home/$USER` directory.
 :::
 
 ## Advantages/disadvantages of using Conda
@@ -37,9 +37,11 @@ module load anaconda3/2024.02
 Conda init can create problems with package installation, so we suggest using `source activate` instead of `conda activate`, even though conda activate is considered a best practice by the Anaconda developers.
 
 ### Automatic deletion of your files
-This page describes the installation of packages on `/scratch`. One has to remember, though, that files stored in the HPC scratch file system are subject to the HPC Scratch old file purging policy: Files on the `/scratch` file system that have not been accessed for 60 or more days will be purged (read more this in [Data Management](../03_storage/01_intro_and_data_management.mdx)).
+This page describes the installation of packages on `/scratch`. One has to remember, though, that files stored in the HPC scratch file system are subject to the HPC Scratch old file purging policy: <br />
+Files on the `/scratch` file system that have not been accessed for 60 or more days will be purged. <br />
+You can read more this in [Data Management](../03_storage/01_intro_and_data_management.mdx).
 
-Thus you can consider the following options
+Thus you can consider the following options:
 
 -   Reinstall your packages if some of the files get deleted
     -   You can do this manually 
@@ -58,8 +60,8 @@ Keep your program/project in `/scratch` and create conda environment using '-p' 
 :::
 
 ```sh
-conda create -p ./penv python=3  ## environment will be created in project directory
-conda activate ./penv 
+conda create -p ./penv python  ## environment will be created in project directory
+source activate ./penv 
 ```
 Also, you need to create a symbolic link, so conda will download files for packages to be installed into scratch, not your home directory.
 ```sh
@@ -82,28 +84,29 @@ Conda and packages install by default to `~/.local/lib/python<version>`
 
 If you did use `'pip install --user'` to install some packages (without conda or other virtual environment), they will be available in `~/.local/lib/python<version>`
 
-:::warning
-***The primary takeaway:***
+::::warning
+:::info[The primary takeaway:]
 
 Let say you have tornado v.6 installed in `~/.local/lib/python<version>`, and tornado v.5 installed by `conda install`.
 
-When you will do `conda activate` you will have tornado v.6 available!! Not v.5!!
+When you will do `source activate` you will have tornado v.6 available!! Not v.5!!
 
 (this behaviour is the same for packages installed by to `~/.local/lib/python<version>` before or after you create your conda environment)
 
 `pip freeze` will give v.6
 
 `conda list` will give v.5
-
-***Solution***
-
-To overcome this, do `export PYTHONNOUSERSITE=True` after conda activate
 :::
+:::tip[Solution]
+
+To overcome this, do `export PYTHONNOUSERSITE=True` after source activate
+:::
+::::
 
 ## R
 Load anaconda module
 ```sh
-module load anaconda3/2020.07
+module load anaconda3/2024.02
 ```
 :::tip
 Keep your program/project in `/scratch` and create conda environment using '-p' parameter. This will keep all the files inside the project's directory, instead of putting them in your `/home/$USER`
@@ -112,8 +115,8 @@ Keep your program/project in `/scratch` and create conda environment using '-p' 
 ```sh
 conda create -p ./renv r=3.5 ## environment will be created in project directory
 ## OR
-conda create -c conda-forge -p ./penv r-base=3.6.3 ## environment will be created in project directory
-conda activate ./renv
+conda create -c conda-forge -p ./renv r-base=3.6.3 ## environment will be created in project directory
+source activate ./renv
 ```
 
 Install pre-compiled packages available in conda:
@@ -130,11 +133,11 @@ install.packages("<package_name>")
 ```
 
 ## Reproducibility
-Packages installed only using conda
+### Packages installed only using conda
 
-Save a list of packages (so you are able to report environment in publication, and to restore/reproduce env on another machine at any time)
+Save a list of packages (so you are able to report the environment in a publication, and to restore/reproduce the environment on another machine at any time)
 
-```sh
+```bash
 # save
 conda list --export > requirements.txt
 # restore
@@ -144,10 +147,11 @@ conda create -p ./penv --file requirements.txt
 This will not list packages installed by `pip` or `install.packages()`
 :::
 
-If you installed extra packages using pip (Python)
 
-In this you can use
-```sh
+### Packages installed using conda and `pip` (Python)
+
+In this case you can use:
+```bash
 export PYTHONNOUSERSITE=True  ## to ignore packages in ~/.local/lib/python<version>
 # save
 conda list --export > conda_requirements.txt
@@ -157,39 +161,44 @@ conda create -p ./penv --file conda_requirements.txt
 pip install -r pip_requirements.txt
 ```
 
-:::note
-Alternatively, you can use conda env export > all_requirements.txt, which will save both: packages installed by conda and by pip.
-:::
 
+::::tip
+Alternatively, you can use `conda env export > all_requirements.txt`, which will save both: packages installed by conda and `pip`.
+:::warning
 However, this may fail if your conda environment is created as a sub-directory of your project's directory (which we recommend)
+:::
+::::
 
-Installed extra packages using install.packages? (R)
+### Packages installed using `install.packages` (R)
 
-Usecase: You need packages not available in conda channels, and want to use install.packages.
+The command `conda list --export` will not include packages installed by `install.packages`. So, only use `conda install` to install R and either `renv` or `packrat` to maintain information about packages installed by `install.packages`.
 
-Command `conda list --export` will not include packages installed by "install.packages". So, do not use `conda install` at all. To have reproducibility in this case you need to use Conda and renv together, as described below
+#### `renv`
 
-Conda + pakcrat: specific version of R and install.packages (R)
+Please see details of using `renv` with conda for reproducibilty on [R packages with `renv`](./04_r_packages_with_renv.md).
 
--   use conda to install version of R you need
--   do not use 'conda install' at all
--   use renv
--   install all the packages using install.packages
--   use [renv as described here](../06_tools_and_software/04_r_packages_with_renv.md) to keep track of the environment
+#### `packrat`
 
-In order for conda + renv to work, you need to add following steps:
+Conda + `packrat`: specific version of R and `install.packages` (R)
 
--   After you activate conda AND before loading R
-    ```sh
-    export R_RENV_DEFAULT_LIBPATHS=<path_to_project_directory>/renv/lib/x86_64-conda_cos6-linux-gnu/<version>/
-    ```
--   Start R and execute
-    ```sh
-    .libPaths(c(.libPaths(), Sys.getenv("R_RENV_SYSTEM_LIBRARY")))
-    ```
+1. load the conda module: `module load anaconda3/2024.02`
+1. use conda to install version of R you need and `packrat`: `conda create -p ./packratenv r=3.5 r-packrat`
+1. activate the conda environment: `source activate packratenv/`
+1. start R: `R`
+1. initialize packrat: `packrat::init()`
+1. install desired packages: `install.packages("package name")`
+
+To get a snapshot of what's installed for publication or to restore/reproduce run the command: <br />
+`packrat::snapshot()`
+
+To restore from your `packrat.lock` file simply run the following command from within your project directory: <br />
+`packrat::restore()`
+
+Remember, to get the snapshot of your conda environment you'll run the command: <br />
+`conda list --export > conda_requirements.txt`
 
 ## Use conda env in a batch script
-The part of the batch script which will call the command shall look like (replace `<path_to_env>` to an appropriate value)
+The part of the batch script that will call the command should look like: (replace `<path_to_env>` with an appropriate value)
 
 ### Python
 
@@ -203,10 +212,10 @@ The part of the batch script which will call the command shall look like (replac
 #SBATCH --mem=8GB
 #SBATCH --time=1:00:00
 module purge;
-module load anaconda3/2020.07;
+module load anaconda3/2024.02;
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK;
 source /share/apps/anaconda3/2020.07/etc/profile.d/conda.sh;
-conda activate ./penv;
+source activate ./penv;
 export PATH=./penv/bin:$PATH;
 python python_script.py
 ```
@@ -215,9 +224,9 @@ python python_script.py
 ```sh
 mpiexec --mca bash -c "module purge;
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK;
-module load anaconda3/2020.07;
+module load anaconda3/2024.02;
 source /share/apps/anaconda3/2020.07/etc/profile.d/conda.sh;
-conda activate ./penv;
+source activate ./penv;
 export PATH=./penv/bin:$PATH;
 python python_script.py"
 ```
@@ -232,10 +241,10 @@ python python_script.py"
 #SBATCH --mem=8GB
 #SBATCH --time=1:00:00
 module purge;
-module load anaconda3/2020.07;
+module load anaconda3/2024.02;
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK;
 source /share/apps/anaconda3/2020.07/etc/profile.d/conda.sh;
-conda activate ./renv;
+source activate ./renv;
 export PATH=./renv/bin:$PATH;
 Rscript r_script.R
 ```
@@ -244,9 +253,9 @@ Rscript r_script.R
 ```sh
 mpiexec --mca bash -c "module purge;
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK;
-module load anaconda3/2020.07;
+module load anaconda3/2024.02;
 source /share/apps/anaconda3/2020.07/etc/profile.d/conda.sh;
-conda activate ./renv;
+source activate ./renv;
 export PATH=./renv/bin:$PATH;
 Rscript r_script.R"
 ```
@@ -258,6 +267,6 @@ In this case, when you use sbatch you would activate conda in sbatch script, and
 module purge
 module load  anaconda3/2020.07
 source /share/apps/anaconda3/2020.07/etc/profile.d/conda.sh
-conda activate ./renv
+source activate ./renv
 Rscript test.R
 ```

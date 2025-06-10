@@ -1,5 +1,19 @@
 # R Packages with renv
 
+## Is this needed:
+:::tip
+If you would like to use conda with `renv` you need to add following steps:
+
+-   After you activate conda AND before loading R
+    ```sh
+    export R_RENV_DEFAULT_LIBPATHS=<path_to_project_directory>/renv/lib/x86_64-conda_cos6-linux-gnu/<version>/
+    ```
+-   Start R and execute
+    ```sh
+    .libPaths(c(.libPaths(), Sys.getenv("R_RENV_SYSTEM_LIBRARY")))
+    ```
+:::
+
 You may use the renv R package to create a personal R Project environment for R packages. Documentation on renv can be found on the [RStudio site](https://rstudio.github.io/renv/).
 
 ## Setup
