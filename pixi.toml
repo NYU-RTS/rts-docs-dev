@@ -8,7 +8,7 @@ version = "0.1.0"
 [tasks]
 install = { cmd = ["pnpm", "install"] }
 build = { cmd = ["pnpm", "build"], depends-on = ["install"] }
-serve = { cmd = ["pnpm", "serve"], depends-on = ["build"] }
+start = { cmd = ["pnpm", "start"], depends-on = ["build"] }
 
 [dependencies]
 nodejs = ">=22.12.0,<22.14"
