@@ -1,5 +1,8 @@
 # Research Technology Services @ NYU
 
+## Companion repo for examples
+Plese add any scripts/code snippets used to [rts-docs-examples](https://github.com/NYU-RTS/rts-docs-examples.git)
+
 ## Deploy locally:
 On Linux/Macos run:
 ```
