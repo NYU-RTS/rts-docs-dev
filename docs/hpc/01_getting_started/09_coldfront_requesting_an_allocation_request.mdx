@@ -1,0 +1,42 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Managing allocations for your project
+
+Login to coldfront at [coldfront.hpc.nyu.edu](https://coldfront.hpc.nyu.edu) either on-campus or on the VPN. Navigate to the "Project" item in the navigation bar on the top of the page and select "Projects" from the drop down menu.<br/>
+![Project Dropdown](./static/project_dropdown.png)
+
+From the list of project, click on the project you'd like to submit an allocation request for and you'll see the current details:
+!["PI_One Project" section](./static/PI_one_project.png)
+
+## Current allocations
+Scroll down and you'll reach the Allocations section. This section lists all the allocations associated with this project. All allocations have SLURM accounts associated with them. Allocations that are "Active" will allow you to submit jobs using the SLURM account associated with it.
+
+## Requesting new allocations
+If you scroll down, you'll see "+Request Resource Allocation" button.
+!["PI request allocation" section](./static/PI_request_allocation.png)
+
+After clicking "+Request Resource Allocation", you'll see a list of resources you can request for. All projects can request access to Torch, which provides access to the cluster. However, depending on the school the project is affiliated with, high priority resources are available.
+
+:::info Available resource for each school:
+<Tabs>
+  <TabItem value="tandon" label="Tandon" default>
+    -   **tandon_advanced**: includes both A100 and H100 GPUs
+    -   **tandon_priority**: includes A100 GPUs only
+  </TabItem>
+  <TabItem value="arts-sciences" label="Arts & Sciences">
+    -   **cilvr**: A100 GPUs
+    -   **cds**: rtx8000 and A100
+    -   **chemistry**: A100 GPUs
+  </TabItem>
+</Tabs>
+:::
+
+Please select a resource and fill in justification to complete the allocation request process.
+![Allocation request justify submit](./static/allocation_request_submit.png)
+
+Now your allocation request is created! You'll see an allocation request with "New" status.
+!["Allocation request created" section](./static/allocation_request_created.png)
+
+Once your school approver approves the request, the status will change to "Active" (and you will receive an email notifying you of the change). 
+
