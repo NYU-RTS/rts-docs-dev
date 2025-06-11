@@ -10,7 +10,7 @@ curl -fsSL https://pixi.sh/install.sh | bash
 ```
 or look for alternate methods/platforms [here](https://pixi.sh/latest/#installation).
 
-### Build and serve:
+### Build and start development server (with live reloading to reflect changes):
 ```
-pixi run serve
+pixi run start
 ```
