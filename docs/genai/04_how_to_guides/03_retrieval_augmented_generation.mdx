@@ -39,9 +39,9 @@ flowchart TB;
 ```
 
 It starts with the "Ingestion" phase where a document to be used as context is parsed and broken into chunks. These chunks are then converted to embeddings and stored in a vector database (which specializes in storing and retrieving vectors). This setup allows us now "retrieve" the required context for an incoming prompt before it is sent to an LLM. The "retrieval" phase consists of converting the prompt to an embedding and looking up embeddings for chunks of the document that are similar to it. The text chunks associated with the embeddings similar to the embedding for the query are then added as additional context to the prompt before passing it to an LLM.
-The LLM now has the associated context it needs to generate an relevant response to the prompt.
+The LLM now has the associated context it needs to generate an relevant response to the prompt. Here's a link to a script to test this out yourself, once you have API access to an embedding model and an LLM: https://github.com/NYU-RTS/rts-docs-examples/tree/main/genai/rag .
 
-Here's a script to test this out yourself, once you have API access to an embedding model and an LLM: https://github.com/NYU-RTS/rts-docs-examples/tree/main/genai/rag . You can run it to ask a question about a recent event that occurred after the knowledge cutoff for the dataset used to train the LLM:
+You can run it to ask a question about a recent event that occurred after the knowledge cutoff for the dataset used to train the LLM:
 ```sh
 ss19980@ITS-JQKQGQQMTX ~/D/p/r/g/rag (main)> uv run rag_basic.py \
                                                  https://en.wikipedia.org/wiki/2025_London_Marathon \
