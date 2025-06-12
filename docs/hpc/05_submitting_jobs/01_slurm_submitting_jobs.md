@@ -6,7 +6,7 @@
 -   HPC workloads are usually better suited to *batch processing* than *interactive* working.
 -   A batch job is sent to the system when submitted with an **sbatch** command. 
 -   The working pattern we are all familiar with is *interactive* - where we type ( or click ) something interactively, and the computer performs the associated action. Then we type ( or click ) the next thing.
--   Comments at the start of the script, which match a special pattern ( #SBATCH ) are read as Slurm options.
+-   Comments at the start of the script, which match a special pattern ( `#SBATCH` ) are read as Slurm options.
 
 ### The trouble with interactive environments
 
@@ -15,8 +15,7 @@ There is a reason why GUIs are less common in HPC environments: **point-and-clic
 :::tip
 The job might not start immediately, and might take hours or days, so we prefer a *batch* approach:
 
--   Plan the sequence of commands which will perform the actions we need
-    -   Write them into a script.
+-   Plan the sequence of commands which will perform the actions we need and write the commands into a script.
 
 You can now run the script interactively, which is a great way to save effort if i frequently use the same workflow, or ...
 -   Submit the script to a batch system, to run on dedicated resources when they become available.

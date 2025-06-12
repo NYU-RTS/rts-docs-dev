@@ -7,7 +7,7 @@ There are different types of software packages available
     -   This includes the licensed software listed below
 -   Singularity Containers
     -   You can find those already built and ready to use, at location `/scratch/work/public/singularity/`
-    -   For more information on running software with Singularity, [click here](../06_tools_and_software/06_singularity_run_custom_applications_with_containers.md).
+    -   For more information on running software with Singularity, [click here](../07_containers/01_intro.md).
 -   Python/R/Julia packages can be installed by a user 
 
 If you need another linux program installed, please contact us at [hpc@nyu.edu](mailto:hpc@nyu.edu) 

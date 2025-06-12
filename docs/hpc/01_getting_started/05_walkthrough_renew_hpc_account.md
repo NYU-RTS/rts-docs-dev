@@ -1,10 +1,10 @@
 # Renewing your HPC Account
 
-Login to the URL given below, using your NetID/password, to create or manage HPC Account Requests:
-
 :::info VPN Needed
 You need to be on the NYU VPN to perform this task!
 :::
+
+Login to the URL given below, using your NetID/password, to create or manage HPC Account Requests:
 
 https://identity.it.nyu.edu/
 
