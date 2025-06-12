@@ -1,22 +1,32 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Connecting to the HPC Cluster
 
 There are several ways to interact with the Greene HPC cluster. Similar to other Linux clusters, the most common method of connection is via a Command Line Interface (CLI). A CLI is a program that allows you to create and delete files, run programs, and navigate through directories and files via a typed prompt. On Mac, the built-in CLI application is called Terminal. While Windows 11 machines support a Linux Subsystem, which allows for similar functionality, a popular tool used to connect to a Linux server is a free application called [PuTTY][putty link]. 
 
+:::tip
 If you'd prefer to access the HPC cluster via a web gateway instead, please refer to [the section describing OpenOnDemand](./03_ood.md).
+:::
 
 The following sections will outline basic ways to connect to the Greene cluster. Access to the clusters is primarily handled via the Secure Shell Protocol, or ssh. Below we outline ways to connect via ssh on Mac, Linux, and Windows machines.
 
-## Remote Connections with the NYU VPN & HPC Gateway Server
+:::info Connecting to Torch from outside NYU Network
 
-If you are connecting from a remote location that is not on the NYU network (your home for example), you have two options:
 
-1.  **VPN Option:** [Set up your computer to use the NYU VPN][nyu vpn link]. Once you've created a VPN connection, you can proceed as if you were connected to the NYU net
-
-2.  **Gateway Option:** Go through our gateway servers (example below). Gateways are designed to support only a very minimal set of commands and their only purpose is to let users connect HPC systems without needing to first connect to the VPN
+<Tabs>
+  <TabItem value="VPN" label="VPN (Preferred)">
+    [Set up your computer to use the NYU VPN][nyu vpn link]. Once you've created a VPN connection, you can proceed as if you were connected to the NYU net
+  </TabItem>
+  <TabItem value="Gateway" label="Gateway">
+    Go through our gateway servers (example below). Gateways are designed to support only a very minimal set of commands and their only purpose is to let users connect HPC systems without needing to first connect to the VPN
+  </TabItem>
+</Tabs>
+:::
 
 You do not need to use the NYU VPN or gateways if you are connected to the NYU network (wired connection in your office or WiFi) or if you have VPN connection initiated. In this case you can ssh directly to the clusters.
 
-## Command Line Interface (Use Terminal)
+## Command Line Interface (with a Terminal)
 
 ### Mac & Linux Access
 
@@ -48,7 +58,7 @@ Instructions on WSL installation can be found here: [https://docs.microsoft.com/
 -   If you are using WSL 2 (Windows subsystem for Linux), you may not be able to access internet when Cisco AnyConnect VPN, installed from exe file, is activated. A potential solution: uninstall Cisco AnyConnect and install AnyConnect using Microsoft Store, and then setup new VPN connection using settings described on [IT webpage][install vpn on windows link].
 :::
 
-### Setting up SSH Keys
+## Setting up SSH Keys
 
 Instead of typing your password every time you need to log in, you can also specify an ssh key.
 

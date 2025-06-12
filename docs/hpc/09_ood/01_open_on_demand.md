@@ -10,7 +10,7 @@ If you're not on the NYU network, you may need to connect via NYU's Virtual Priv
 This page describes how to use your Singularity with conda environment in Open OnDemand (OOD) GUI at Greene. 
 
 ### Log Into Greene via the Terminal
-The following commands must be run from the terminal. Information on accessing via the terminal can be found at the [Connecting to the HPC page](../02_connecting_to_hpc/01_connecting_to_hpc.md). 
+The following commands must be run from the terminal. Information on accessing via the terminal can be found at the [Connecting to the HPC page](../02_connecting_to_hpc/01_connecting_to_hpc.mdx). 
 
 ### Preinstallation Warning
 :::warning
