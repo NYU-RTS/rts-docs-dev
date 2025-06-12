@@ -198,8 +198,7 @@ Remember, to get the snapshot of your conda environment you'll run the command: 
 `conda list --export > conda_requirements.txt`
 
 ## Use conda env in a batch script
-The part of the batch script that will call the command should look like: (replace `<path_to_env>` with an appropriate value)
-
+The part of the batch script that will call the command should look like:
 ### Python
 
 #### Single node
@@ -215,21 +214,35 @@ module purge;
 module load anaconda3/2024.02;
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK;
 source /share/apps/anaconda3/2020.07/etc/profile.d/conda.sh;
-source activate ./penv;
-export PATH=./penv/bin:$PATH;
-python python_script.py
+export PATH_TO_ENV=<full path to penv>
+source activate $PATH_TO_ENV;
+export PATH=$PATH_TO_ENV/bin:$PATH;
+python test.py
+
 ```
+You'll need to replace `<full path to penv>` with the full path to your penv directory.  It's probably something like `/scratch/NetID/conda_tests/penv`
 
 #### Multiple nodes, using MPI
 ```sh
-mpiexec --mca bash -c "module purge;
+#!/bin/bash
+#SBATCH --job-name=test
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=1
+#SBATCH --ntasks-per-node=4
+#SBATCH --mem=8GB
+#SBATCH --time=1:00:00
+export PATH_TO_ENV="<full path to penv>"
+module purge;
+module load openmpi/gcc/4.1.6;
+mpiexec bash -c "module purge;
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK;
 module load anaconda3/2024.02;
-source /share/apps/anaconda3/2020.07/etc/profile.d/conda.sh;
-source activate ./penv;
-export PATH=./penv/bin:$PATH;
-python python_script.py"
+source /share/apps/anaconda3/2024.02/etc/profile.d/conda.sh;
+source activate "$PATH_TO_ENV";
+export PATH="$PATH_TO_ENV/bin:$PATH";
+python test.py"
 ```
+Again, you'll need to replace `<full path to penv>` above with the full path to your penv directory.
 
 ### R (conda packages only)
 ```bash
@@ -243,30 +256,48 @@ python python_script.py"
 module purge;
 module load anaconda3/2024.02;
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK;
-source /share/apps/anaconda3/2020.07/etc/profile.d/conda.sh;
-source activate ./renv;
-export PATH=./renv/bin:$PATH;
+source /share/apps/anaconda3/2024.02/etc/profile.d/conda.sh;
+export PATH_TO_ENV=<full path to renv>;
+source activate $PATH_TO_ENV;
+export PATH=$PATH_TO_ENV/bin:$PATH;
 Rscript r_script.R
 ```
+You'll again need to replace `<full path to renv>` above with the full path to your renv directory.
 
 #### Multiple nodes, using MPI
 ```sh
-mpiexec --mca bash -c "module purge;
-export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK;
+#!/bin/bash
+#SBATCH --job-name=test
+#SBATCH --nodes=2
+#SBATCH --cpus-per-task=2
+#SBATCH --ntasks-per-node=4
+#SBATCH --mem=8GB
+#SBATCH --time=1:00:00
+module purge;
 module load anaconda3/2024.02;
-source /share/apps/anaconda3/2020.07/etc/profile.d/conda.sh;
-source activate ./renv;
-export PATH=./renv/bin:$PATH;
-Rscript r_script.R"
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK;
+source /share/apps/anaconda3/2024.02/etc/profile.d/conda.sh;
+export PATH_TO_ENV="<full path to renv>";
+source activate $PATH_TO_ENV;
+export PATH=$PATH_TO_ENV/bin:$PATH;
+Rscript test.R
 ```
+You'll again need to replace `<full path to renv>` above with the full path to your renv directory.
 
 ### R (conda with renv combination)
 
 In this case, when you use sbatch you would activate conda in sbatch script, and R script will pickup packages installed in renv
 ```sh
-module purge
-module load  anaconda3/2020.07
-source /share/apps/anaconda3/2020.07/etc/profile.d/conda.sh
-source activate ./renv
+#!/bin/bash
+#SBATCH --job-name=test
+#SBATCH --nodes=2
+#SBATCH --cpus-per-task=2
+#SBATCH --ntasks-per-node=4
+#SBATCH --mem=8GB
+#SBATCH --time=1:00:00module purge
+module load anaconda3/2024.02
+source /share/apps/anaconda3/2024.02/etc/profile.d/conda.sh
+source activate <full path to renv>
 Rscript test.R
 ```
+You'll again need to replace `<full path to renv>` above with the full path to your renv directory.
