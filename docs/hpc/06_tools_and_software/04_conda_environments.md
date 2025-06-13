@@ -24,7 +24,7 @@ However, Conda has a significantly larger number of pre-compiled packages.
 
 ### Disadvantages
 
--   Conda does not take advantage of packages already installed in the system (while [virtualenv and venv](./03_python_packages_with_virtual_environments.md) do)
+-   Conda does not take advantage of packages already installed in the system (while [virtualenv and venv](./02_python_packages_with_virtual_environments.md) do)
 -   As you will see below, you may need to do additional steps to keep track of all installed packages (including those installed by pip and/or install.packages)
 
 ## Initializing Conda
@@ -171,31 +171,11 @@ However, this may fail if your conda environment is created as a sub-directory o
 
 ### Packages installed using `install.packages` (R)
 
-The command `conda list --export` will not include packages installed by `install.packages`. So, only use `conda install` to install R and either `renv` or `packrat` to maintain information about packages installed by `install.packages`.
+The command `conda list --export` will not include packages installed by `install.packages`. So, only use `conda install` to install R and use `renv` to maintain information about packages installed by `install.packages`.
 
 #### `renv`
 
-Please see details of using `renv` with conda for reproducibilty on [R packages with `renv`](./04_r_packages_with_renv.md).
-
-#### `packrat`
-
-Conda + `packrat`: specific version of R and `install.packages` (R)
-
-1. load the conda module: `module load anaconda3/2024.02`
-1. use conda to install version of R you need and `packrat`: `conda create -p ./packratenv r=3.5 r-packrat`
-1. activate the conda environment: `source activate packratenv/`
-1. start R: `R`
-1. initialize packrat: `packrat::init()`
-1. install desired packages: `install.packages("package name")`
-
-To get a snapshot of what's installed for publication or to restore/reproduce run the command: <br />
-`packrat::snapshot()`
-
-To restore from your `packrat.lock` file simply run the following command from within your project directory: <br />
-`packrat::restore()`
-
-Remember, to get the snapshot of your conda environment you'll run the command: <br />
-`conda list --export > conda_requirements.txt`
+Please see details of using `renv` with conda for reproducibilty on [R packages with `renv`](./03_r_packages_with_renv.md).
 
 ## Use conda env in a batch script
 The part of the batch script that will call the command should look like:
