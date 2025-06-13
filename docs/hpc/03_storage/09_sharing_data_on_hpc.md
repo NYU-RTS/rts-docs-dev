@@ -1,7 +1,7 @@
 # Sharing Data on HPC
 
 ## Introduction
-To share files on the cluster with other users, we recommend using file access control lists (FACL) for a user to share access to their data with others.  FACL mechanism allows a fine-grained control access to any files by any users or groups of users. We discourage users from setting '777' permissions with `chmod`, because this can lead to data loss (by a malicious user or unintentionally, by accident). Linux commands `getfacl` and `setfacl` are used to view and set access. 
+To share files on the cluster with other users, we recommend using file access control lists (FACL) for a user to share access to their data with others.  FACL mechanism allows a fine-grained control access to any files by any users or groups of users. We discourage users from setting `777` permissions with `chmod`, because this can lead to data loss (by a malicious user or unintentionally, by accident). Linux commands `getfacl` and `setfacl` are used to view and set access. 
 
 ACL mechanism, just like regular Linux POSIX, allows three different levels of access control:
 

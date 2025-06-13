@@ -1,4 +1,4 @@
-# Singularity: Run Custom Applications with Containers
+# Custom Applications with Containers
 
 ## What is Singularity
 Singularity is a container based Linux kernel workspace that works just like docker.  You can run pre-built programs in containers without having to worry about the pre-install environment.
@@ -7,14 +7,14 @@ For users who are familiar with Docker containers, Singularity works very simila
 
 For a detailed introduction on Singularity, visit their official site [here](https://apptainer.org/documentation/)
 
-## why do we use Singularity
+## Why do we use Singularity
 There are multiple reasons to use Singularity on the HPC clusters:
 1.  Security: Singularity provides a layer of security as it does not require any root access on our clusters. This makes it safer against malware and bad scripts that might jeopardize the outer system. Thus we only support Singularity on our clusters(there are not other options such as Kubernetes or Docker on our clusters right now)
 2.  Containerization: Singularity will run all your images(packaged and pre-built programs) inside of its containers, each container works like a small vm. They contain all the required environment and files of a single Linux kernel and you don't have to worry about any pre-installation nonsense
 3.  Inter-connectivity: Containers are able to talk to each other, as well as the home system, so while each container has its own small space, they are still a part of a big interconnected structure. Thus enabling you to connect your programs.
 4.  Accessibility: Probably the most important feature of all, Singularity allows you to run your program in 2 to 3 simple steps, as shown in the topic how to run a singularity container. 
 
-## how to run a singularity container
+## How to run a singularity container
 There are 3 steps to run a Singularity container on our clusters:
 
 pulling a image from Singularity hub or Docker hub
