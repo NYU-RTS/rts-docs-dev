@@ -7,8 +7,8 @@ Please find more information at [the official documentation page](https://docs.c
 
 Conda provides a great way to install packages that are already compiled, so you don't need to go over the long compilation process. If a package you need is not available, you can install it (and compile it when needed) using pip (Python) or install.packages (R).
 
-:::tip
-**Reproducibility**:
+:::note
+Reproducibility:
 One of the ways to ensure the reproducibility of your results is to have an independent conda environment in the directory of each project (one of the options shown below). This will also keep conda environment files away from your `/home/$USER` directory.
 :::
 

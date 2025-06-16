@@ -1,4 +1,4 @@
-# How to approve an Allocation Request
+# How to approve an allocation request
 
 If you are an approver for your school, first login to coldfront page and you'll see "staff" navigation bar.
 Click the "staff" navigation bar and click "Allocation Requests" to see a list of requests waiting for your approval.
