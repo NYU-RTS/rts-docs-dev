@@ -32,9 +32,9 @@ Below is a list of modules and their associated functions:
 
 
 ## Package Management for R, Python, & Julia, and Conda in general
--   [Conda environments (Python, R)](../06_tools_and_software/04_conda_environments.md)
--   [Using virtual environments for Python](../06_tools_and_software/02_python_packages_with_virtual_environments.md)
--   [Managing R packages with renv](../06_tools_and_software/03_r_packages_with_renv.md)
+-   [Conda environments (Python, R)](../06_tools_and_software/04_conda_environments.mdx)
+-   [Using virtual environments for Python](../06_tools_and_software/02_python_packages_with_virtual_environments.mdx)
+-   [Managing R packages with renv](../06_tools_and_software/03_r_packages_with_renv.mdx)
 
 ## Examples of software usage on Greene 
 Examples can be found under `/scratch/work/public/examples/` and include the following
