@@ -23,7 +23,7 @@ It is better in this case to request smaller amount of RAM and read data (effici
 
 -   You are not limited by RAM any longer
 -   Compared to other file formats SQLite is very good in selecting certain lines (especially if you use indexing)
--   You can use familiar dplyr syntax or execute SQL queries directly
+-   You can use familiar `dplyr` syntax or execute SQL queries directly
     -   [dplyr](https://dplyr.tidyverse.org/) is an interface for working with data in a database, not for modifying remote tables.
     -   [DBI package](https://dbi.r-dbi.org/) allows to both read and modify tables
 -   SQLite is [actually faster for common data analysis tasks](https://www.sqlite.org/speed.html) than other popular databases.
@@ -44,26 +44,30 @@ It is better in this case to request smaller amount of RAM and read data (effici
 ## Command line (CLI) example
 Create environment
 ```sh
-mkdir projects/sqlite-test
-cd projects/sqlite-test
-conda create -p ./cenv
-conda activate ./cenv
-conda install -y sqlite
+$ mkdir projects/sqlite-test
+$ cd projects/sqlite-test
+$ conda create -p ./cenv
+$ source activate ./cenv
+$ conda install -y sqlite
 ```
 Then [follow this SQLite example](https://sqlite.org/cli.html).
 ```sh
-sqlite3 db_file.sqlite
-create table tbl1(one varchar(10), two smallint);
-insert into tbl1 values('hello!',10);
-insert into tbl1 values('goodbye', 20);
-select * from tbl1;
+$ sqlite3 db_file.sqlite
+sqlite> create table tbl1(one varchar(10), two smallint);
+sqlite> insert into tbl1 values('hello!', 10);
+sqlite> insert into tbl1 values('goodbye', 20);
+sqlite> select * from tbl1;
+hello!|10
+goodbye|20
 ```
 Now Close session (Ctrl-D).
 
 Reopen session to check if changes are saved
 ```sh
-sqlite3 db_file.sqlite
-select * from tbl1;
+$ sqlite3 db_file.sqlite
+sqlite> select * from tbl1;
+hello!|10
+goodbye|20
 ```
 
 ## R example
@@ -75,15 +79,15 @@ conda will install pre-compiled packages. Which is good (faster) and bad (not fu
 :::
 
 :::tip
-Alternative: install packages to a local directory or use renv as described in [R Packages with renv](./04_r_packages_with_renv.md)
+Alternative: install packages to a local directory or use renv as described in [R Packages with renv](./03_r_packages_with_renv.mdx)
 ```sh
 mkdir /scratch/$USER/projects/myTempProject
 cd  /scratch/$USER/projects/myTempProject
 
-module load anaconda3/2020.07
+module load anaconda3/2024.02
 
-conda create -p ./cenv -c conda-forge r=4.1
-conda activate ./cenv
+conda create -p ./cenv -c conda-forge r=4.5
+source activate ./cenv
 conda install -c r r-rsqlite
 conda install -c r r-tidyverse
 conda install -c conda-forge r-remotes
@@ -144,7 +148,7 @@ df_temp <- df_con %>% filter( row_number() %in%  c(1, 3) ) %>% collect
 
 Save as feather
 ```R
-feather::write_feather(df_temp, paste0("file_", ind, ".feather"))
+feather::write_feather(df_temp, "my_data.feather")
 ```
 
 ### Alternative: read csv file to SQLite directly
@@ -155,9 +159,39 @@ conda install -c conda-forge r-sqldf
 R
 library(sqldf)
 ## create data file
-sqldf("attach allData as new")
-## read file directly from csv to sqlite
-read.csv.sql(file = "test.tab", sql = "create table states_data as select * from file", dbname = "allData")
+# sqldf("attach allData as new")
+
+# make csv file for this example
+write.csv(df_con, "df_con.csv", row.names = FALSE)
+
+# read file directly from csv to sqlite
+read.csv.sql(file = "df_con.csv", sql = "create table states_data as select * from file", dbname = "allData")
+
+# verify data in data frame
+dbListTables(con)
+[1] "fl"           "sqlite_stat1" "sqlite_stat4" "states_data" 
+
+df_con_sd <- tbl(con, "states_data")
+df_con_sd
+# Source:   table<`states_data`> [?? x 19]
+# Database: sqlite 3.50.1 [/scratch/netID/myTempProject/allData]
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   <int> <int> <int>    <int>          <int>     <int>    <int>          <int>
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# ℹ more rows
+# ℹ 11 more variables: arr_delay <int>, carrier <chr>, flight <int>,
+#   tailnum <chr>, origin <chr>, dest <chr>, air_time <int>, distance <int>,
+#   hour <int>, minute <int>, time_hour <int>
+# ℹ Use `print(n = ...)` to see more rows
 ```
 
 ## UI for SQLite - SQLiteStudio
