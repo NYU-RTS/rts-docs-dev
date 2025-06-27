@@ -49,7 +49,7 @@ running this would yield a menu for output:
 
 ![singularity3](./static/singularity3.png)
 
-:::tip[go into container]
+#### Enter Container
 ```sh
 singularity shell <image name>.simg:ro
 # after this step, you will be going into the container and start your programming
@@ -58,7 +58,8 @@ singularity shell <image name>.simg:ro
 ![singularity4](./static/singularity4.png)
 :::
 
-you can run commands for the container using exec arguments without actually going into the container
+#### Run commands outside the container
+You can run commands for the container using exec arguments without actually going into the container
 ```sh
 $ singularity exec <image name>.simg:ro <commands>
 # adding commands to the back will return the display result of these commands in the container without actually going into the container
