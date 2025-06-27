@@ -49,4 +49,3 @@ If you create a conda or python environment in you home directory, this can eat 
 :::
 
 Please review the [Package Management section](../06_tools_and_software/01_software_on_greene.md#package-management-for-r-python--julia-and-conda-in-general) of the [Greene Software Page](../06_tools_and_software/01_software_on_greene.md).
-

@@ -7,7 +7,7 @@ There are different types of software packages available
     -   This includes the licensed software listed below
 -   Singularity Containers
     -   You can find those already built and ready to use, at location `/scratch/work/public/singularity/`
-    -   For more information on running software with Singularity, [click here](../07_containers/01_intro.md).
+    -   For more information on running software with Singularity, See our [Containers Intro](../07_containers/01_intro.md).
 -   Python/R/Julia packages can be installed by a user 
 
 If you need another linux program installed, please contact us at [hpc@nyu.edu](mailto:hpc@nyu.edu) 
@@ -22,7 +22,7 @@ Below is a list of modules and their associated functions:
 | Command                           | Function                                                              |
 |-----------------------------------|-----------------------------------------------------------------------|
 | module unload `<module-name>`     | unload a module                                                       |
-| module show `<module-name>`       | see exactly what effect loading the module will have with             |
+| module show `<module-name>`       | see exactly what effect loading the module will have                  |
 | module purge                      | remove all loaded modules from your environment                       |
 | module load `<module-name>`       | load a module                                                         |
 | module whatis `<module-name>`     | find out more about a software package                                |
@@ -32,10 +32,9 @@ Below is a list of modules and their associated functions:
 
 
 ## Package Management for R, Python, & Julia, and Conda in general
--   [Conda environments (Python, R)](../06_tools_and_software/02_conda_environments.md)
--   [Using virtual environments for Python](../06_tools_and_software/03_python_packages_with_virtual_environments.md)
--   [Managing R packages with renv](../06_tools_and_software/04_r_packages_with_renv.md)
--   [Singularity with Miniconda](../07_containers/03_singularity_with_conda.md)
+-   [Conda environments (Python, R)](../06_tools_and_software/04_conda_environments.mdx)
+-   [Using virtual environments for Python](../06_tools_and_software/02_python_packages_with_virtual_environments.mdx)
+-   [Managing R packages with renv](../06_tools_and_software/03_r_packages_with_renv.mdx)
 
 ## Examples of software usage on Greene 
 Examples can be found under `/scratch/work/public/examples/` and include the following
@@ -68,7 +67,7 @@ Schrödinger can be used for non-commercial, academic purposes ONLY.
 
 To load Schrodinger module execute
 ```sh
-$ module load schrodinger/2021-1
+$ module load schrodinger/2024.4
 ```
 #### Using SCHRODINGER on NYU Lab Computers
 
@@ -158,7 +157,7 @@ In order to check what Comsol licenses are available on Greene use `comsol_licen
 Several versions of COMSOL are available on the HPC cluster. To use COMSOL on the Greene HPC cluster, please 
 load the relevant module in your batch job submission script:
 ```sh
-module load comsol/5.6.0.280
+module load comsol/6.3
 ```
 To submit a COMSOL job in a parallel fashion, running on multiple processing cores, follow the steps below:
 1.  Create a directory on "scratch" as given below.
@@ -182,7 +181,7 @@ Mathematica is a general computing environment with organizing algorithmic, visu
 
 To run Mathematica on the Greene HPC cluster, please load the relevant module in your batch job submission script:
 ```sh
-module load mathematica/12.1.1
+module load mathematica/14.1.0
 ```
 :::note
 In the example below the module is loaded already in the sbatch script.
@@ -254,8 +253,7 @@ MATLAB can be used for non-commercial, academic purposes.
 
 There are several versions of Matlab available on the cluster and the relevant version can be loaded.
 ```sh
-module load matlab/2020b
-module load matlab/2021a
+module load matlab/2024b
 ```
 In order to run MATLAB interactively on the cluster, [start an interactive slurm job](../05_submitting_jobs/01_slurm_submitting_jobs.md), load the matlab module and launch an interactive matlab session in the terminal. 
 
