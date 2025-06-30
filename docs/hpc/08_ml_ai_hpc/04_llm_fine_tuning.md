@@ -78,6 +78,12 @@ This comparison demonstrates how our custom fine-tuning can achieve similar or b
 
 ---
 
+
+:::tip
+Complete scripts used are available here: https://github.com/NYU-RTS/rts-docs-examples/tree/main/hpc/llm_fine_tuning
+
+:::
+
 ## System Environment Setup
 
 ### Singularity Container & Overlay Configuration
@@ -199,7 +205,7 @@ peft_config = LoraConfig(
 
 ### **Training Script: `train_gemma3.py`**
 
-The complete training script is available in the repository. Below are the key configuration snippets:
+The complete training script is available [here](https://github.com/NYU-RTS/rts-docs-examples/tree/main/hpc/llm_fine_tuning). Below are the key configuration snippets:
 
 **Model and Dataset Configuration:**
 
@@ -243,7 +249,6 @@ training_args = TrainingArguments(
 )
 ```
 
-📁 **Complete script available at**: Repository examples folder (to be added with this PR)
 
 ### **sbatch Script**
 
