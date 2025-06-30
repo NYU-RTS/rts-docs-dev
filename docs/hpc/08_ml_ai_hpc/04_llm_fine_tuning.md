@@ -55,9 +55,9 @@ Great question! Let me break down quantum computing in simple terms:
 - Handle complex calculations that would take classical computers thousands of years
 
 **Real applications**: Password breaking, drug discovery, weather prediction, and financial modeling.
-
-The fine-tuned model provides clearer explanations with better structure, analogies, and practical context!
 ```
+The fine-tuned model provides clearer explanations with better structure, analogies, and practical context!
+
 
 #### Official Instruction-tuned Model (`google/gemma-3-4b-it`):
 
@@ -73,8 +73,8 @@ Quantum computing is a revolutionary approach to computation that leverages quan
 
 **Current Applications**: Drug discovery, financial modeling, cryptography, and artificial intelligence research.
 
-This comparison demonstrates how our custom fine-tuning can achieve similar or better instruction-following capabilities compared to the official instruction-tuned variant.
 ```
+This comparison demonstrates how our custom fine-tuning can achieve similar or better instruction-following capabilities compared to the official instruction-tuned variant.
 
 ---
 
