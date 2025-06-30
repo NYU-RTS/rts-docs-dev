@@ -277,10 +277,10 @@ If the first ext3 overlay image runs out of space or you are using a squashFS co
 
 Open the first image in read only mode
 ```sh
-[rjy1@log-1 pytorch-example]$ cp -rp /scratch/work/public/overlay-fs-ext3/overlay-2GB-100K.ext3.gz .
-[rjy1@log-1 pytorch-example]$ gunzip overlay-2GB-100K.ext3.gz
+[NetID@log-1 pytorch-example]$ cp -rp /scratch/work/public/overlay-fs-ext3/overlay-2GB-100K.ext3.gz .
+[NetID@log-1 pytorch-example]$ gunzip overlay-2GB-100K.ext3.gz
 
-[rjy1@log-1 pytorch-example]$ singularity exec --overlay overlay-2GB-100K.ext3 --overlay /scratch/<NetID>/pytorch-example/my_pytorch.ext3:ro /scratch/work/public/singularity/cuda12.1.1-cudnn8.9.0-devel-ubuntu22.04.2.sif /bin/bash
+[NetID@log-1 pytorch-example]$ singularity exec --overlay overlay-2GB-100K.ext3 --overlay /scratch/<NetID>/pytorch-example/my_pytorch.ext3:ro /scratch/work/public/singularity/cuda12.1.1-cudnn8.9.0-devel-ubuntu22.04.2.sif /bin/bash
 Singularity> source /ext3/env.sh
 Singularity> pip install tensorboard
 ```
