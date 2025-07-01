@@ -1,18 +1,16 @@
-# Open OnDemand (Web-based Graphical User Interface)
+# Introduciton to Open OnDemand (OOD)
 
-Open OnDemand is designed to create easier access to users to interface with HPC systems. It comes with a variety of convenient tools to manage files, access the command line, manage and monitor jobs, and launch interactive applications, such as Jupyter Notebooks, RStudio sessions, and even full Linux Desktops. Features Include:
+## A Web-based Graphical User Interface
+
+OOD is designed to create easier access for users to interface with HPC systems. It comes with a variety of convenient tools to manage files, access the command line, manage and monitor jobs, and launch interactive applications, such as Jupyter Notebooks, RStudio sessions, and even full Linux Desktops. Features Include:
 
 -   Easy file management - upload and download files, view HTML and pictures without downloading
-
 -   Command-line shell access without any SSH client locally installed
-
 -   Job management and monitoring
-
 -   Full Linux desktop experience without X11
-
 -   Interactive Apps such as JupyterHub and RStudio without the need for port forwarding
 
-Open OnDemand (OOD) is accessible to all users with a valid NYU HPC account while on-campus network or through a VPN via https://ood.hpc.nyu.edu.
+It is accessible to all users with a valid NYU HPC account while on-campus network or through NYU VPN via https://ood.hpc.nyu.edu.
 
 ## Access the Shell
 
@@ -32,7 +30,8 @@ A common issue that can occur is receiving an error that the Open OnDemand page 
 
 In Chrome, this can be done by navigating to this page in your settings:
 
-```
+
+```bash
 chrome://settings/content/all?searchSubpage=ood.hpc.nyu.edu&search
 ```
 
@@ -41,4 +40,3 @@ The link above will automatically search for the Open OnDemand site data and coo
 ![Remove browser cache image](./static/ood_remove_cache.png)
 
 Once done, try navigating again to https://ood.hpc.nyu.edu and the site should load. For other issues please email hpc@nyu.edu.
-

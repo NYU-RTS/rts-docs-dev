@@ -1,11 +1,5 @@
 # Open OnDemand (OOD) with Conda/Singularity
 
-[Open OnDemand](https://ood.hpc.nyu.edu/) is a tool that allows users to launch Graphical User Interfaces (GUIs) based applications are accessible without modifying your HPC environment. You can log into the Open OnDemand interface at [https://ood.hpc.nyu.edu](https://ood.hpc.nyu.edu). Once logged in, select the **Interactive Apps** menu, select the desired application, and submit the job based on required resources and options. 
-
-:::note
-If you're not on the NYU network, you may need to connect via NYU's Virtual Private Network (VPN) before connecting to [https://ood.hpc.nyu.edu](https://ood.hpc.nyu.edu).  [Read the details about NYU's VPN and instructions for connecting](https://www.nyu.edu/life/information-technology/infrastructure/network-services/vpn.html).
-:::
-
 ## OOD + Singularity + conda
 This page describes how to use your Singularity with conda environment in Open OnDemand (OOD) GUI at Greene. 
 
