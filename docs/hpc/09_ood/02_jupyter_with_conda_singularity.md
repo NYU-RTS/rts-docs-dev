@@ -1,7 +1,7 @@
-# Open OnDemand (OOD) with Conda/Singularity
+# Jupyter with Conda/Singularity on OOD
 
 ## OOD + Singularity + conda
-This page describes how to use your Singularity with conda environment in Open OnDemand (OOD) GUI at Greene. 
+This page describes how to use your Singularity with conda environment in OOD GUI at Greene. 
 
 ### Log Into Greene via the Terminal
 The following commands must be run from the terminal. Information on accessing via the terminal can be found at [Connecting to the HPC](../02_connecting_to_hpc/01_connecting_to_hpc.mdx). 
@@ -190,7 +190,7 @@ to
 ```
 Update the `"<Your NetID>"` to your own NetID without the `"<>"` symbols.
 
-### Launch an Open OnDemand Jupyter Notebook
+### Launch an OOD Jupyter Notebook
 [https://ood.hpc.nyu.edu](https://ood.hpc.nyu.edu)
 
 ![OOD Launch](./static/OOD_launch.png)

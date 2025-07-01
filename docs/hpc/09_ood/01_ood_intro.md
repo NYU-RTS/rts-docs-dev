@@ -18,6 +18,8 @@ Under the **clusters** menu you can select the **Greene Shell Access** option to
 
 ![img](./static/open_ondemand_gif.gif)
 
+Please see our documentation on [Submitting Jobs](http://localhost:3000/rts-docs-dev/docs/hpc/submitting_jobs/slurm_submitting_jobs/) if you'd like detailed instructions.
+
 **Interactive Applications**
 
 GUI based applications are accessible without the need for port or X11 forwarding. Select the Interactive Apps menu, select the desired application, and submit the job based on required resources and options.
