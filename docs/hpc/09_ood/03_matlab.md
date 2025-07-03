@@ -7,7 +7,7 @@ You can run Matlab in OOD by going to the URL [ood.hpc.nyu.edu](http://ood.hpc.n
 Be aware that when you start from `Recently Used Apps` it will start with the same configuration that you used previously.  If you'd like to configure your Matlab session differently, you'll need to select it from the menu.
 :::
 
-![OOD Interactive Apps menu](./static/ood_interactive_apps.png)
+![OOD Interactive Apps menu](./static/ood_interactive_apps_matlab.png)
 
 ## Configuration
 
@@ -28,6 +28,18 @@ Each time you start it up after that it will set its working directory to the la
 
 This will allow you to set the full path of the initial working folder you would prefer.  Be sure to hit the `Apply` button, so your changes are applied.
 ::::
+
+:::tip
+Another step you may wish to take to keep Matlab from filling up your `/home` directory is to create symlinks from `/scratch` to `/home` for internal Matlab folders.  You can do this by running the following commands:
+```bash
+# make sure you're in your /home directory
+cd
+mkdir /scratch/$USER/.matlab
+mkdir /scratch/$USER/.MathWorks
+ln -s /scratch/$USER/.matlab
+ln -s /scratch/$USER/.MathWorks
+``` 
+:::
 
 ## Matlab Running in OOD
 
