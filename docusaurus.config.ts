@@ -124,19 +124,23 @@ const config: Config = {
           title: "Contact",
           items: [
             {
-              label: "Email for HPC support",
+              label: "Email HPC support",
               href: "mailto:hpc@nyu.edu",
             },
             {
-              label: "Email for HSRN support",
+              label: "Email HSRN support",
               href: "mailto:hsrn-support@nyu.edu",
             },
             {
-              label: "Email for general GenAI support",
+              label: "Email research cloud support",
+              href: "mailto:research-cloud-support@nyu.edu",
+            },
+            {
+              label: "Email general GenAI support",
               href: "mailto:genai-support@nyu.edu",
             },
             {
-              label: "Email for GenAI for research support",
+              label: "Email GenAI for research support",
               href: "mailto:Genai-research-support@nyu.edu",
             },
           ],
@@ -158,7 +162,7 @@ const config: Config = {
           title: "More",
           items: [
             {
-              label: "Blog",
+              label: "Announcements",
               to: "/blog",
             },
             {
