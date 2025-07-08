@@ -18,7 +18,7 @@ You can select the version of Matlab to use, the number or cores, amount of memo
 ::::tip
 Please be aware that when you run each version of Matlab for the first time, the working directory will default to your home directory `/home/NetID`.  
 :::warning
-Be careful not to go over your quota for `/home`.  You can find your current usage with the `myquota` command.  Please see [our Storage documentation](../03_storage/01_intro_and_data_management.mdx) for details about your storage options.
+Be careful not to go over your quota for `/home`.  You can find your current usage with the `myquota` command.  Please see our [Storage documentation](../03_storage/01_intro_and_data_management.mdx) for details about your storage options.
 :::
 Each time you start it up after that it will set its working directory to the last directory you were in.  If you'd like to change this behavior, so that you always start at the same directory:
 1.   click on `ENVIRONMENT` in your `Home` panel
