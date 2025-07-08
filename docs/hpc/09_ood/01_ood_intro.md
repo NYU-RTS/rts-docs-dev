@@ -1,4 +1,4 @@
-# Introduciton to Open OnDemand (OOD)
+# Introduction to Open OnDemand (OOD)
 
 ## A Web-based Graphical User Interface
 

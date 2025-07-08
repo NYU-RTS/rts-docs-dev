@@ -30,6 +30,6 @@ After you hit the `Launch` button you'll have to wait for the scheduler to find 
 
 Then you'll have a short wait for RStudio itself to start up.<br />
 
-Then after you hit the `Connect to RStudio Server` button you'll have the familar RStudio Desktop to use.
+Then after you hit the `Connect to RStudio Server` button you'll have the familiar RStudio Desktop to use.
 
 ![OOD RStudio Running](./static/ood_rstudio_running.png)

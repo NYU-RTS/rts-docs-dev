@@ -47,13 +47,13 @@ After you hit the `Launch` button you'll have to wait for the scheduler to find 
 ![OOD Matlab in queue](./static/ood_matlab_in_queue.png)
 
 Then you'll have a short wait for Matlab itself to start up.<br />
-Once that happends you'll get one last form that will allow you to:
+Once that happens you'll get one last form that will allow you to:
 -   make changes to compression and image qualtiy
 -   open a terminal window on the compute node your Matlab session is running on
 -   get a link that you can share that will allow others to view your Matlab session
 
 ![Pre-launch matlab OOD](./static/ood_matlab_prelaunch.png)
 
-Then after you hit the `Launch Matlab` button you'll have the familar Matlab Desktop to use.
+Then after you hit the `Launch Matlab` button you'll have the familiar Matlab Desktop to use.
 
 ![OOD Matlab Running](./static/ood_matlab_running.png)
