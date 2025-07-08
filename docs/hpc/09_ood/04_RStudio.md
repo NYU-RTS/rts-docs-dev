@@ -17,9 +17,9 @@ You can select the version of R to use, the R package location, the number or co
 
 ::::tip
 You may wish to set the 'R Package Location' to `/scratch` since space in `/home` is limited.
-Also, be aware that when RStudio always starts in your `/home/NetID` directory.
+Also, be aware that RStudio always starts in your `/home/NetID` directory.
 :::warning
-Be careful not to go over your quota for `/home`.  You can find your current usage with the `myquota` command.  Please see [our Storage documentation](../03_storage/01_intro_and_data_management.mdx) for details about your storage options.
+Be careful not to go over your quota for `/home`.  You can find your current usage with the `myquota` command.  Please see our [Storage documentation](../03_storage/01_intro_and_data_management.mdx) for details about your storage options.
 :::
 ::::
 
