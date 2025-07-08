@@ -114,3 +114,48 @@ Singularity> python --version
 Singularity> which pip
 # output: /ext3/miniforge3/bin/pip
 ```
+
+Now use either conda or pip to install your required python packages to the Miniforge environment.
+
+To install larger packages, like Tensorflow, you must first start an interactive job with adequate compute and memory resources to install packages. The login nodes restrict memory to 2GB per user, which may cause some large packages to crash.
+```bash
+Singularity> exit
+
+[NetID@log-1 my_env]$ srun --cpus-per-task=2 --mem=10GB --time=04:00:00 --pty /bin/bash
+
+# wait to be assigned a node
+
+[NetID@cm001 my_env]$ singularity exec --overlay /scratch/$USER/my_env/overlay-15GB-500K.ext3:rw /scratch/work/public/singularity/cuda12.3.2-cudnn9.0.0-ubuntu-22.04.4.sif /bin/bash
+
+Singularity> source /ext3/env.sh
+# activate the environment
+```
+
+After it is running, you’ll be redirected to a compute node. From there, run singularity to setup on conda environment, same as you were doing on login node.
+
+### Configure iPython Kernels
+To create a kernel named my_env copy the template files to your home directory.
+```bash sh
+Singularity> mkdir -p ~/.local/share/jupyter/kernels
+Singularity> cd ~/.local/share/jupyter/kernels
+Singularity> cp -R /share/apps/mypy/src/kernel_template ./my_env # this should be the name of your Singularity env
+Singularity> cd ./my_env 
+
+Singularity> ls
+#kernel.json  logo-32x32.png  logo-64x64.png  python # files in the ~/.local/share/jupyter/kernels directory
+```
+
+To set the conda environment, edit the file named `python` in `/.local/share/jupyter/kernels/my_env/`. 
+
+The python file is a wrapper script that the Jupyter notebook will use to launch your Singularity container and attach it to the notebook.
+
+At the bottom of the file we have the template singularity command.
+```bash
+singularity exec $nv \
+  --overlay /scratch/$USER/my_env/overlay-15GB-500K.ext3:ro \
+  /scratch/work/public/singularity/cuda12.3.2-cudnn9.0.0-ubuntu-22.04.4.sif \
+  /bin/bash -c "source /ext3/env.sh; $cmd $args"
+```
+:::warning
+If you used a different overlay (/scratch/$USER/my_env/overlay-15GB-500K.ext3 shown above) or .sif file (/scratch/work/public/singularity/cuda12.3.2-cudnn9.0.0-ubuntu-22.04.4.sif shown above), you MUST change those lines in the command above to the files you used.
+:::
