@@ -159,3 +159,33 @@ singularity exec $nv \
 :::warning
 If you used a different overlay (/scratch/$USER/my_env/overlay-15GB-500K.ext3 shown above) or .sif file (/scratch/work/public/singularity/cuda12.3.2-cudnn9.0.0-ubuntu-22.04.4.sif shown above), you MUST change those lines in the command above to the files you used.
 :::
+
+Edit the default `kernel.json` file by setting PYTHON_LOCATION and KERNEL_DISPLAY_NAME using a text editor like nano/vim.
+```json
+{
+ "argv": [
+  "PYTHON_LOCATION",
+  "-m",
+  "ipykernel_launcher",
+  "-f",
+  "{connection_file}"
+ ],
+ "display_name": "KERNEL_DISPLAY_NAME",
+ "language": "python"
+}
+```
+to
+```json
+{
+ "argv": [
+  "/home/<Your NetID>/.local/share/jupyter/kernels/my_env/python",
+  "-m",
+  "ipykernel_launcher",
+  "-f",
+  "{connection_file}"
+ ],
+ "display_name": "my_env",
+ "language": "python"
+}
+```
+Update the `"<Your NetID>"` to your own NetID without the `"<>"` symbols.
