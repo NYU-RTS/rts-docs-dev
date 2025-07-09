@@ -26,7 +26,9 @@ GUI based applications are accessible without the need for port or X11 forwardin
 
 ![interactive-applications](./static/interactive-applications.png)
 
-## Troubleshooting Connections to Open OnDemand
+## Troubleshooting
+
+### Connections to Open OnDemand
 
 A common issue that can occur is receiving an error that the Open OnDemand page cannot be reached. Sometimes this can indicate that the service is down, but often this is an issue with the the local browser cache. You can test this by opening a private browser window and seeing if https://ood.hpc.nyu.edu will load. If it does, try deleting the cache for https://ood.hpc.nyu.edu in your browser history to resolve this issue.
 
@@ -42,3 +44,23 @@ The link above will automatically search for the Open OnDemand site data and coo
 ![Remove browser cache image](./static/ood_remove_cache.png)
 
 Once done, try navigating again to https://ood.hpc.nyu.edu and the site should load. For other issues please email hpc@nyu.edu.
+
+### Viewing Logs
+
+When problems arise one of the best ways to figure out what went wrong is to look in the logs.  You can do this in two ways for OOD: from within OOD itself or via the terminal.
+
+#### From within OOD
+
+You can view session logs for interactive apps from within OOD if they are still visible within `Home / My Interactive Sessions`.  
+
+![OOD Matlab in queue](./static/ood_matlab_in_queue.png)
+
+Just click on the `Session ID` link and a tab will open with the contents of the directory that contains your session logs.
+
+![OOD session ID directory](./static/ood_session_dir.png)
+
+`output.log` is probably the most informative for debugging.  Simply click on `output.log` and the contents will be displayed.
+
+#### From terminal
+
+If your session is no longer visible from within OOD you may still be able to find your logs via the terminal.  Simply [log into Greene](https://sites.google.com/nyu.edu/nyu-hpc/accessing-hpc) and `cd` to `/home/$USER/ondemand/data/sys/dashboard/batch_connect/sys/` and then `cd` into the directory for the app that you're interested in.  You should find the file `output.log` there.
