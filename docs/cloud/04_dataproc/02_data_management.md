@@ -54,8 +54,8 @@ You can find the full path to your file/folder in the ingest storage by clicking
 Data uploaded into the ingest website will be visible to all members of the cluster temporarily.  If you are uploading files that cannot be shared with all cluster users (e.g., code) please use the alternate method described below.
 :::
 
-## Uploading Data to HDFS from Greene
-First download gcloud on a desktop computer with a browser by following the instructions [here](https://cloud.google.com/sdk/docs/install). Ensure that you run the install command described as optional in step 4. Log into Greene and activate the Google Cloud command line interface module:
+## Uploading Data to HDFS from Torch
+First download gcloud on a desktop computer with a browser by following the instructions [here](https://cloud.google.com/sdk/docs/install). Ensure that you run the install command described as optional in step 4. Log into Torch and activate the Google Cloud command line interface module:
 ```sh
 ml load google-cloud-sdk/379.0.0
 ```
@@ -65,7 +65,7 @@ gcloud auth login
 ```
 Copy and paste the command that you are given into a terminal application on your desktop and run it.  When prompted, type y to proceed.  If you are signed into multiple Google accounts, you will then be presented with a browser window where you can choose your account.  Select your NYU account.  Google will then present a message saying that “Google Cloud SDK wants to access your Google Account”.  Click Allow.
 
-Copy the URL that you are given in the terminal window, and paste it into your Greene session on the line where gcloud asks for it.
+Copy the URL that you are given in the terminal window, and paste it into your Torch session on the line where gcloud asks for it.
 
 Type gcloud auth list to verify that you are logged in:
 ```sh
@@ -81,12 +81,12 @@ Now that you are logged in, use the instructions under the Small Transfers or La
 
 ### Small Transfers
 
-Run the following commands on Greene to ensure that gcloud knows that you are using it with Dataproc (rather than a different Google Cloud application):
+Run the following commands on Torch to ensure that gcloud knows that you are using it with Dataproc (rather than a different Google Cloud application):
 ```sh
 gcloud config set project hpc-dataproc-19b8
 gcloud config set compute/zone us-central1-f
 ```
-Run the following command on Greene to upload your file to your filesystem home directory on Dataproc:
+Run the following command on Torch to upload your file to your filesystem home directory on Dataproc:
 ```sh
 gcloud compute scp MYFILE nyu-dataproc-m:~
 ```
@@ -99,7 +99,7 @@ hdfs dfs -put /home/<your_netid>_nyu_edu/<path_to_file> <hdfs_path>
 
 ### Large Transfers
 
-On Greene, run the following to upload a single file to the staging bucket:
+On Torch, run the following to upload a single file to the staging bucket:
 
 ```sh
 gsutil cp FILE  gs://nyu-dataproc-hdfs-ingest

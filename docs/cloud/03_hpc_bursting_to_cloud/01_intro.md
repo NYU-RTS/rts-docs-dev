@@ -38,17 +38,17 @@ However, approval is required to submit jobs to the partitions. Partitions are s
 
 ### Storage
 
-Greene's `/home` and `/scratch` are mounted (available) at login node of bursting setup.
+Torch's `/home` and `/scratch` are mounted (available) at login node of bursting setup.
 
-Compute node however, do have independent `/home` and `/scratch`.  These `/home` and `/scratch` mounts are persistent, are available from any compute node and independent from `/home` and `/scratch` at Greene.
+Compute node however, do have independent `/home` and `/scratch`.  These `/home` and `/scratch` mounts are persistent, are available from any compute node and independent from `/home` and `/scratch` at Torch.
 
-User may need to copy data from Greene's `/home` or `/scratch` to GCP mounted `/home` or `/scratch`
+User may need to copy data from Torch's `/home` or `/scratch` to GCP mounted `/home` or `/scratch`
 
 When you run a bursting job the compute nodes will not see those file mounts. This means that you need to copy data to the burst instance.
 
 The file systems are independent, so you must copy data to the GCP location.
 
-To copy data, you must first start an interactive job. Once started, you can copy your data using scp from the HPC Data Transfer Nodes (greene-dtn). Below is the basic setup to copy files from Greene to your home directory while you are in an interactive bursting job:
+To copy data, you must first start an interactive job. Once started, you can copy your data using scp from the HPC Data Transfer Nodes (greene-dtn). Below is the basic setup to copy files from Torch to your home directory while you are in an interactive bursting job:
 ```sh
 scp <NetID>@greene-dtn.hpc.nyu.edu:/path/to/files /home/<NetID>/
 ```
