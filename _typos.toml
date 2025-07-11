@@ -1,3 +1,8 @@
 [default.extend-words]
 # Scientific Software
 namd = "namd"
+
+[default.extend-identifiers]
+# Technical terms
+SerDe = "SerDe"
+JsonSerDe = "JsonSerDe"

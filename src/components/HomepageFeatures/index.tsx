@@ -65,7 +65,7 @@ const FeatureList: FeatureItem[] = [
         OpenShift cluster called Research Technology Cloud.
       </>
     ),
-    to: "/docs/cloud/intro/",
+    to: "/docs/cloud/getting_started/intro/",
   },
   {
     title: "SRDE",
