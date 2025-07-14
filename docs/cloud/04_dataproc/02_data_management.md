@@ -4,7 +4,7 @@ HDFS stands for Hadoop Distributed File System. HDFS is a highly fault-tolerant 
 
 ### File Permissions and Access Control Lists
 
-You can share files with others using access control lists (ACLs). An ACL gives you per-file, per-directory and per-user control over who has permission to access files. You can see the ACL for a file or directory with the getfacl command:
+You can share files with others using [access control lists (ACLs)](../../hpc/03_storage/09_sharing_data_on_hpc.md). An ACL gives you per-file, per-directory and per-user control over who has permission to access files. You can see the ACL for a file or directory with the getfacl command:
 ```sh
 hdfs dfs -getfacl  /user/<net_id>_nyu_edu/testdir
 ```
@@ -67,7 +67,7 @@ Copy and paste the command that you are given into a terminal application on you
 
 Copy the URL that you are given in the terminal window, and paste it into your Torch session on the line where gcloud asks for it.
 
-Type gcloud auth list to verify that you are logged in:
+Type `gcloud auth list` to verify that you are logged in:
 ```sh
 [NetID@hlog-1 ~]$ gcloud auth list
            Credentialed Accounts

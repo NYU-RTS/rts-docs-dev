@@ -6,6 +6,7 @@
 [internet2-cc]: https://internet2.edu/services/cloud-connect/
 [google-for-edu]: https://cloud.google.com/edu?hl=en
 [gcp-get-started]: https://cloud.google.com/docs/get-started/
+[gcp-credits]: https://cloud.google.com/edu/researchers?hl=en
 
 We facilitate access to Google Cloud Platform (GCP) for your research projects. NYU is a member of the [Internet2 Net+ GCP program][internet2-gcp] that allows for community-negotiated GCP terms that provides NYU researchers with benefits that include, amongst other things, price discounts, [waivers for data egress fees][waive-egress], and [NIH STRIDES][nih-strides] initiative benefits.
 
@@ -24,12 +25,9 @@ NYU researchers who work with the Research Cloud team to deploy projects on GCP 
 There are a number of ways you can get started with using GCP in research projects:
 -   To start using GCP resources in a research project, request a consultation with the Research Cloud team (via email research-cloud-support@nyu.edu). The Research Cloud team can advise on ways to set up your research project, available discounts, etc.
 -   If a project involves Data Science and Machine Learning, consult with the DS3 team before starting your project on GCP.
-Please note:
--   Creating a GCP project using your NYU account (NetID@nyu.edu) will place the project under the nyu.edu organization, an environment managed by the NYU Research Cloud team. However, your project doesn't automatically qualify for the price discounts and benefits that NYU has negotiated with GCP.
--   For non-NYU work on GCP, please use your personal, non-NYU, Google email when creating GCP projects.
-
 :::tip
-For non-NYU work on GCP, please use your personal, non-NYU, Google email when creating GCP projects.
+-  Creating a GCP project using your NYU account (NetID@nyu.edu) will place the project under the nyu.edu organization, an environment managed by the NYU Research Cloud team. However, your project doesn't automatically qualify for the price discounts and benefits that NYU has negotiated with GCP.
+-  For non-NYU work on GCP, please use your personal, non-NYU, Google email when creating GCP projects.
 :::
 
 The NYU Research Cloud team does not currently offer training on how to deploy and utilize resources on GCP in research projects or teaching. If you are new to GCP and you want to learn the GCP fundamentals or if you want to learn how to perform specific tasks on GCP (obtain skill badges), please consider the following resources:
@@ -43,7 +41,7 @@ Apply for credits using your NYU account (https://cloud.google.com/free/). After
 -   https://edu.google.com/programs/?modal_active=none
 ### Sources of funding for GCP project
 Please consider options below and explore other options which may exist for your specific field.
--   Google Cloud research credits
+-   [Google Cloud research credits][gcp-credits]
 -   NIH STRIDES
 -   NSF CloudBank
 -   GCP seed grant through NYU HPC

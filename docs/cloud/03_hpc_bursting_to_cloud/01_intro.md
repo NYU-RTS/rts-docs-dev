@@ -12,7 +12,9 @@ To request access to the HPC Bursting capabilities, [please complete this form][
 :::
 
 ## Running a Bursting Job
-Note: this is not public, only per request of eligible classes or researchers
+:::note
+This is not public, only per request of eligible classes or researchers
+:::
 ```sh
 ssh <NetID>@greene.hpc.nyu.edu
 ```

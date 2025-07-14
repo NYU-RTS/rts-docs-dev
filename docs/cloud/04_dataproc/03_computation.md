@@ -17,7 +17,7 @@ Ingest a text file into HDFS.  In the below example, the hdfs -put command is co
 curl -o input.txt https://www.gutenberg.org/files/1661/1661-0.txt
 hdfs dfs -put input.txt
 ```
-The following command will run an example Word Count job (described in more detail here) with the Sherlock Holmes book as its input.
+The following command will run an example Word Count job (described in more detail [here](https://cwiki.apache.org/confluence/display/HADOOP2/WordCount)) with the Sherlock Holmes book as its input.
 ```sh
 hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar wordcount -D mapreduce.job.maps=6 -D mapreduce.job.reduces=2 /user/<netid>_nyu_edu/input.txt /user/<netid>_nyu_edu/output
 ```
@@ -32,25 +32,27 @@ Spark provides an interactive shell that you can use to learn the Spark API and 
 ```sh
 spark-shell --deploy-mode client --num-executors=1 --driver-memory=1G --executor-memory=1G
 ```
-Note: NYU Dataproc deploys Spark applications in cluster mode by default.  The following error indicates that you are trying to deploy an interactive shell, which must use client mode:
+:::tip
+NYU Dataproc deploys Spark applications in cluster mode by default.  The following error indicates that you are trying to deploy an interactive shell, which must use client mode:
+:::
 ```sh
 Exception in thread "main" org.apache.spark.SparkException: Cluster deploy mode is not applicable to Spark shells.
 ```
-To resolve this error, either use the command line flag indicated above (--deploy-mode client) or set the spark.submit.deployMode property in your Spark configuration to client.  More details about the difference between cluster and client mode can be found [here](https://spark.apache.org/docs/latest/running-on-yarn.html#launching-spark-on-yarn).
+To resolve this error, either use the command line flag indicated above (`--deploy-mode client`) or set the `spark.submit.deployMode` property in your Spark configuration to client. More details about the difference between cluster and client mode can be found [here](https://spark.apache.org/docs/latest/running-on-yarn.html#launching-spark-on-yarn).
 
 ## YARN Scheduler
 
 YARN is the resource manager and job scheduler in the Hadoop cluster. YARN allows you to use various data processing engines for batch, interactive, and real-time stream processing of data stored in HDFS.
 
-Application status and logs: Please find the list of current running apps using 'Yarn' script. Running the yarn script without any arguments prints the description for all commands
+-   Application status and logs: Please find the list of current running apps using 'Yarn' script. Running the yarn script without any arguments prints the description for all commands
 ```sh
 yarn application -list 
 ```
-To kill a currently running app because the submitted app started malfunctioning or in worst case scenario, it's stuck in an infinite loop. Get the app ID and then kill it as given below
+-   To kill a currently running app because the submitted app started malfunctioning or in worst case scenario, it's stuck in an infinite loop. Get the app ID and then kill it as given below
 ```sh
 yarn application -kill <application_ID>
 ```
-To download application logs for examination on the command line
+-   To download application logs for examination on the command line
 ```sh
 yarn logs -applicationId <application_ID>
 ```
@@ -79,8 +81,9 @@ Access to Hive databases on NYU Dataproc is derived from HDFS permissions becaus
 ```
 hdfs dfs -setfacl -R -m user:<OTHER_PERSON_NETID>_nyu_edu:r-x /user/hive/warehouse/NetID_nyu_edu.db
 ```
+:::warning
 Outside of NYU, other Hadoop installations may use a different mechanism to share databases with other colleagues– it is common for Hadoop installations to use a SQL style grant/revoke mechanism for sharing databases ([SQL Standards Based Authorization](https://cwiki.apache.org/confluence/display/Hive/LanguageManual+Authorization#LanguageManualAuthorization-2SQLStandardsBasedAuthorizationinHiveServer2)).  This mechanism is not used at NYU and it is important to bear in mind that external documentation referring to grant/revoke statements is not applicable to NYU Dataproc.
-
+:::
 
 ## Using Trino
 
