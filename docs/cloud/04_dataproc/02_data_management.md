@@ -50,7 +50,7 @@ hadoop distcp gs://nyu-dataproc-hdfs-ingest/<file_or_folder_name> /user/<your_ne
 ```
 You can find the full path to your file/folder in the ingest storage by clicking on it in the web interface and then scrolling down to the gsutil URI field in the Live Object tab.
 
-::: warning
+:::warning
 Data uploaded into the ingest website will be visible to all members of the cluster temporarily.  If you are uploading files that cannot be shared with all cluster users (e.g., code) please use the alternate method described below.
 :::
 
