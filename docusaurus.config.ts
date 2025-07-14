@@ -141,8 +141,8 @@ const config: Config = {
             },
             {
               label: "Email GenAI for research support",
-              href: "mailto:Genai-research-support@nyu.edu",
-            },
+              href: "mailto:genai-research-support@nyu.edu",
+             },
           ],
         },
         {
