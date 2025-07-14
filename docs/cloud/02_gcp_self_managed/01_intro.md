@@ -26,8 +26,10 @@ There are a number of ways you can get started with using GCP in research projec
 -   To start using GCP resources in a research project, request a consultation with the Research Cloud team (via email research-cloud-support@nyu.edu). The Research Cloud team can advise on ways to set up your research project, available discounts, etc.
 -   If a project involves Data Science and Machine Learning, consult with the DS3 team before starting your project on GCP.
 :::tip
--  Creating a GCP project using your NYU account (NetID@nyu.edu) will place the project under the nyu.edu organization, an environment managed by the NYU Research Cloud team. However, your project doesn't automatically qualify for the price discounts and benefits that NYU has negotiated with GCP.
--  For non-NYU work on GCP, please use your personal, non-NYU, Google email when creating GCP projects.
+Creating a GCP project using your NYU account (NetID@nyu.edu) will place the project under the nyu.edu organization, an environment managed by the NYU Research Cloud team. However, your project doesn't automatically qualify for the price discounts and benefits that NYU has negotiated with GCP.
+:::
+:::warning
+For non-NYU work on GCP, please use your personal, non-NYU, Google email when creating GCP projects.
 :::
 
 The NYU Research Cloud team does not currently offer training on how to deploy and utilize resources on GCP in research projects or teaching. If you are new to GCP and you want to learn the GCP fundamentals or if you want to learn how to perform specific tasks on GCP (obtain skill badges), please consider the following resources:
