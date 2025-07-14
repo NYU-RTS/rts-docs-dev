@@ -96,7 +96,7 @@
     "summary": null,
     "field_data": {
       "field_alumni_access": {
-        "value": "\u003Cp\u003EAvailable\u003C\/p\u003E",
+        "value": "\u003Cp\u003ENot Available\u003C\/p\u003E",
         "label": "Alumni Access",
         "weight": 10
       },
@@ -111,7 +111,7 @@
         "weight": 7
       },
       "field_limitations": {
-        "value": "\u003Cp\u003E2TB limit with 60 day purge policy for untouched files\u003C\/p\u003E",
+        "value": "\u003Cp\u003E\u003C\/p\u003E",
         "label": "Limitations",
         "weight": 5
       },
