@@ -1,21 +1,15 @@
-# Open OnDemand (OOD) with Conda/Singularity
-
-[Open OnDemand](https://ood.hpc.nyu.edu/) is a tool that allows users to launch Graphical User Interfaces (GUIs) based applications are accessible without modifying your HPC environment. You can log into the Open OnDemand interface at [https://ood.hpc.nyu.edu](https://ood.hpc.nyu.edu). Once logged in, select the **Interactive Apps** menu, select the desired application, and submit the job based on required resources and options. 
-
-:::note
-If you're not on the NYU network, you may need to connect via NYU's Virtual Private Network (VPN) before connecting to [https://ood.hpc.nyu.edu](https://ood.hpc.nyu.edu).  [Read the details about NYU's VPN and instructions for connecting](https://www.nyu.edu/life/information-technology/infrastructure/network-services/vpn.html).
-:::
+# Jupyter with Conda/Singularity in OOD
 
 ## OOD + Singularity + conda
-This page describes how to use your Singularity with conda environment in Open OnDemand (OOD) GUI at Greene. 
+This page describes how to use your Singularity with conda environment in OOD GUI at Greene. 
 
 ### Log Into Greene via the Terminal
-The following commands must be run from the terminal. Information on accessing via the terminal can be found at [Connecting to the HPC](../02_connecting_to_hpc/01_connecting_to_hpc.mdx). 
+The following commands must be run from the terminal. Information on accessing via the terminal can be found at [Connecting to the HPC](../02_connecting_to_hpc/01_connecting_to_hpc.mdx) or you can log into OOD and select the `Clusters` tab at the top of the page and select `Greene Shell Access`.
 
 ### Preinstallation Warning
 :::warning
 If you have initialized Conda in your base environment, your prompt on Greene may show something like:
-```sh
+```bash
 (base) [NetID@log-1 ~]$
 ```
 then you must first comment out or remove this portion of your `~/.bashrc` file:
@@ -59,7 +53,7 @@ Launching Singularity with the `--overlay` flag mounts the overlay file to a new
 
 :::warning
 Be sure that you have the Singularity prompt (`Singularity>`) and that `/ext3` is available before the next step.
-```sh
+```bash
 Singularity> ls -lah /ext3
 total 8.5K
 drwxrwxr-x.  2 root root 4.0K Oct 19 10:01 .
@@ -196,10 +190,11 @@ to
 ```
 Update the `"<Your NetID>"` to your own NetID without the `"<>"` symbols.
 
-### Launch an Open OnDemand Jupyter Notebook
-[https://ood.hpc.nyu.edu](https://ood.hpc.nyu.edu)
+### Launch an OOD Jupyter Notebook
+Go to [https://ood.hpc.nyu.edu](https://ood.hpc.nyu.edu) <br />
+and select Jupyter Notebook from the Interactive Apps pull-down menu:
 
-![OOD Launch](./static/OOD_launch.png)
+![OOD Launch](./static/start_jupyter.png)
 
 ### Configure and Launch your Notebook
 
