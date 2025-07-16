@@ -1,16 +1,21 @@
 # Quickstart
+
+:::danger[Access to Portkey is only permitted via NYU VPN]
+The machine sending requests to the LLM gateway needs to be connected to the NYU VPN to access the LLM gateway. If it is not connected to the VPN, your requests will timeout and result in connection errors.
+
+If you are sending requests from a server like Colab notebook while your laptop is on the VPN the requests will fail as the machine sending the requests is the Colab server, not your laptop!
+:::
+
+
+## Getting started with the LLM gateway
+
 :::tip[Gateway URL]
 Whenever you instantiate a Portkey client, the `base_url` must be set to `base_url="https://ai-gateway.apps.cloud.rt.nyu.edu/v1/"`. If you miss this parameter you would be connecting to the vendor's SaaS platform and NYU provisioned virtual keys will not work.
 :::
 
-## Getting started with Portkey
-As part of the onboarding process, you would have received an invite which gives you access to a workspace. We will also add virtual keys for LLMs to your workspace as part of the onboarding process. Once you've accepted it, head over to `https://app.portkey.ai/` and select the sign-in with Single Sign-On option and proceed with your NYU email address.
+With the virtual key and the API key in hand, you should now be able to run the following snippet of code:
 
-:::danger[Access to Portkey is only permitted via NYU VPN]
-You need to be connected to the NYU VPN to access the Portkey LLM gateway. If you are not, your requests will timeout and result in connection errors.
-:::
 
-You will now be able to create an API key for yourself by access the `API Keys` item on the left sidebar. With an API key and a virtual key at your disposal, you can now run the following script:
 ```python
 from portkey_ai import Portkey
 
@@ -25,10 +30,10 @@ completion = portkey.chat.completions.create(
         {"role": "system", "content": "You are not a helpful assistant"},
         {"role": "user", "content": "Say this is a test"},
     ],
-    model="gemini-2.0-flash-lite",
+    model="", # Replace with the LLM model you'd like to use
 )
 
 print(completion)
 ```
 
-Once the script is executed, you can head back to `app.portkey.ai` to view the logs for the call!
+Once the script is executed, you can head back to [`app.portkey.ai`](https://app.portkey.ai/login) to view the logs for the call!
