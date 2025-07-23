@@ -4,7 +4,7 @@ import { themes as prismThemes } from "prism-react-renderer";
 
 // Set the /<baseUrl>/ pathname under which your site is served
 // For GitHub pages deployment, it is often '/<projectName>/'
-let baseUrl = "/rts-docs-dev/";
+let baseUrl = "/rts-docs/";
 if (process.env.PREVIEW_PATH) {
   baseUrl += process.env.PREVIEW_PATH;
 }
