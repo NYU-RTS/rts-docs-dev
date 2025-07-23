@@ -167,7 +167,7 @@ const config: Config = {
             },
             {
               label: "GitHub",
-              href: "https://github.com/NYU-ITS/rts-docs-dev",
+              href: "https://github.com/NYU-ITS/rts-docs",
             },
           ],
         },
