@@ -22,7 +22,7 @@ const config: Config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: "NYU-ITS", // Usually your GitHub org/user name.
-  projectName: "rts-docs-dev", // Usually your repo name.
+  projectName: "rts-docs", // Usually your repo name.
   deploymentBranch: "main",
 
   onBrokenLinks: "throw",
