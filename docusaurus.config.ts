@@ -52,7 +52,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: "./sidebars.ts",
-          editUrl: "https://github.com/NYU-ITS/rts-docs-dev/blob/main/",
+          editUrl: "https://github.com/NYU-ITS/rts-docs/blob/main/",
         },
         blog: {
           showReadingTime: true,
@@ -61,7 +61,7 @@ const config: Config = {
             xslt: true,
           },
           // Remove this to remove the "edit this page" links.
-          editUrl: "https://github.com/NYU-ITS/rts-docs-dev/blob/main/",
+          editUrl: "https://github.com/NYU-ITS/rts-docs/blob/main/",
           // Useful options to enforce blogging best practices
           onInlineTags: "warn",
           onInlineAuthors: "warn",
@@ -167,7 +167,7 @@ const config: Config = {
             },
             {
               label: "GitHub",
-              href: "https://github.com/NYU-ITS/rts-docs-dev",
+              href: "https://github.com/NYU-ITS/rts-docs",
             },
           ],
         },
