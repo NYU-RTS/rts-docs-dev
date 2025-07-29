@@ -14,14 +14,14 @@ const config: Config = {
   favicon: "img/NYU.ico",
 
   // Set the production url of your site here
-  url: "https://your-docusaurus-site.example.com",
+  url: "https://services.rt.nyu.edu/",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: baseUrl,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: "NYU-ITS", // Usually your GitHub org/user name.
+  organizationName: "NYU-RTS", // Usually your GitHub org/user name.
   projectName: "rts-docs", // Usually your repo name.
   deploymentBranch: "main",
 
@@ -52,7 +52,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: "./sidebars.ts",
-          editUrl: "https://github.com/NYU-ITS/rts-docs/blob/main/",
+          editUrl: "https://github.com/NYU-RTS/rts-docs/blob/main/",
         },
         blog: {
           showReadingTime: true,
@@ -61,7 +61,7 @@ const config: Config = {
             xslt: true,
           },
           // Remove this to remove the "edit this page" links.
-          editUrl: "https://github.com/NYU-ITS/rts-docs/blob/main/",
+          editUrl: "https://github.com/NYU-RTS/rts-docs/blob/main/",
           // Useful options to enforce blogging best practices
           onInlineTags: "warn",
           onInlineAuthors: "warn",
@@ -167,7 +167,7 @@ const config: Config = {
             },
             {
               label: "GitHub",
-              href: "https://github.com/NYU-ITS/rts-docs",
+              href: "https://github.com/NYU-RTS/rts-docs",
             },
           ],
         },
