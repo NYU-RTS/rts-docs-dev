@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
     <channel>
         <title>Connecting researchers to computational resources. Blog</title>
-        <link>https://your-docusaurus-site.example.com/blog/</link>
+        <link>https://services.rt.nyu.edu/blog/</link>
         <description>Connecting researchers to computational resources. Blog</description>
         <lastBuildDate>Fri, 02 May 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
@@ -10,8 +10,8 @@
         <language>en</language>
         <item>
             <title><![CDATA[o4-mini is now available!]]></title>
-            <link>https://your-docusaurus-site.example.com/blog/2025-05-02-o4-mini/</link>
-            <guid>https://your-docusaurus-site.example.com/blog/2025-05-02-o4-mini/</guid>
+            <link>https://services.rt.nyu.edu/blog/2025-05-02-o4-mini/</link>
+            <guid>https://services.rt.nyu.edu/blog/2025-05-02-o4-mini/</guid>
             <pubDate>Fri, 02 May 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[We are pleased to announce that o4-mini is now available via Pythia. Here is an overview of the model//platform.openai.com/docs/models/o4-mini]]></description>
             <content:encoded><![CDATA[<p>We are pleased to announce that <code>o4-mini</code> is now available via Pythia. Here is an overview of the model: <a href="https://platform.openai.com/docs/models/o4-mini" target="_blank" rel="noopener noreferrer">https://platform.openai.com/docs/models/o4-mini</a></p>
