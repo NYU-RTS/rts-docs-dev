@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkrts_docs_dev=self.webpackChunkrts_docs_dev||[]).push([["7627"],{47548:function(s){s.exports=JSON.parse('{"blogBasePath":"/rts-docs/pr-preview/pr-146/blog","blogTitle":"Blog","authorsListPath":"/rts-docs/pr-preview/pr-146/blog/authors"}')}}]);
