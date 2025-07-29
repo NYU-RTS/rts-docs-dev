@@ -2,8 +2,6 @@ import type * as Preset from "@docusaurus/preset-classic";
 import { type Config } from "@docusaurus/types";
 import { themes as prismThemes } from "prism-react-renderer";
 
-// Set the /<baseUrl>/ pathname under which your site is served
-// For GitHub pages deployment, it is often '/<projectName>/'
 let baseUrl = "/";
 if (process.env.PREVIEW_PATH) {
   baseUrl += process.env.PREVIEW_PATH;
@@ -15,8 +13,6 @@ const config: Config = {
 
   // Set the production url of your site here
   url: "https://services.rt.nyu.edu/",
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: baseUrl,
 
   // GitHub pages deployment config.
