@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="atom.xsl"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://your-docusaurus-site.example.com/rts-docs/blog/</id>
+    <id>https://your-docusaurus-site.example.com/blog/</id>
     <title>Connecting researchers to computational resources. Blog</title>
     <updated>2025-05-02T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://your-docusaurus-site.example.com/rts-docs/blog/"/>
+    <link rel="alternate" href="https://your-docusaurus-site.example.com/blog/"/>
     <subtitle>Connecting researchers to computational resources. Blog</subtitle>
-    <icon>https://your-docusaurus-site.example.com/rts-docs/img/NYU.ico</icon>
+    <icon>https://your-docusaurus-site.example.com/img/NYU.ico</icon>
     <entry>
         <title type="html"><![CDATA[o4-mini is now available!]]></title>
-        <id>https://your-docusaurus-site.example.com/rts-docs/blog/2025-05-02-o4-mini/</id>
-        <link href="https://your-docusaurus-site.example.com/rts-docs/blog/2025-05-02-o4-mini/"/>
+        <id>https://your-docusaurus-site.example.com/blog/2025-05-02-o4-mini/</id>
+        <link href="https://your-docusaurus-site.example.com/blog/2025-05-02-o4-mini/"/>
         <updated>2025-05-02T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[We are pleased to announce that o4-mini is now available via Pythia. Here is an overview of the model//platform.openai.com/docs/models/o4-mini]]></summary>
         <content type="html"><![CDATA[<p>We are pleased to announce that <code>o4-mini</code> is now available via Pythia. Here is an overview of the model: <a href="https://platform.openai.com/docs/models/o4-mini" target="_blank" rel="noopener noreferrer">https://platform.openai.com/docs/models/o4-mini</a></p>
