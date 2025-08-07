@@ -92,7 +92,28 @@
   {
     "id": "15",
     "title": "Distributed storage on the HSRN",
-    "facet_matches": ["5", "6", "10", "13", "14"],
+    "facet_matches": [
+      "5",
+      "6",
+      "10",
+      "11",
+      "13",
+      "14",
+      "18",
+      "20",
+      "26",
+      "28",
+      "29",
+      "32",
+      "33",
+      "34",
+      "38",
+      "41",
+      "48",
+      "49",
+      "50",
+      "54"
+    ],
     "summary": null,
     "field_data": {
       "field_alumni_access": {
