@@ -137,7 +137,7 @@
         "weight": 5
       },
       "field_links": {
-        "value": "\u003Cp\u003E\u003Ca href=\u0022http:\/\/hpc.nyu.edu\/\u0022\u003Ehpc.nyu.edu\u003C\/a\u003E\u003C\/p\u003E",
+        "value": "\u003Cp\u003E\u003Ca href=\u0022https:\/\/hsrn.nyu.edu\/docs\/cephfs\/\u0022\u003Ehsrn.nyu.edu\/docs\/cephfs\/\u003C\/a\u003E\u003C\/p\u003E",
         "label": "Links",
         "weight": 2
       },
